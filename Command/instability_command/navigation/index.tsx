@@ -16,6 +16,8 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ControlScreen from '../screens/ControlScreen';
 import StatusScreen from '../screens/StatusScreen';
+import MapScreen from '../screens/MapScreen';
+
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -85,13 +87,22 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          title: 'Map',
+          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
         name="Status"
         component={StatusScreen}
         options={{
           title: 'Status',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="tv" color={color} />,
         }}
       />
+      
     </BottomTab.Navigator>
   );
 }

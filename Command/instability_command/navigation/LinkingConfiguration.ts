@@ -20,9 +20,14 @@ const linking: LinkingOptions<RootStackParamList> = {
               ControlScreen: 'one',
             },
           },
+          Map: {
+            screens: {
+              MapScreen: 'two',
+            },
+          },
           Status: {
             screens: {
-              StatusScreen: 'two',
+              StatusScreen: 'three',
             },
           },
         },

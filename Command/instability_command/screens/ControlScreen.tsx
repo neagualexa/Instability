@@ -5,7 +5,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
-import { useLongPress } from '../components/useLongPress'
+// import { useLongPress } from '../components/useLongPress'
 
 
 
@@ -15,46 +15,12 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
     console.log('Go ', direction, '!');
   }
 
-  //REPEATS EVERY 0.1s but does not stop
-  // const timerId = setInterval(() => {
-  //   console.log('Someone Scheduled me to run every 0.1s');
-  // }, 100);
-  
-  // const [startLongPress, setStartLongPress] = useState(false);
-
-  // useEffect((callback = () => {}, ms = 300) => {
-  //   let timerId;
-  //   if (startLongPress) {
-  //     pressDirection("forward");
-  //     timerId = setTimeout(callback, ms);
-  //   } else {
-  //     clearTimeout(timerId);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(timerId);
-  //   };
-  // }, [callback, ms, startLongPress]);
-
-  // const onLongPress = () => {
-  //     console.log('longpress is triggered');
-  // };
-
-  // const onClick = () => {
-  //     console.log('click is triggered')
-  // }
-
-  // const defaultOptions = {
-  //     shouldPreventDefault: true,
-  //     delay: 500,
-  // };
-  // const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
-
 
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <Text style={styles.title}>Tab One testttttsss h</Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <Text style={styles.title}>Controller page</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         {/* <EditScreenInfo path="/screens/ControlScreen.tsx" /> */}
         {/* <TouchableOpacity onPress={longPressEvent}>Repeat test</TouchableOpacity> */}
@@ -82,7 +48,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
             <Text>LEFT</Text>
           </TouchableOpacity>
           
-          <Text>     +     </Text>
+          <Text>        +        </Text>
           
           <TouchableOpacity
             onPress={() => pressDirection("right")}
@@ -127,7 +93,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 20,
+    // marginTop: 20,
   },
   separator: {
     marginVertical: 30,
@@ -135,12 +101,12 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   roundButton1: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    borderRadius: 100,
+    borderRadius: 80,
     backgroundColor: 'orange',
     // alignSelf: "flex-start",
   },
