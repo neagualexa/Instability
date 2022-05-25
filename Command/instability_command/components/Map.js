@@ -5,6 +5,15 @@ import { applyEdgeChanges, applyNodeChanges, addEdge } from 'react-flow-renderer
 import initialNodes from './data/nodes.js';
 import initialEdges from './data/edges.js';
 
+import alienNode from './alienNode.js';
+import positionNode from './positionNode.js';
+import './map.css';
+
+const nodeTypes = {
+  position: positionNode,
+  alien:    alienNode,
+};
+
 function Flow() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
@@ -23,9 +32,12 @@ function Flow() {
   );
 
   return (
-    <ReactFlow nodes={nodes}
+    <ReactFlow
+      // style={reactFlowStyle}
+      nodes={nodes}
       edges={edges} 
-      onNodesChange={onNodesChange}
+      nodeTypes={nodeTypes}
+      // onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       fitView
@@ -37,5 +49,6 @@ function Flow() {
   );
   
 }
+
 
 export default Flow;
