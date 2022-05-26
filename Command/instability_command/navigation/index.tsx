@@ -3,12 +3,13 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, View, Text, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -20,6 +21,7 @@ import MapScreen from '../screens/MapScreen';
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import  {generateNodes} from '../components/data/nodes';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -92,6 +94,23 @@ function BottomTabNavigator() {
         options={{
           title: 'Map',
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          headerRight: () => (
+            <View>
+              <TouchableOpacity
+                  onPress={generateNodes}
+                  style={{backgroundColor:"orange"}}
+                >
+                <Text>READ FILE</Text>
+              </TouchableOpacity>
+              <FontAwesome
+                name="info-circle"
+                size={20}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              >
+               {`\t`}Click on nodes to select where to move to. </FontAwesome>
+            </View>
+          ),
         }}
       />
       <BottomTab.Screen
@@ -116,3 +135,4 @@ function TabBarIcon(props: {
 }) {
   return <FontAwesome size={25} style={{ marginBottom: 0 }} {...props} />;
 }
+

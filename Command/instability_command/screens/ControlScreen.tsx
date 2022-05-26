@@ -8,7 +8,6 @@ import { RootTabScreenProps } from '../types';
 // import { useLongPress } from '../components/useLongPress'
 
 
-
 export default function ControlScreen({ navigation }: RootTabScreenProps<'Control'>) {
 
   function pressDirection(direction) {

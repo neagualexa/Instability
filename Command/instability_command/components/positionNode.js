@@ -103,14 +103,3 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
   );
 });
 
-const styles = () => {
-  connectorLeft: {
-    height= 5, width=5,
-    background= '#555',
-    left= sizePos*2
-  }
-  connectorTop: {
-    height= 5, width=5,
-    background= '#555'
-  }
-};
