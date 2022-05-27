@@ -1,18 +1,34 @@
 {
     "node1" : {
-        "id": "1",
-        "position": "{ x: 250, y: 25 }"
+        "id": "p1",
+        "position": { "x": 250, "y": 25 }
     },
     "node2" : {
-        "id": "2",
-        "position": "{ x: 100, y: 125 }"
+        "id": "p2",
+        "position": { "x": 100, "y": 125 }
     },
     "node3" : {
-        "id": "3",
-        "position": "{ x: 250, y: 250 }"
+        "id": "p3",
+        "position": { "x": 250, "y": 250 }
     },
     "node4" : {
-        "id": "4",
-        "position": "{ x: 0, y: 0 }"
+        "id": "p4",
+        "position": { "x": 0, "y": 0 }
+    },
+    "node5" : {
+        "id": "p5",
+        "position": { "x": 30, "y": -200 }
+    },
+    "node6" : {
+        "id": "p6",
+        "position": { "x": 100, "y": -200 }
+    },
+    "node7" : {
+        "id": "p7",
+        "position": { "x": 30, "y": 200 }
+    },
+    "node8" : {
+        "id": "a8",
+        "position": { "x": 300, "y": 100 }
     }
 }

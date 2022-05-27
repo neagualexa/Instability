@@ -21,7 +21,6 @@ import MapScreen from '../screens/MapScreen';
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import  {generateNodes} from '../components/data/nodes';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -62,10 +61,29 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Control"
+      initialRouteName="Map"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
+      <BottomTab.Screen
+        name="Map"
+        component={MapScreen}
+        options={({ navigation }: RootTabScreenProps<'Map'>) => ({
+          title: 'Map',
+          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          headerRight: () => (
+            <View>
+              <FontAwesome
+                name="info-circle"
+                size={20}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              >
+               {`\t`}Click on nodes to select where to move to. </FontAwesome>
+            </View>
+          ),
+        })}
+      />
       <BottomTab.Screen
         name="Control"
         component={ControlScreen}
@@ -87,31 +105,6 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
-      />
-      <BottomTab.Screen
-        name="Map"
-        component={MapScreen}
-        options={{
-          title: 'Map',
-          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
-          headerRight: () => (
-            <View>
-              <TouchableOpacity
-                  onPress={generateNodes}
-                  style={{backgroundColor:"orange"}}
-                >
-                <Text>READ FILE</Text>
-              </TouchableOpacity>
-              <FontAwesome
-                name="info-circle"
-                size={20}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              >
-               {`\t`}Click on nodes to select where to move to. </FontAwesome>
-            </View>
-          ),
-        }}
       />
       <BottomTab.Screen
         name="Status"

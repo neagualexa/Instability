@@ -1,0 +1,6 @@
+{
+    "edge1": { "id": "e1-2", "source": "p1", "target": "p2" , "sourceHandle": "left_out",   "targetHandle": "right_in"}, 
+    "edge2": { "id": "e1-3", "source": "p1", "target": "p3" , "sourceHandle": "bottom_out", "targetHandle": "top_in"}, 
+    "edge3": { "id": "e1-4", "source": "p1", "target": "p4" , "sourceHandle": "top_out",    "targetHandle": "bottom_in"}, 
+    "edge4": { "id": "e1-5", "source": "p1", "target": "p5" , "sourceHandle": "right_out",  "targetHandle": "left_in"}
+}

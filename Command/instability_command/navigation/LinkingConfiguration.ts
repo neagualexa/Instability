@@ -15,14 +15,14 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          Control: {
-            screens: {
-              ControlScreen: 'one',
-            },
-          },
           Map: {
             screens: {
-              MapScreen: 'two',
+              MapScreen: 'one',
+            },
+          },
+          Control: {
+            screens: {
+              ControlScreen: 'two',
             },
           },
           Status: {

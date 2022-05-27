@@ -1,21 +1,22 @@
-import Nodes from './nodes.json';
+import NodesJSON from './nodes.json';
+import currentNode from './currentNode.json';
 
-// console.log(Nodes);
+// console.log(NodesJSON);
 
 let initialNodes = [
   {
-    id: '1',
+    id: 'p00',
     type: 'position',
     data: { label: 'Origin'},
-    position: { x: 250, y: 50 },
+    position: { x: 190, y: 240 },
   },
 
-  // {
-  //   id: '2',
-  //   type: 'position',
-  //   data: { label: '(100,50)'},
-  //   position: { x: 100, y: 50 },
-  // },
+  {
+    id: 'p01',
+    type: 'position',
+    data: { label: '(100,50)'},
+    position: { x: 100, y: 50 },
+  },
   // {
   //   id: '3',
   //   type: 'position',
@@ -44,18 +45,56 @@ let initialNodes = [
   // },
 ];
 
-console.log(Nodes);
+console.log(initialNodes);
+let nodes = initialNodes;
 
 export function generateNodes(){
-  let nodes = [];
-  for (let i in Nodes) {
-    nodes.push(
-      {
-        id: Nodes[i].id,
-        type: 'position',
-        position: Nodes[i].position
+  //nodes are being added multiple times...must check if they exists in order to not add them again
+  //code updates everytime we change the code...so should put the map as first/main page so it refreshes on it
+  var exists = false;
+  for (let i in NodesJSON) {
+    exists = false;
+    for(let n in nodes){
+      // console.log(nodes[n].id, '----', NodesJSON[i].id);
+      if(nodes[n].id == NodesJSON[i].id){
+        exists = true;
+        // console.log("IF CASE: FOUND NODE");
+        break;
       }
-    )
+    }
+    if (!exists){
+      if(NodesJSON[i].id[0] == "a"){
+        nodes.push(
+          {
+            id: NodesJSON[i].id,
+            type: 'alien',
+            position: NodesJSON[i].position
+          }
+        );
+      }
+      else {
+        //if(NodesJSON[i].id[0] == "p")
+        if(currentNode.currPos.id == NodesJSON[i].id) { 
+          //should check the postion too to make sure that it has the same coords or to add a new node
+          nodes.push(
+            {
+              id: NodesJSON[i].id,
+              type: 'currentPos',
+              position: NodesJSON[i].position
+            }
+          );
+        } else {
+          nodes.push(
+            {
+              id: NodesJSON[i].id,
+              type: 'position',
+              position: NodesJSON[i].position
+            }
+          );
+        }
+      }
+      
+    }
   }
   console.log(nodes);
   return nodes;
