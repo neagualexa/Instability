@@ -67,7 +67,7 @@ function Flow() {
   return (
     <div>
       <ReactFlow
-        style={{height:500}} //should be variable
+        style={{height:600}} //should be variable
         nodes={nodes}
         edges={edges} 
         nodeTypes={nodeTypes}
