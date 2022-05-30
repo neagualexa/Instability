@@ -1,9 +1,9 @@
-import ReactFlow, { MiniMap, Controls, Background } from 'react-flow-renderer';
+import ReactFlow, { MiniMap, Controls, Background, ControlButton } from 'react-flow-renderer';
 import { useCallback, useState, useRef } from 'react';
-import { applyEdgeChanges, applyNodeChanges, addEdge } from 'react-flow-renderer';
+import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-flow-renderer';
 
-import initialNodes, {generateNodes} from './data/nodes.js';
-import initialEdges, { generateEdges } from './data/edges.js';
+import initialNodes, { generateNodes, emptyNodes } from './nodes.js';
+import initialEdges, { generateEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
 import positionNode from './positionNode.js';
@@ -20,6 +20,7 @@ const nodeTypes = {
 };
 
 function Flow() {
+  //nodes and edges are read only
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const yPos = useRef(0);
@@ -44,6 +45,8 @@ function Flow() {
     () => addEdge(generateEdges()), [setEdges]
   );
 
+  const onEdgeUpdate = (oldEdge, newConnection) => setEdges((els) => updateEdge(oldEdge, newConnection, els));
+
   //TODO: manually add local node to the map, not write back to file (could do for the future!!)
   const addNode = useCallback(() => {
     yPos.current += 50;
@@ -64,18 +67,23 @@ function Flow() {
   return (
     <div>
       <ReactFlow
-        style={{height:600}} //should be variable
+        style={{height:500}} //should be variable
         nodes={nodes}
         edges={edges} 
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
         fitView
         
       >
         <MiniMap />
-        <Controls />
+        <Controls>
+          {/* <ControlButton onClick={addNode}> Add Node </ControlButton> */}
+          {/* <ControlButton onClick={genNodes}> Update NodesJSON </ControlButton> */}
+          {/* <ControlButton onClick={genEdges}> Update EdgesJSON </ControlButton> */}
+        </Controls>
         <Background />
         
       </ReactFlow>

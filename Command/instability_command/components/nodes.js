@@ -1,5 +1,5 @@
-import NodesJSON from './nodes.json';
-import currentNode from './currentNode.json';
+import NodesJSON from './data/nodes.json';
+import currentNode from './data/currentNode.json';
 
 // console.log(NodesJSON);
 
@@ -7,16 +7,14 @@ let initialNodes = [
   {
     id: 'p00',
     type: 'position',
-    data: { label: 'Origin'},
     position: { x: 190, y: 240 },
   },
 
-  {
-    id: 'p01',
-    type: 'position',
-    data: { label: '(100,50)'},
-    position: { x: 100, y: 50 },
-  },
+  // {
+  //   id: 'p01',
+  //   type: 'position',
+  //   position: { x: 100, y: 50 },
+  // },
   // {
   //   id: '3',
   //   type: 'position',

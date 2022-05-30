@@ -20,7 +20,7 @@
     font-size: 8px;
     background: rgb(180, 67, 61);
     /* border-radius: 50%; */
-    width: 3rem;
+    width: 3rem; /* 3 x font-size */
     height: 3rem;
     text-align: center;
     padding-top: 0.5rem;
