@@ -9,38 +9,6 @@ let initialNodes = [
     type: 'position',
     position: { x: 190, y: 240 },
   },
-
-  // {
-  //   id: 'p01',
-  //   type: 'position',
-  //   position: { x: 100, y: 50 },
-  // },
-  // {
-  //   id: '3',
-  //   type: 'position',
-  //   data: { label: '(250,120)'},
-  //   position: { x: 250, y: 120 },
-  // },
-
-  // {
-  //   id: '4',
-  //   type: 'position',
-  //   data: { label: '(250,-20)'},
-  //   position: { x: 250, y: -20 },
-  // },
-  // {
-  //   id: '5',
-  //   type: 'position',
-  //   data: { label: '(400,50)'},
-  //   position: { x: 400, y: 50 },
-  // },
-
-  // {
-  //   id: 'alien1',
-  //   type: 'alien',
-  //   data: { label: 'Alien(400,50)', safetyRadius: 100},
-  //   position: { x: 400, y: 200 },
-  // },
 ];
 
 console.log(initialNodes);
