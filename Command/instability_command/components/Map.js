@@ -2,6 +2,8 @@ import ReactFlow, { MiniMap, Controls, Background, ControlButton } from 'react-f
 import { useCallback, useState, useRef } from 'react';
 import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-flow-renderer';
 
+import useWindowDimensions from '../screens/getScreenDimensions'
+
 import initialNodes, { generateNodes, emptyNodes } from './nodes.js';
 import initialEdges, { generateEdges } from './edges.js';
 
@@ -11,6 +13,7 @@ import currentPosNode from './currentPosNode.js';
 
 import './map.css';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { BiAddToQueue, BiAnalyse, BiVector } from "react-icons/bi"; {/* https://react-icons.github.io/react-icons/icons?name=bi */}
 
 
 const nodeTypes = {
@@ -24,6 +27,8 @@ function Flow() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const yPos = useRef(0);
+
+  const { height, width } = useWindowDimensions();
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -67,7 +72,7 @@ function Flow() {
   return (
     <div>
       <ReactFlow
-        style={{height:600}} //should be variable
+        style={{height:height-100}} //should be variable
         nodes={nodes}
         edges={edges} 
         nodeTypes={nodeTypes}
@@ -75,37 +80,37 @@ function Flow() {
         onEdgesChange={onEdgesChange}
         onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
-        fitView
+        fitView={{padding:0.2}}
         
       >
-        <MiniMap />
-        <Controls>
-          {/* <ControlButton onClick={addNode}> Add Node </ControlButton> */}
-          {/* <ControlButton onClick={genNodes}> Update NodesJSON </ControlButton> */}
-          {/* <ControlButton onClick={genEdges}> Update EdgesJSON </ControlButton> */}
+        <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
+        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{background:'white', width: 30, alignItems:'center'}}>
+          {/* TODO: size of the given buttons does not change, will look into it */}
+          <ControlButton onClick={addNode} style={{ width: 20}}> <BiAddToQueue /> </ControlButton>
+          <ControlButton onClick={genNodes} style={{width: 20}}> <BiAnalyse /> </ControlButton>
+          <ControlButton onClick={genEdges} style={{width: 20}}> <BiVector/> </ControlButton>
         </Controls>
         <Background />
         
       </ReactFlow>
-      <button onClick={addNode}>Add Extra Node</button>
-      <button onClick={genNodes}>Update NodesJSON</button>
-      <button onClick={genEdges}>Update EdgesJSON</button>
+      {/* <button onClick={addNode}>Add Extra Node</button> */}
+      {/* <button onClick={genNodes}>Update NodesJSON</button> */}
+      {/* <button onClick={genEdges}>Update EdgesJSON</button> */}
     </div>
   );
-  
 }
 
-const styles = StyleSheet.create({
-  roundButton1: {
-    width: 90,
-    height: 90,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 80,
-    backgroundColor: 'orange',
-    // alignSelf: "flex-start",
-  },
-});
+const nodeColour = (node) => {
+  switch (node.type) {
+    case 'position':
+      return '#7cad3e';
+    case 'currentPos':
+      return '#173042';
+    case 'alien':
+      return '#8d5b2f';
+    default:
+      return '#eee';
+  }
+};
 
 export default Flow;

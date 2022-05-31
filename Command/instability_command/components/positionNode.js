@@ -55,12 +55,12 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
             <div> - </div>
           </div>
         :
-          <div className= "positionNode" style={{background:"yellow"}}>
-            <div> -move to- </div>
-            <div>
+          <div className= "positionNode" style={{background:"#4a6c2f"}}>
+            <div style={{color:'#cfdfda'}}> -move to- </div>
+            <div style={{color:'#cfdfda'}}>
               <strong>({xPos+''};{yPos+''})</strong>
             </div>
-            <div> -?- </div>
+            <div style={{color:'#cfdfda'}}> -?- </div>
           </div>
       }
 

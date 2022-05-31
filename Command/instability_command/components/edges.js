@@ -81,8 +81,8 @@ function getTargetHandle(i) {
     }
   }
   var tag = "";
-  console.log("target x: ", t.position.x, "; target y: ", t.position.y)
-  console.log("source x: ", s.position.x, "; source y: ", s.position.y)
+  // console.log("target x: ", t.position.x, "; target y: ", t.position.y)
+  // console.log("source x: ", s.position.x, "; source y: ", s.position.y)
   if (t.position.x > s.position.x + 30) {
     if (t.position.y > s.position.y + 30) {
       //Quadrant 4

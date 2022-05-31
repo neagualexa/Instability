@@ -1,11 +1,11 @@
 .react-flow {
-    background: #f4f4f4;
+    background: #e3dfdb;
 }
 
 .react-flow__node-alien {
     font-family: 'space-mono';
     font-size: 8px;
-    background: rgb(120, 164, 108);
+    background: #8d5b2f;
     border-radius: 50%;
     width: 5rem;
     height: 5rem;
@@ -17,7 +17,7 @@
 .react-flow__node-position {
     font-family: 'space-mono';
     font-size: 8px;
-    background: rgb(180, 67, 61);
+    background: #7cad3e;
     /* border-radius: 50%; */
     width: 3rem; /* 3 x font-size */
     height: 3rem;
@@ -28,7 +28,7 @@
 .react-flow__node-currentPos {
     font-family: 'space-mono';
     font-size: 8px;
-    background: rgb(212, 195, 70);
+    background: #236477;
     width: 3rem;
     height: 3rem;
     text-align: center;

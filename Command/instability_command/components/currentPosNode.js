@@ -55,10 +55,10 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
             <div> - </div>
           </div>
         :
-          <div className= "currentPosNode">
-            <div> -rover- </div>
-            <div> -is here- </div>
-            <div>
+          <div className= "currentPosNode" style={{background:"#173042"}}>
+            <div style={{color:'#cfdfda'}}> -rover- </div>
+            <div style={{color:'#cfdfda'}}> -is here- </div>
+            <div style={{color:'#cfdfda'}}>
               <strong>({xPos+''};{yPos+''})</strong>
             </div>
           </div>

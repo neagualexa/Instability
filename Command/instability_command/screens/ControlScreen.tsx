@@ -35,7 +35,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
           // onPressOut={() => setStartLongPress(false)}
           style={styles.roundButton1}
         >
-          <Text>FORWARD</Text>
+          <Text style={styles.text}>FORWARD</Text>
         </TouchableOpacity>
 
 
@@ -44,7 +44,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
             onPress={() => pressDirection("left")}
             style={styles.roundButton1}
           >
-            <Text>LEFT</Text>
+            <Text style={styles.text}>LEFT</Text>
           </TouchableOpacity>
           
           <Text>        +        </Text>
@@ -53,7 +53,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
             onPress={() => pressDirection("right")}
             style={styles.roundButton1}
           >
-            <Text>RIGHT</Text>
+            <Text style={styles.text}>RIGHT</Text>
           </TouchableOpacity>
         </View>
 
@@ -61,7 +61,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
           onPress={() => pressDirection("backwards")}
           style={styles.roundButton1}
         >
-          <Text>BACK</Text>
+          <Text style={styles.text}>BACK</Text>
         </TouchableOpacity>
 
       </View>
@@ -106,7 +106,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 80,
-    backgroundColor: 'orange',
+    backgroundColor: 'white',
     // alignSelf: "flex-start",
   },
+  text:{
+    textShadowOffset:{ width: 1.2, height: 1.5 },
+    textShadowColor:'#8f8f8f',
+    // textshadowOpacity: 0.8,
+    textShadowRadius: 2.5,
+    fontWeight: 'bold',
+    fontSize: 14,
+    color:'black'
+  }
 });
