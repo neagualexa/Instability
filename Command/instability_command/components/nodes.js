@@ -8,6 +8,7 @@ let initialNodes = [
     id: 'p00',
     type: 'position',
     position: { x: 190, y: 240 },
+    hidden: false,
   },
 ];
 
@@ -34,7 +35,18 @@ export function generateNodes(){
           {
             id: NodesJSON[i].id,
             type: 'alien',
-            position: NodesJSON[i].position
+            position: NodesJSON[i].position,
+            hidden: false
+          }
+        );
+      }
+      else if(NodesJSON[i].id[0] == "l"){
+        nodes.push(
+          {
+            id: NodesJSON[i].id,
+            type: 'path',
+            position: NodesJSON[i].position,
+            hidden: false
           }
         );
       }
@@ -46,7 +58,8 @@ export function generateNodes(){
             {
               id: NodesJSON[i].id,
               type: 'currentPos',
-              position: NodesJSON[i].position
+              position: NodesJSON[i].position,
+              hidden: false
             }
           );
         } else {
@@ -54,7 +67,8 @@ export function generateNodes(){
             {
               id: NodesJSON[i].id,
               type: 'position',
-              position: NodesJSON[i].position
+              position: NodesJSON[i].position,
+              hidden: false
             }
           );
         }
@@ -65,6 +79,22 @@ export function generateNodes(){
   console.log(nodes);
   return nodes;
 }
+
+export function hidePath(nodes){
+  for (let i in nodes) {
+    if(nodes[i]['id'][0] == "l"){
+      if (nodes[i]['hidden'] == true){
+        nodes[i]['hidden'] = false;
+      } else {
+        nodes[i]['hidden'] = true;
+      }
+    }
+  }
+  console.log(nodes)
+  console.log("Hidden/Not hidden real paths!");
+  return nodes;
+}
+
 // generateNodes();
 
 // export function createNewNode(){

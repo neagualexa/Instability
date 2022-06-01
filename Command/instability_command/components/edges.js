@@ -29,7 +29,8 @@ export function generateEdges(){
           source: EdgesJSON[i].source,
           target: EdgesJSON[i].target,
           sourceHandle: getSourceHandle(i),
-          targetHandle: getTargetHandle(i)
+          targetHandle: getTargetHandle(i),
+          hidden: false,
         }
       );
     }
@@ -112,6 +113,18 @@ function getTargetHandle(i) {
       //overlay the nodes, too close(should not happen)    
   }
   return tag;
+}
+
+export function hideEdges(edg){
+  for (let i in edg) {
+    if (edg[i]['hidden'] == true){
+      edg[i]['hidden'] = false;
+    } else {
+      edg[i]['hidden'] = true;
+    }
+  }
+  console.log("Hidden/Not hidden edges!");
+  return edg;
 }
 
 export default initialEdges;

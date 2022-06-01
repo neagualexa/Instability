@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
-var sizePos = 8;
+var sizePos = 7;
 
 export default memo(({selected, isConnectable, xPos, yPos}) => {
   return (

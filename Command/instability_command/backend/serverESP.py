@@ -1,6 +1,7 @@
 import socket
 import json
 import genJSON
+import genPathJSON
 
 print("We're in tcp server..."); 
 #select a server port 
@@ -13,6 +14,9 @@ welcome_socket.listen(1)
 #ready message 
 print('Server running on port ', server_port) 
 #Now the main server loop 
+
+path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/'
+
 while True: 
     connection_socket, caddr = welcome_socket.accept() 
     #notice recv and send instead of recvto and sendto 
@@ -26,6 +30,22 @@ while True:
             if cmsg[0] == 'd':
                 debugmsg = cmsg[1:len(cmsg)]
                 print('DEBUG: ', debugmsg) 
+            elif cmsg[0] == 'l':
+                live_msg = cmsg[1:len(cmsg)]
+                print('Live coords: ', live_msg)
+
+                path_dict = json.loads(strJSON)
+
+                for obj in path_dict:
+                    print(obj)
+                    print('id: ', path_dict[obj]['id'])
+                    print(path_dict[obj]['position'])
+                    # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
+                    with open(path+'components/data/pathNode.json', 'w') as json_file:
+                        json.dump(path_dict[obj], json_file, indent = 4, sort_keys=True)
+                
+                genPathJSON.genPath()
+
             else:
                 print("unknown message type: ", cmsg)
         else:
@@ -39,7 +59,7 @@ while True:
                 print('id: ', obj_dict[obj]['id'])
                 print(obj_dict[obj]['position'])
                 # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
-                with open('d:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/data/'+obj+'.json', 'w') as json_file:
+                with open(path+'components/data/'+obj+'.json', 'w') as json_file:
                     json.dump(obj_dict[obj], json_file, indent = 4, sort_keys=True)
                     
             genJSON.genJSON()

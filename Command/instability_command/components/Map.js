@@ -4,12 +4,13 @@ import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-f
 
 import useWindowDimensions from '../screens/getScreenDimensions'
 
-import initialNodes, { generateNodes, emptyNodes } from './nodes.js';
-import initialEdges, { generateEdges } from './edges.js';
+import initialNodes, { generateNodes, hidePath } from './nodes.js';
+import initialEdges, { generateEdges, hideEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
 import positionNode from './positionNode.js';
 import currentPosNode from './currentPosNode.js';
+import pathNode from './pathNode';
 
 import './map.css';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
@@ -20,6 +21,7 @@ const nodeTypes = {
   position: positionNode,
   alien:    alienNode,
   currentPos:    currentPosNode,
+  path:     pathNode,
 };
 
 function Flow() {
@@ -47,7 +49,14 @@ function Flow() {
     () => setNodes(generateNodes()), [setNodes]
   );
   const genEdges = useCallback(
-    () => addEdge(generateEdges()), [setEdges]
+    () => setEdges(generateEdges()), [setEdges]
+  );
+  
+  const hidePathNodes = useCallback(
+    () => setNodes(hidePath(nodes)), [setNodes]
+  );
+  const hideEdg = useCallback(
+    () => setEdges(hideEdges(edges)), [setEdges]
   );
 
   const onEdgeUpdate = (oldEdge, newConnection) => setEdges((els) => updateEdge(oldEdge, newConnection, els));
@@ -88,7 +97,9 @@ function Flow() {
           {/* TODO: size of the given buttons does not change, will look into it */}
           <ControlButton onClick={addNode} style={{ width: 20}}> <BiAddToQueue /> </ControlButton>
           <ControlButton onClick={genNodes} style={{width: 20}}> <BiAnalyse /> </ControlButton>
+          <ControlButton onClick={hidePathNodes} style={{width: 20, fontSize:12}}> Hide Path </ControlButton>
           <ControlButton onClick={genEdges} style={{width: 20}}> <BiVector/> </ControlButton>
+          <ControlButton onClick={hideEdg} style={{width: 20, fontSize:12}}> Hide Edge </ControlButton>
         </Controls>
         <Background />
         

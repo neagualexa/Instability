@@ -14,6 +14,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
     console.log('Go ', direction, '!');
   }
 
+// TODO: could add another map that shows the real path and a diagram showing the orientation of the robot and which motor is doing what
 
   return (
     <View style={styles.main}>

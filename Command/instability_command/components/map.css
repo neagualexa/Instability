@@ -16,22 +16,33 @@
 
 .react-flow__node-position {
     font-family: 'space-mono';
-    font-size: 8px;
+    font-size: 6px;
     background: #7cad3e;
     /* border-radius: 50%; */
-    width: 3rem; /* 3 x font-size */
-    height: 3rem;
+    width: 40px; /* 3rem x font-size */
+    height: 40px;
     text-align: center;
-    padding-top: 0.5rem;
+    padding-top: 5px;
 }
 
 .react-flow__node-currentPos {
     font-family: 'space-mono';
-    font-size: 8px;
+    font-size: 6px;
     background: #236477;
-    width: 3rem;
-    height: 3rem;
+    width: 40px;
+    height: 40px;
     text-align: center;
-    padding-top: 0.5rem;
+    padding-top: 5px;
+}
+
+.react-flow__node-path {
+    font-family: 'space-mono';
+    font-size: 2px;
+    color: #e3dfdb;
+    background: #344919;
+    /* border-radius: 50%; */
+    width: 5px; /* 3 x font-size */
+    height: 5px;
+    text-align: center;
 }
 

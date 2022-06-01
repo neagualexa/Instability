@@ -9,7 +9,6 @@ def genJSON():
   new_node = json.load(open('./components/data/nextPos.json', 'r'))
   edges_dict = json.load(open('./components/data/edges.json', 'r'))
 
-
   # add new_node into the nodeJSON to be read by the webpage
   newNodeID = 'node' + str(len(nodes_dict)+1)
   found = False
@@ -21,6 +20,7 @@ def genJSON():
     print('current:: ', current_node)
     print('new::     ',new_node)
     print(nodes_dict)
+
     with open('./components/data/nodes.json', 'w') as json_file:
       json.dump(nodes_dict, json_file, indent = 4, sort_keys=True)
 
@@ -36,3 +36,4 @@ def genJSON():
   else:
     print("Achtung: ", new_node, " already exists!")
 
+# genJSON()
