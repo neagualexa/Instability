@@ -1,5 +1,5 @@
 import ReactFlow, { MiniMap, Controls, Background, ControlButton } from 'react-flow-renderer';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-flow-renderer';
 
 import useWindowDimensions from '../screens/getScreenDimensions'
@@ -10,12 +10,13 @@ import initialEdges, { generateEdges, hideEdges } from './edges.js';
 import alienNode from './alienNode.js';
 import positionNode from './positionNode.js';
 import currentPosNode from './currentPosNode.js';
-import pathNode from './pathNode';
+import pathNode from './pathNode.js';
 
 import './map.css';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { BiAddToQueue, BiAnalyse, BiVector } from "react-icons/bi"; {/* https://react-icons.github.io/react-icons/icons?name=bi */}
 
+// import new_path_node from '../../data/pathNode.json'
 
 const nodeTypes = {
   position: positionNode,
@@ -80,7 +81,116 @@ function Flow() {
     });
   }, []);
 
-  // window.stop();
+  // const getPath = async () => {
+  //   try {
+  //     const response = await fetch('http://192.168.137.2:3000');
+  //     console.log(response)
+  //     // const new_path_node = await response.json();
+  //     // console.log(new_path_node)
+  //     // setNodes((nodes) => {
+  //     //   var found = false;
+  //     //   for (let n in nodes){
+  //     //     if (new_path_node.position == nodes[n]['position']) {
+  //     //       found = true;
+  //     //       break;
+  //     //     }
+  //     //   }
+        
+  //     //   if (found == false) {
+  //     //     console.log(nodes);
+  //     //     return [
+  //     //       ...nodes,
+  //     //       {
+  //     //         id: "l_"+Math.random(),
+  //     //         position: new_path_node.position,
+  //     //         type: 'path',
+  //     //         hidden: false
+  //     //       }
+  //     //     ];
+  //     //   } else {
+  //     //     console.log("Node at ", new_path_node.position, " already exists!");
+  //     //     return nodes;
+  //     //   }
+  //     // });
+  //   } catch (error) {
+  //     console.error(error);
+  //   } 
+  // };
+
+  // useEffect(() => {
+  //   getPath();
+  // }, []);
+
+  // const getMovies = () => {
+  //   var myRequest = new Request('http://localhost:3000', {method:"GET", mode: "no-cors"});
+  //   fetch(myRequest)
+  //   .then(function(response) {
+  //     if (!response.ok) {
+  //       throw new Error("HTTP error, status = " + response.status);
+  //     }
+  //     return response.text();
+  //   })
+  //   .then(function(text) {
+  //     console.log('START print:');
+  //     console.log(text);
+  //     return(text);
+  //   })
+  //   .catch(function(error) {
+  //       console.log('Error: ' + error.message)
+  // })}
+
+//   const [isLoading, setLoading] = useState(true);
+//   const [data, setData] = useState([]);
+  
+  const getMovies = async () => {
+    try {
+      // var myRequest = new Request('https://reactnative.dev/movies.json');
+      var myRequest = new Request('http://localhost:3000/books.json', {mode:'no-cors'}); // the mode breakes it!
+      const response = await fetch(myRequest);
+      console.log(response)
+      const json = await response.json();
+      console.log(json)
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log("FIN")
+    }
+  }
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  // const livePathNode = setInterval(function(){ 
+  //   setNodes((nodes) => {
+  //     var found = false;
+  //     for (let n in nodes){
+  //       if (new_path_node['position'] == nodes[n]['position']) {
+  //         found = true;
+  //         break;
+  //       }
+  //     }
+      
+  //     if (found == false) {
+  //       console.log(nodes);
+  //       return [
+  //         ...nodes,
+  //         {
+  //           id: "l_"+Math.random(),
+  //           position: new_path_node['position'],
+  //           type: 'path',
+  //           hidden: false
+  //         }
+  //       ];
+  //     } else {
+  //       console.log("Node at ", new_path_node['position'], " already exists!");
+  //       return nodes;
+  //     }
+      
+  //   });
+  //  }, 500);
+
+
   function refreshPage() {
     window.location.reload(false);
   }
@@ -108,14 +218,11 @@ function Flow() {
           <ControlButton onClick={hidePathNodes} style={{width: 20, fontSize:12}}> Hide Path </ControlButton>
           <ControlButton onClick={genEdges} style={{width: 20}}> <BiVector/> </ControlButton>
           <ControlButton onClick={hideEdg} style={{width: 20, fontSize:12}}> Hide Edge </ControlButton>
-          <button onClick={refreshPage}>Click to reload!</button>
+          <button onClick={refreshPage}>Reload</button>
         </Controls>
         <Background />
         
       </ReactFlow>
-      {/* <button onClick={addNode}>Add Extra Node</button> */}
-      {/* <button onClick={genNodes}>Update NodesJSON</button> */}
-      {/* <button onClick={genEdges}>Update EdgesJSON</button> */}
       
     </div>
   );

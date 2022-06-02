@@ -15,7 +15,8 @@ welcome_socket.listen(1)
 print('Server running on port ', server_port) 
 #Now the main server loop 
 
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/'
+# path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
+path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
 while True: 
     connection_socket, caddr = welcome_socket.accept() 
@@ -34,15 +35,13 @@ while True:
                 live_msg = cmsg[1:len(cmsg)]
                 print('Live coords: ', live_msg)
 
-                path_dict = json.loads(strJSON)
+                path_dict = json.loads(live_msg)
 
-                for obj in path_dict:
-                    print(obj)
-                    print('id: ', path_dict[obj]['id'])
-                    print(path_dict[obj]['position'])
-                    # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
-                    with open(path+'components/data/pathNode.json', 'w') as json_file:
-                        json.dump(path_dict[obj], json_file, indent = 4, sort_keys=True)
+                print(path_dict)
+                print(path_dict['position'])
+                # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
+                with open(path+'data/pathNode.json', 'w') as json_file:
+                    json.dump(path_dict, json_file, indent = 4, sort_keys=True)
                 
                 genPathJSON.genPath()
 
@@ -59,7 +58,7 @@ while True:
                 print('id: ', obj_dict[obj]['id'])
                 print(obj_dict[obj]['position'])
                 # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
-                with open(path+'components/data/'+obj+'.json', 'w') as json_file:
+                with open(path+'data/'+obj+'.json', 'w') as json_file:
                     json.dump(obj_dict[obj], json_file, indent = 4, sort_keys=True)
                     
             genJSON.genJSON()

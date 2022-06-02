@@ -7,7 +7,11 @@ import { Wifi } from '../components/wifi'
 import '../components/wifi.styles.css'
 import BatteryGauge from 'react-battery-gauge'
 
+
 export default function StatusScreen() {
+
+  var batteryValue = 30;
+
   return (
     <View style={styles.container}>
 
@@ -23,7 +27,7 @@ export default function StatusScreen() {
         <Text>{'\t\t\t'}</Text>
         <View style={{alignItems:'center'}}>
           <Text style={styles.title}>Battery level</Text>
-          <BatteryGauge value={40} padding={12} customization={batteryCustom} /> {/* https://npm.io/package/react-battery-gauge */}
+          <BatteryGauge value={batteryValue} padding={12} customization={batteryCustom} /> {/* https://npm.io/package/react-battery-gauge */}
         </View>
       </View>
 

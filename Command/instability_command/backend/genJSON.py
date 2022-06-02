@@ -1,13 +1,16 @@
 import json
 
+# path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
+path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+
 def genJSON():
   # the path is with relation to where the code is run from
-  with open('./components/data/nodes.json', 'r') as nodes:
+  with open(path+'data/nodes.json', 'r') as nodes:
     nodes_dict = json.load(nodes)
 
-  current_node = json.load(open('./components/data/currPos.json', 'r'))
-  new_node = json.load(open('./components/data/nextPos.json', 'r'))
-  edges_dict = json.load(open('./components/data/edges.json', 'r'))
+  current_node = json.load(open(path+'data/currPos.json', 'r'))
+  new_node = json.load(open(path+'data/nextPos.json', 'r'))
+  edges_dict = json.load(open(path+'data/edges.json', 'r'))
 
   # add new_node into the nodeJSON to be read by the webpage
   # GENERATING THE ID SHOULD BE MADE EVEN MORE COMPLEX TO NOT RUN OUT OF VALUES
@@ -22,7 +25,7 @@ def genJSON():
     print('new::     ',new_node)
     print(nodes_dict)
 
-    with open('./components/data/nodes.json', 'w') as json_file:
+    with open(path+'data/nodes.json', 'w') as json_file:
       json.dump(nodes_dict, json_file, indent = 4, sort_keys=True)
 
     # generate edge/path just completed
@@ -32,7 +35,7 @@ def genJSON():
     id = 'e'+source+'-'+target
     edges_dict[newEdgeID] = { 'id': id, 'source': source, 'target': target }
     print(edges_dict)
-    with open('./components/data/edges.json', 'w') as json_file:
+    with open(path+'data/edges.json', 'w') as json_file:
       json.dump(edges_dict, json_file, indent = 4, sort_keys=True)
   else:
     print("Achtung: ", new_node, " already exists!")

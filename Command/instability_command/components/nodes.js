@@ -1,5 +1,5 @@
-import NodesJSON from './data/nodes.json';
-import currentNode from './data/currentNode.json';
+import NodesJSON from '../../data/nodes.json';
+import currentNode from '../../data/currentNode.json';
 
 // console.log(NodesJSON);
 
@@ -12,7 +12,7 @@ let initialNodes = [
   },
 ];
 
-console.log(initialNodes);
+// console.log(initialNodes);
 let nodes = initialNodes;
 
 export function generateNodes(){
@@ -90,7 +90,7 @@ export function hidePath(nodes){
       }
     }
   }
-  console.log(nodes)
+  // console.log(nodes)
   console.log("Hidden/Not hidden real paths!");
   return nodes;
 }

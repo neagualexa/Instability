@@ -4,7 +4,7 @@ import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-f
 
 import useWindowDimensions from '../screens/getScreenDimensions'
 
-import initialNodes, { generateNodes, hidePath } from './PathNodes.js';
+import initialNodes, { generateNodes, hidePath } from './pathNodes.js';
 import initialEdges, { generateEdges, hideEdges } from './edges.js';
 
 import alienNode from './alienNode.js';

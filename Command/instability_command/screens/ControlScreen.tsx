@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
+import { GiMarsCuriosity, GiCartwheel } from 'react-icons/gi'
 
 // import { useLongPress } from '../components/useLongPress'
 
@@ -22,8 +23,19 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <Text style={styles.title}>Controller page</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        {/* <EditScreenInfo path="/screens/ControlScreen.tsx" /> */}
-        {/* <TouchableOpacity onPress={longPressEvent}>Repeat test</TouchableOpacity> */}
+
+        <View style={styles.row}>
+          <GiMarsCuriosity color="white" size={300} /> 
+          <View>
+            <GiCartwheel color="white" size={50}> <Text> LEFT WHEEL </Text> </GiCartwheel>
+
+            <div style={{alignItems:'center'}}>
+              <GiCartwheel color="white" size={50} /> 
+              <Text style={{color:"white", fontSize:14}}> RIGHT WHEEL </Text>
+            </div>
+            
+          </View>
+        </View>
       </View>
       
       <View style={styles.container}>
