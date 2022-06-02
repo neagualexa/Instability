@@ -3,18 +3,20 @@ import json
 def genPath():
     with open('./components/data/nodes.json', 'r') as nodes:
         nodes_dict = json.load(nodes)
-    with open('./components/data/pathNode.json', 'r') as p:
-        path_dict = json.load(p)
+    # with open('./components/data/pathNode.json', 'r') as p: //only give one node
+    path_new_node = json.load(open('./components/data/pathNode.json', 'r'))
 
-    for p in path_dict:
-        found = False
-        for n in nodes_dict:
-            if path_dict[p]['id'] == nodes_dict[n]['id']:
-                found = True
-                break
-        if found == False:
-            nodes_dict[p] = path_dict[p]
-            print('path n:: ', path_dict[p])
+    # for p in path_dict:
+    # GENERATING THE ID SHOULD BE MADE EVEN MORE COMPLEX TO NOT RUN OUT OF VALUES
+    newNodeID = 'l_' + str(len(nodes_dict)+1)
+    found = False
+    for n in nodes_dict:
+        if path_new_node['position'] == nodes_dict[n]['position']:
+            found = True
+            break
+    if found == False:
+        nodes_dict[newNodeID] = path_new_node
+        print('path n:: ', path_new_node)
     
     print(nodes_dict)
 

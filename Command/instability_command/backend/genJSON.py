@@ -10,6 +10,7 @@ def genJSON():
   edges_dict = json.load(open('./components/data/edges.json', 'r'))
 
   # add new_node into the nodeJSON to be read by the webpage
+  # GENERATING THE ID SHOULD BE MADE EVEN MORE COMPLEX TO NOT RUN OUT OF VALUES
   newNodeID = 'node' + str(len(nodes_dict)+1)
   found = False
   for n in nodes_dict:

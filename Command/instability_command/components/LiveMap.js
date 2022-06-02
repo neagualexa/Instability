@@ -4,7 +4,7 @@ import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-f
 
 import useWindowDimensions from '../screens/getScreenDimensions'
 
-import initialNodes, { generateNodes, hidePath } from './nodes.js';
+import initialNodes, { generateNodes, hidePath } from './PathNodes.js';
 import initialEdges, { generateEdges, hideEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
@@ -24,14 +24,11 @@ const nodeTypes = {
   path:     pathNode,
 };
 
-function Flow() {
+function LiveMap() {
   //nodes and edges are read only
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const yPos = useRef(0);
-
-  //update the map with the json data directly
-  generateNodes();
 
   const { height, width } = useWindowDimensions();
 
@@ -80,11 +77,6 @@ function Flow() {
     });
   }, []);
 
-  // window.stop();
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
 
   return (
     <div>
@@ -93,8 +85,8 @@ function Flow() {
         nodes={nodes}
         edges={edges} 
         nodeTypes={nodeTypes}
-        onNodesChange={onNodesChange} //change node positions on map live
-        onEdgesChange={onEdgesChange} //change edge positions on map live
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
         fitView={{padding:0.2}}
@@ -108,7 +100,6 @@ function Flow() {
           <ControlButton onClick={hidePathNodes} style={{width: 20, fontSize:12}}> Hide Path </ControlButton>
           <ControlButton onClick={genEdges} style={{width: 20}}> <BiVector/> </ControlButton>
           <ControlButton onClick={hideEdg} style={{width: 20, fontSize:12}}> Hide Edge </ControlButton>
-          <button onClick={refreshPage}>Click to reload!</button>
         </Controls>
         <Background />
         
@@ -116,7 +107,6 @@ function Flow() {
       {/* <button onClick={addNode}>Add Extra Node</button> */}
       {/* <button onClick={genNodes}>Update NodesJSON</button> */}
       {/* <button onClick={genEdges}>Update EdgesJSON</button> */}
-      
     </div>
   );
 }
