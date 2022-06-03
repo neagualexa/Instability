@@ -1,8 +1,9 @@
-
 // var http = require('http'); 
 const https = require('https');
 const fs = require('fs');
 const cors = require('http-cors');
+
+const path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/';
 
 const options = {
   key: fs.readFileSync('./key.pem'),
@@ -19,6 +20,10 @@ const authors = JSON.stringify([
     { name: "Kahlil Gibran", countryOfBirth: "Lebanon", yearOfBirth: 1883 }
 ]);
 
+// function refreshPage() {
+//     window.location.reload(1);
+// }
+
 const requestListener = function (req, res) {
     if (cors(req, res)) return
 
@@ -27,21 +32,20 @@ const requestListener = function (req, res) {
         case '/':
             res.writeHead(200);
             res.end(
-                `{
-                    "position": {
-                        "x": 320,
-                        "y": 25
-                    }
-                }`);
+                fs.readFileSync('../data/pathNode.json')
+            );
+            // setTimeout(function(){
+            //     refreshPage();
+            // }, 2000)
             break
-        case "/books":
-            res.writeHead(200);
-            res.end(books);
-            break
-        case "/authors":
-            res.writeHead(200);
-            res.end(authors);
-            break
+        // case "/books":
+        //     res.writeHead(200);
+        //     res.end(books);
+        //     break
+        // case "/authors":
+        //     res.writeHead(200);
+        //     res.end(authors);
+        //     break
         default:
             res.writeHead(404);
             res.end(JSON.stringify({error:"Resource not found - TRY / or /books or /authors"}));
