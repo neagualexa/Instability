@@ -23,7 +23,7 @@ export function generateNodes(){
     exists = false;
     for(let n in nodes){
       // console.log(nodes[n].id, '----', NodesJSON[i].id);
-      if(nodes[n].id == NodesJSON[i].id){
+      if(nodes[n].position == NodesJSON[i].position){
         exists = true;
         // console.log("IF CASE: FOUND NODE");
         break;
@@ -76,23 +76,23 @@ export function generateNodes(){
       
     }
   }
-  console.log(nodes);
+  // console.log(nodes);
   return nodes;
 }
 
-export function hidePath(nodes){
-  for (let i in nodes) {
-    if(nodes[i]['id'][0] == "l"){
-      if (nodes[i]['hidden'] == true){
-        nodes[i]['hidden'] = false;
+export function hidePath(all_nodes){
+  for (let i in all_nodes) {
+    if(all_nodes[i]['id'][0] == "l"){
+      if (all_nodes[i]['hidden'] == true){
+        all_nodes[i]['hidden'] = false;
       } else {
-        nodes[i]['hidden'] = true;
+        all_nodes[i]['hidden'] = true;
       }
     }
   }
-  // console.log(nodes)
+  console.log(all_nodes)
   console.log("Hidden/Not hidden real paths!");
-  return nodes;
+  return all_nodes;
 }
 
 // generateNodes();
@@ -109,7 +109,7 @@ export function hidePath(nodes){
 // }
 
 // function getData() {
-//   var myRequest = new Request('newNode.txt');
+//   var myRequest = new Request('newNode.txt'); //must be external url
 //   fetch(myRequest, {mode: "no-cors"})
 //   .then(function(response) {
 //     if (!response.ok) {

@@ -1,5 +1,5 @@
 import EdgesJSON from '../../data/edges.json';
-import NodesJSON from '../../data/currPos.json';
+import NodesJSON from '../../data/nodes.json';
 
 const initialEdges = [
   // { id: 'e00-01', source: 'p00', target: 'p01' , sourceHandle: 'left_out',   targetHandle: 'right_in'}, //West
@@ -17,7 +17,7 @@ export function generateEdges(){
     for(let n in edges){
       if(edges[n].id == EdgesJSON[i].id){
         exists = true;
-        // console.log("IF CASE: FOUND NODE");
+        // console.log("IF CASE: FOUND edge");
         break;
       }
     }
@@ -38,8 +38,8 @@ export function generateEdges(){
   return edges;
 }
 
-let s = { id: '', source: '', target: '' , sourceHandle: '',   targetHandle: ''};
-let t = { id: '', source: '', target: '' , sourceHandle: '',   targetHandle: ''}
+let s = { };
+let t = { };
 
 function getSourceHandle(i) {
   for (let n in NodesJSON) {

@@ -14,15 +14,13 @@ import pathNode from './pathNode.js';
 
 import './map.css';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { BiAddToQueue, BiAnalyse, BiVector } from "react-icons/bi"; {/* https://react-icons.github.io/react-icons/icons?name=bi */}
-
-// import new_path_node from '../../data/pathNode.json'
+import { BiAddToQueue, BiAnalyse, BiVector } from "react-icons/bi"; {/* https://react-icons.github.io/react-icons/icons?name=bi */ }
 
 const nodeTypes = {
   position: positionNode,
-  alien:    alienNode,
-  currentPos:    currentPosNode,
-  path:     pathNode,
+  alien: alienNode,
+  currentPos: currentPosNode,
+  path: pathNode,
 };
 
 function Flow() {
@@ -55,7 +53,7 @@ function Flow() {
   const genEdges = useCallback(
     () => setEdges(generateEdges()), [setEdges]
   );
-  
+
   const hidePathNodes = useCallback(
     () => setNodes(hidePath(nodes)), [setNodes]
   );
@@ -65,131 +63,88 @@ function Flow() {
 
   const onEdgeUpdate = (oldEdge, newConnection) => setEdges((els) => updateEdge(oldEdge, newConnection, els));
 
+
   //TODO: manually add local node to the map, not write back to file (could do for the future!!)
   const addNode = useCallback(() => {
     yPos.current += 50;
+    var newN = {
+      id: "l_"+Math.random(),
+      position: { x: 100, y: yPos.current },
+      data: { label: "yo" },
+      type:'path',
+      hidden:false
+    };
+    nodes.push(newN);
     setNodes((nodes) => {
       console.log(nodes);
       return [
         ...nodes,
-        {
-          id: Math.random(),
-          position: { x: 100, y: yPos.current },
-          data: { label: "yo" }
-        }
+        newN
       ];
     });
   }, []);
 
-  // const getPath = async () => {
-  //   try {
-  //     const response = await fetch('http://192.168.137.2:3000');
-  //     console.log(response)
-  //     // const new_path_node = await response.json();
-  //     // console.log(new_path_node)
-  //     // setNodes((nodes) => {
-  //     //   var found = false;
-  //     //   for (let n in nodes){
-  //     //     if (new_path_node.position == nodes[n]['position']) {
-  //     //       found = true;
-  //     //       break;
-  //     //     }
-  //     //   }
-        
-  //     //   if (found == false) {
-  //     //     console.log(nodes);
-  //     //     return [
-  //     //       ...nodes,
-  //     //       {
-  //     //         id: "l_"+Math.random(),
-  //     //         position: new_path_node.position,
-  //     //         type: 'path',
-  //     //         hidden: false
-  //     //       }
-  //     //     ];
-  //     //   } else {
-  //     //     console.log("Node at ", new_path_node.position, " already exists!");
-  //     //     return nodes;
-  //     //   }
-  //     // });
-  //   } catch (error) {
-  //     console.error(error);
-  //   } 
-  // };
+  // REPEAT THE GETPATH() TO CONTINUE UPDATING THE WEBPAGE !!!!!!!!!!!!!
+  // setInterval(
+  //   () => getPath()
+  // , 5000);
 
-  // useEffect(() => {
-  //   getPath();
-  // }, []);
+  const getPath = () => {
+    var myRequest = new Request('https://localhost:8000/');
+    fetch(myRequest)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("HTTPS error, status = " + response.status);
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        console.log('START connection read:');
+        // console.log(json);
+        livePathNode(json);
+        return 
+        // return (json);
+      })
+      .catch(function (error) {
+        console.log('Error: ' + error.message)
+      })
+  };
 
-  // const getMovies = () => {
-  //   var myRequest = new Request('http://localhost:3000', {method:"GET", mode: "no-cors"});
-  //   fetch(myRequest)
-  //   .then(function(response) {
-  //     if (!response.ok) {
-  //       throw new Error("HTTP error, status = " + response.status);
-  //     }
-  //     return response.text();
-  //   })
-  //   .then(function(text) {
-  //     console.log('START print:');
-  //     console.log(text);
-  //     return(text);
-  //   })
-  //   .catch(function(error) {
-  //       console.log('Error: ' + error.message)
-  // })}
-
-//   const [isLoading, setLoading] = useState(true);
-//   const [data, setData] = useState([]);
-  
-  const getMovies = async () => {
-    try {
-      // var myRequest = new Request('https://reactnative.dev/movies.json');
-      var myRequest = new Request('http://localhost:3000/books.json', {mode:'no-cors'}); // the mode breakes it!
-      const response = await fetch(myRequest);
-      console.log(response)
-      const json = await response.json();
-      console.log(json)
-    } catch (error) {
-      console.error(error);
-    } finally {
-      console.log("FIN")
+  const livePathNode = useCallback((new_path_node) => {
+    var new_path = {};
+    var found = false;
+    for (let n in nodes) {
+      if ((new_path_node.position.x == nodes[n].position.x) && (new_path_node.position.y == nodes[n].position.y)) {
+        found = true;
+        break;
+      }
     }
-  }
-
-  useEffect(() => {
-    getMovies();
+    if (!found) {
+      console.log("Added node: ", new_path_node)
+      new_path = {
+        id: "l_" + Math.random(),
+        position: new_path_node['position'],
+        type: 'path',
+        hidden: false
+      };
+      setNodes(() => {
+        if (!found) {
+          return [
+            ...nodes,
+            new_path
+          ];
+        } else {
+          console.log("Node at ", new_path_node['position'], " already exists!");
+          return nodes;
+        }
+      });
+      nodes.push(new_path); 
+      console.log(nodes);
+    } else {
+      console.log("Path node ",new_path_node.position," already exists")
+    }
   }, []);
-
-  // const livePathNode = setInterval(function(){ 
-  //   setNodes((nodes) => {
-  //     var found = false;
-  //     for (let n in nodes){
-  //       if (new_path_node['position'] == nodes[n]['position']) {
-  //         found = true;
-  //         break;
-  //       }
-  //     }
-      
-  //     if (found == false) {
-  //       console.log(nodes);
-  //       return [
-  //         ...nodes,
-  //         {
-  //           id: "l_"+Math.random(),
-  //           position: new_path_node['position'],
-  //           type: 'path',
-  //           hidden: false
-  //         }
-  //       ];
-  //     } else {
-  //       console.log("Node at ", new_path_node['position'], " already exists!");
-  //       return nodes;
-  //     }
-      
-  //   });
-  //  }, 500);
-
+  
 
   function refreshPage() {
     window.location.reload(false);
@@ -199,31 +154,32 @@ function Flow() {
   return (
     <div>
       <ReactFlow
-        style={{height:height-100}} //should be variable
+        style={{ height: height - 100 }} //should be variable
         nodes={nodes}
-        edges={edges} 
+        edges={edges}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange} //change node positions on map live
         onEdgesChange={onEdgesChange} //change edge positions on map live
         onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
-        fitView={{padding:0.2}}
-        
+        fitView={{ padding: 0.2 }}
+
       >
         <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
-        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{background:'white', width: 30, alignItems:'center'}}>
+        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 30, alignItems: 'center' }}>
           {/* TODO: size of the given buttons does not change, will look into it */}
-          <ControlButton onClick={addNode} style={{ width: 20}}> <BiAddToQueue /> </ControlButton>
-          <ControlButton onClick={genNodes} style={{width: 20}}> <BiAnalyse /> </ControlButton>
-          <ControlButton onClick={hidePathNodes} style={{width: 20, fontSize:12}}> Hide Path </ControlButton>
-          <ControlButton onClick={genEdges} style={{width: 20}}> <BiVector/> </ControlButton>
-          <ControlButton onClick={hideEdg} style={{width: 20, fontSize:12}}> Hide Edge </ControlButton>
+          <ControlButton onClick={addNode} style={{ width: 20 }}> <BiAddToQueue /> </ControlButton>
+          <ControlButton onClick={genNodes} style={{ width: 20 }}> <BiAnalyse /> </ControlButton>
+          <ControlButton onClick={hidePathNodes} style={{ width: 20, fontSize: 12 }}> Hide Path </ControlButton>
+          <ControlButton onClick={genEdges} style={{ width: 20 }}> <BiVector /> </ControlButton>
+          <ControlButton onClick={hideEdg} style={{ width: 20, fontSize: 12 }}> Hide Edge </ControlButton>
+          <button onClick={getPath}>Path</button> {/* manual request to read the server */}
           <button onClick={refreshPage}>Reload</button>
         </Controls>
         <Background />
-        
+
       </ReactFlow>
-      
+
     </div>
   );
 }
