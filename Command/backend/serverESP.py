@@ -16,7 +16,7 @@ print('Server running on port ', server_port)
 #Now the main server loop 
 
 # path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = '~/Rover/Instability/Command'
 
 while True: 
     connection_socket, caddr = welcome_socket.accept() 

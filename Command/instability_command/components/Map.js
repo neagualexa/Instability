@@ -90,7 +90,7 @@ function Flow() {
   // , 5000);
 
   const getPath = () => {
-    var myRequest = new Request('https://localhost:8000/');
+    var myRequest = new Request('https://52.70.85.50:8000/');
     fetch(myRequest)
       .then(function (response) {
         if (!response.ok) {

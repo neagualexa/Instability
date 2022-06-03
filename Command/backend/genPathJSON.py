@@ -1,7 +1,7 @@
 import json
 
 # path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = '~/Rover/Instability/Command'
 
 def genPath():
     with open(path+'data/nodes.json', 'r') as nodes:
