@@ -6,8 +6,8 @@ const cors = require('http-cors');
 const path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/';
 
 const options = {
-  key: fs.readFileSync('./key.pem'),
-  cert: fs.readFileSync('./cert.pem')
+  key: fs.readFileSync(path+'server/key.pem'),
+  cert: fs.readFileSync(path+'server/cert.pem')
 };
 
 const books = JSON.stringify([
