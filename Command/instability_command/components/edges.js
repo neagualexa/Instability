@@ -51,22 +51,33 @@ function getSourceHandle(i) {
     }
   }
   var tag = "";
-  if (t.position.x > s.position.x) {
-    if (t.position.y >= s.position.y) {
+  if (t.position.x > s.position.x + 30) {
+    if (t.position.y > s.position.y + 30) {
       //Quadrant 4
       tag = "right_out";
-    } else {
+    } else if (t.position.y < s.position.y - 30) {
       //Quadrant 1
       tag = "top_out"
+    } else {
+      tag = "right_out"
     }
-  } else {
-    if (t.position.y >= s.position.y) {
+  } else if (t.position.x < s.position.x - 30) {
+    if (t.position.y > s.position.y + 30) {
       //Quadrant 3
       tag = "bottom_out"
+    } else if (t.position.y < s.position.y - 30) {
+      tag = "left_out"
     } else {
       //Quadrant 2
       tag = "left_out";
     }
+  } else {
+    if (t.position.y >= s.position.y) {
+      tag = "bottom_out"
+    } else {
+      tag = "top_in"
+    } 
+      //overlay the nodes, too close(should not happen)    
   }
   return tag;
 }

@@ -2,17 +2,19 @@ import socket
 import json
 import genJSON
 import genPathJSON
+import genAlienJSON
 
 print("We're in tcp server..."); 
 #select a server port 
-server_port = 12000 
+server_port = 12000
+
 #create a welcoming socket 
 welcome_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 #bind the server to the localhost at port server_port
 welcome_socket.bind(('0.0.0.0',server_port)) 
 welcome_socket.listen(1) 
 #ready message 
-print('Server running on port ', server_port) 
+print('TCP Server running on port ', server_port) 
 #Now the main server loop 
 
 # path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
@@ -37,13 +39,30 @@ while True:
 
                 path_dict = json.loads(live_msg)
 
-                print(path_dict)
-                print(path_dict['position'])
+                # print(path_dict)
+                # print(path_dict['position'])
+                
                 # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
                 with open(path+'data/pathNode.json', 'w') as json_file:
                     json.dump(path_dict, json_file, indent = 4, sort_keys=True)
                 
                 genPathJSON.genPath()
+
+            elif cmsg[0] == 'a':
+                live_msg = cmsg[1:len(cmsg)]
+                print('Alien coords: ', live_msg)
+
+                path_dict = json.loads(live_msg)
+
+                # print(path_dict)
+                # print(path_dict['position'])
+                
+                # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
+                with open(path+'data/alien.json', 'w') as json_file:
+                    json.dump(path_dict, json_file, indent = 4, sort_keys=True)
+                
+                genAlienJSON.genAlienJSON()
+
 
             else:
                 print("unknown message type: ", cmsg)
@@ -55,7 +74,7 @@ while True:
 
             for obj in obj_dict:
                 print(obj)
-                print('id: ', obj_dict[obj]['id'])
+                # print('id: ', obj_dict[obj]['id'])
                 print(obj_dict[obj]['position'])
                 # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
                 with open(path+'data/'+obj+'.json', 'w') as json_file:

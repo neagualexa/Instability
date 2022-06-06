@@ -85,9 +85,9 @@ function Flow() {
   }, []);
 
   // REPEAT THE GETPATH() TO CONTINUE UPDATING THE WEBPAGE !!!!!!!!!!!!!
-  // setInterval(
-  //   () => getPath()
-  // , 5000);
+  setInterval(
+    () => getPath()
+  , 400);
 
   const getPath = () => {
     var myRequest = new Request('https://localhost:8000/');
@@ -99,15 +99,15 @@ function Flow() {
         return response.json();
       })
       .then(function (json) {
-        console.log('START connection read:');
+        // console.log('START connection read:');
         // console.log(json);
         livePathNode(json);
         return 
         // return (json);
       })
-      .catch(function (error) {
-        console.log('Error: ' + error.message)
-      })
+      // .catch(function (error) {
+      //   console.log('Error: ' + error.message)
+      // })
   };
 
   const livePathNode = useCallback((new_path_node) => {
@@ -134,14 +134,14 @@ function Flow() {
             new_path
           ];
         } else {
-          console.log("Node at ", new_path_node['position'], " already exists!");
+          // console.log("Node at ", new_path_node['position'], " already exists!");
           return nodes;
         }
       });
       nodes.push(new_path); 
       console.log(nodes);
     } else {
-      console.log("Path node ",new_path_node.position," already exists")
+      // console.log("Path node ",new_path_node.position," already exists")
     }
   }, []);
   

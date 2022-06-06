@@ -52,7 +52,8 @@ export function generateNodes(){
       }
       else {
         //if(NodesJSON[i].id[0] == "p")
-        if(currentNode.currPos.id == NodesJSON[i].id) { 
+        // TODO: MUST UPDATE THIS WITH THE GIVEN JSON FROM ESP32
+        if(currentNode.id == NodesJSON[i].id) { 
           //should check the postion too to make sure that it has the same coords or to add a new node
           nodes.push(
             {

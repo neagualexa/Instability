@@ -26,25 +26,15 @@
         "source": "p1",
         "target": "p2"
     },
-    "edge14": {
-        "id": "ep1-p2",
-        "source": "p1",
-        "target": "p2"
-    },
     "edge15": {
-        "id": "ep1-p2",
-        "source": "p1",
-        "target": "p2"
+        "id": "ep4-p11",
+        "source": "p4",
+        "target": "p11"
     },
     "edge16": {
-        "id": "ep1-p20",
-        "source": "p1",
-        "target": "p20"
-    },
-    "edge17": {
-        "id": "ep1-p21",
-        "source": "p1",
-        "target": "p21"
+        "id": "ep11-p22",
+        "source": "p11",
+        "target": "p22"
     },
     "edge2": {
         "id": "e1-3",

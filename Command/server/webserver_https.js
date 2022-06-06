@@ -15,11 +15,6 @@ const books = JSON.stringify([
     { title: "The Prophet", author: "Kahlil Gibran", year: 1923 }
 ]);
 
-const authors = JSON.stringify([
-    { name: "Paulo Coelho", countryOfBirth: "Brazil", yearOfBirth: 1947 },
-    { name: "Kahlil Gibran", countryOfBirth: "Lebanon", yearOfBirth: 1883 }
-]);
-
 // function refreshPage() {
 //     window.location.reload(1);
 // }
@@ -32,16 +27,16 @@ const requestListener = function (req, res) {
         case '/':
             res.writeHead(200);
             res.end(
-                fs.readFileSync('../data/pathNode.json')
+                fs.readFileSync(path+'data/pathNode.json')
             );
             // setTimeout(function(){
             //     refreshPage();
             // }, 2000)
             break
-        // case "/books":
-        //     res.writeHead(200);
-        //     res.end(books);
-        //     break
+        case "/motors":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/motors.json'));
+            break
         // case "/authors":
         //     res.writeHead(200);
         //     res.end(authors);
@@ -55,5 +50,7 @@ const requestListener = function (req, res) {
 var server = https.createServer(options, requestListener); 
 // var server = http.createServer(requestListener); 
 
-console.log('Server is running on port 8000'); 
-server.listen(8000);
+port = 8000
+
+console.log('WEB Server is running on port ', port); 
+server.listen(port);
