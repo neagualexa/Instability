@@ -98,10 +98,10 @@ function BottomTabNavigator() {
               })}>
               <FontAwesome
                 name="info-circle"
-                size={25}
+                size={20}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
-              />
+              > {`\t`} Click here to open SQUAL graph </FontAwesome>
             </Pressable>
           ),
         })}

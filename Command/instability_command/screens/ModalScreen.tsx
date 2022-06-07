@@ -4,11 +4,13 @@ import { Platform, StyleSheet } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-import LineGraph from '../components/chart.js'
+import LineGraph, {getDataXList, getDataYList} from '../components/chart.js'
 import { useState, useEffect, useCallback } from "react"
 
-const dataVar = {
-  labels: [0,1],
+import useWindowDimensions from '../screens/getScreenDimensions'
+
+export const dataVar = {
+  labels: [0,1,2,3,4,5,6,7],
   datasets: [
     {
       label: 'first set',
@@ -16,7 +18,7 @@ const dataVar = {
       borderColor: "rgba(75,192,192,1)",
       borderWidth: 2,
       fill: false,
-      data: [0,0]
+      data: [0,0,5,3,52,0,6]
     }
   ]
 }
@@ -24,29 +26,17 @@ const dataVar = {
 export default function ModalScreen() {
 
   const [chartData, setChartData] = useState(dataVar)
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  function getDataXList(data){
-    var data_list = [];
-    for(let d in data){
-      data_list.push(data[d].x);
-    }
-    return data_list;
-  }
-
-  function getDataYList(data){
-    var data_list = [];
-    for(let d in data){
-      data_list.push(data[d].y);
-    }
-    return data_list;
-  }
+  const { h, w } = useWindowDimensions();
 
   // setInterval(
   //   () => updateData()
   // , 1200);
 
+  const myRequest = new Request('https://localhost:8000/squal');
+
   const updateData = ()=>{
-    var myRequest = new Request('https://localhost:8000/squal');
     fetch(myRequest)
       .then(function (response) {
         if (!response.ok) {
@@ -55,10 +45,12 @@ export default function ModalScreen() {
         return response.json();
       })
       .then(function (json) {
+        setIsLoaded(true);
         fetchData(json);
         return 
       })
       // .catch(function (error) {
+        // setIsLoaded(true);
       //   console.log('Error: ' + error.message)
       // })
 
@@ -85,10 +77,12 @@ export default function ModalScreen() {
 
 
   return (
-    <div style={{height:1000, width:1000}}>
-      <LineGraph chartData={chartData} />
-      <button onClick={updateData}>Update</button>
-    </div>
+    <View style={{ alignItems: 'center', justifyContent:'center', flex:1}}>
+      <div style={{height:550, width:1060, backgroundColor:'white'}}>
+        <LineGraph chartData={chartData} />
+        <button onClick={updateData}>Update</button>
+      </div>
+    </View>
   );
 
   // return (
@@ -107,6 +101,18 @@ export default function ModalScreen() {
 }
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: 'center', //vertical
+    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    // margin: 20,
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

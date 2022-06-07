@@ -29,9 +29,6 @@ const requestListener = function (req, res) {
             res.end(
                 fs.readFileSync(path+'data/pathNode.json')
             );
-            // setTimeout(function(){
-            //     refreshPage();
-            // }, 2000)
             break
         case "/status":
                 res.writeHead(200);

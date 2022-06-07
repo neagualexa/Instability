@@ -8,7 +8,8 @@ import { GiMarsCuriosity, GiCartwheel } from 'react-icons/gi';
 import Bulb from 'react-bulb';
 import Arrow from '@elsdoerfer/react-arrow';
 
-// import { useLongPress } from '../components/useLongPress'
+import LineGraph, { getDataXList, getDataYList } from '../components/chart.js'
+import useWindowDimensions from '../screens/getScreenDimensions'
 
 
 export default function ControlScreen({ navigation }: RootTabScreenProps<'Control'>) {
@@ -17,8 +18,11 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
     console.log('Go ', direction, '!');
   }
 
+  const { h, w } = useWindowDimensions();
+
+  var myRequest = new Request('https://localhost:8000/motors');
+
   const connect = () => {
-    var myRequest = new Request('https://localhost:8000/motors');
     fetch(myRequest)
       .then(function (response) {
         if (!response.ok) {
@@ -27,115 +31,199 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         return response.json();
       })
       .then(function (json) {
-        // console.log('START connection read:');
         console.log(json);
-        setColour(json);
-        return 
-        // return (json);
+        getOrientation(json.orientation);
+        setColour(json.data);
+        fetchData(json.data);
+        return
       })
       .catch(function (error) {
         console.log('Error: ' + error.message)
       })
   };
 
+  const stationaty = {
+    labels: [0, 1, 2],
+    datasets: [
+      {
+        label: 'LEFT stationary',
+        backgroundColor: "rgba(255, 0, 0, 0.2)",
+        borderColor: "rgba(255, 0, 0, 1)",
+        borderWidth: 2,
+        fill: false,
+        data: [0, 0, 0]
+      },
+      {
+        label: 'RIGHT stationary',
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+        borderWidth: 2,
+        fill: false,
+        data: [0, 0, 0]
+      }
+    ]
+  }
+
   const [leftColour, setLeft] = useState("red");
   const [rightColour, setRight] = useState("red");
+  const [orientation, setOrientation] = useState(90);
+  const [motorSpeed, setMotorSpeed] = useState(stationaty);
 
   const setColour = useCallback((json) => {
-    if(json.left == 1){
-      setLeft("green")
-    } else {
+    if (json.left[json.left.length-1].y == 0) {
       setLeft("red")
-    }
-
-    if(json.right == 1){
-      setRight("green")
     } else {
-      setRight("red")
+      setLeft("green")
     }
-  },[]);
 
-// TODO: could add another map that shows the real path and a diagram showing the orientation of the robot and which motor is doing what
+    if (json.right[json.right.length-1].y == 0) {
+      setRight("red")
+    } else {
+      setRight("green")
+    }
+  }, []);
+
+  const getOrientation = useCallback((orientation) => {
+    setOrientation(orientation);
+  }, []);
+
+  const fetchData = useCallback((json) => {
+    console.log(json)
+    console.log("Left: ", getDataYList(json.left))
+    console.log("Right: ", getDataYList(json.right))
+    setMotorSpeed({
+      labels: (getDataXList(json.left).length >= getDataXList(json.right).length ? getDataXList(json.left) : getDataXList(json.right)),
+      datasets: [
+        {
+          label: "LEFT velocity",
+          data: getDataYList(json.left),
+          backgroundColor: "rgba(255, 0, 0, 0.2)",
+          borderColor: "rgba(255, 0, 0, 1)",
+          borderWidth: 2,
+          fill: false,
+        },
+        {
+          label: "RIGHT velocity",
+          data: getDataYList(json.right),
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "rgba(75,192,192,1)",
+          borderWidth: 2,
+          fill: false,
+        },
+      ]
+    });
+  }, []);
+
+  // TODO: could add another map that shows the real path and a diagram showing the orientation of the robot and which motor is doing what
 
   return (
-    <View style={styles.main}>
-      <View style={styles.container}>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={styles.title}>Controller page</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+    <View style={{alignItems:'center'}}>
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <Text style={styles.title}>Controller page</Text>
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <View style={styles.row}>
-          <GiMarsCuriosity color="white" size={300} /> 
+      <View style={styles.main}>
 
-          <View style={styles.container}>
-            <Text style={styles.title}>Motors:</Text>
-            <div>-</div>
-            <div >
-              <GiCartwheel color="white" size={50} /> 
-              <Bulb size={10} color={leftColour}/>
-              <Text style={{color:"white", fontSize:16}}>   LEFT </Text>
-              
-            </div>
+        {/* LEFT */}
+        <View style={{}}>
 
-            <div >
-              <GiCartwheel color="white" size={50} /> 
-              <Bulb size={10} color={rightColour}/>
-              <Text style={{color:"white", fontSize:16}}> RIGHT</Text>
-            </div>
-            
-            <button onClick={connect}>Update</button>
-          </View>
+          {/* ROVER */}
+          <View style={styles.row}>
+            <GiMarsCuriosity color="white" size={300} />
 
-          <Arrow angle={45} length={100} lineWidth={5} color='red'
+            <View style={{}}>
+              <div style={{paddingLeft:70, paddingBottom:20}}>
+                <Text style={styles.title}>Motors:</Text>
+              </div>
+
+              <div style={{ paddingLeft: 30, paddingRight: 30, paddingBottom: 15  }}>
+                <GiCartwheel color="white" size={50} />
+                <Bulb size={10} color={leftColour} style={{ padding: 10 }} />
+                <Text style={{ color: "white", fontSize: 16, fontWeight: 'bold' }}>  LEFT </Text>
+
+              </div>
+
+              <div style={{ paddingLeft: 30, paddingRight: 30, paddingBottom: 15 }}>
+                <GiCartwheel color="white" size={50} />
+                <Bulb size={10} color={rightColour} style={{ padding: 10 }} />
+                <Text style={{ color: "white", fontSize: 16, fontWeight: 'bold' }}> RIGHT </Text>
+              </div>
+            </View>
+
+            {/* ORIENTATION ARROW */}
+            <View>
+              <div style={{paddingBottom:20}}>
+                <Text style={styles.title}>Direction:</Text>
+              </div>
+              <View style={{height:110, justifyContent:'center'}}>
+                <Arrow angle={orientation} length={350} lineWidth={15} color='red'
                   style={{
                     width: '100px',
-                    color: 'red'
+                    height: '100px'
                   }}
-            />
+                />
+              </View>
+            </View>
+            
+          </View>
+
+          {/* GRAPH */}
+          <View style={{padding: 30}}>
+            <View style={styles.row}>
+              <View style={{ width: 500, backgroundColor: 'white', padding: 5 }}>
+                <LineGraph chartData={motorSpeed} />
+              </View>
+              <View style={{ padding: 10 }}>
+                <TouchableOpacity onPress={connect} style={styles.roundButton1}>
+                  <Text style={styles.text}>Update</Text></TouchableOpacity>
+              </View>
+            </View>
+          </View>
 
         </View>
-      </View>
-      
-      <View style={styles.container}>
-        <TouchableOpacity
-          // onPress={ () => setInterval(() => {
-          //   pressDirection("forward 0.1s");
-          // }, 100) }
-          onPress={() => pressDirection("forward")}
-          // onPressIn={ () => setStartLongPress(true)}
-          // onPressOut={() => setStartLongPress(false)}
-          style={styles.roundButton1}
-        >
-          <Text style={styles.text}>FORWARD</Text>
-        </TouchableOpacity>
+
+        {/* RIGHT */}
+        <View style={{paddingLeft:100}}>
+
+          {/* Joystick */}
+          <View style={{alignItems:'center'}}>
+            <TouchableOpacity
+              onPress={() => pressDirection("forward")}
+              style={styles.roundButton1}
+            >
+              <Text style={styles.text}>FORWARD</Text>
+            </TouchableOpacity>
 
 
-        <View style={styles.row}>
-          <TouchableOpacity
-            onPress={() => pressDirection("left")}
-            style={styles.roundButton1}
-          >
-            <Text style={styles.text}>LEFT</Text>
-          </TouchableOpacity>
-          
-          <Text>        +        </Text>
-          
-          <TouchableOpacity
-            onPress={() => pressDirection("right")}
-            style={styles.roundButton1}
-          >
-            <Text style={styles.text}>RIGHT</Text>
-          </TouchableOpacity>
+            <View style={styles.row}>
+              <TouchableOpacity
+                onPress={() => pressDirection("left")}
+                style={styles.roundButton1}
+              >
+                <Text style={styles.text}>LEFT</Text>
+              </TouchableOpacity>
+
+              <Text>        +        </Text>
+
+              <TouchableOpacity
+                onPress={() => pressDirection("right")}
+                style={styles.roundButton1}
+              >
+                <Text style={styles.text}>RIGHT</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => pressDirection("backwards")}
+              style={styles.roundButton1}
+            >
+              <Text style={styles.text}>BACK</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <TouchableOpacity
-          onPress={() => pressDirection("backwards")}
-          style={styles.roundButton1}
-        >
-          <Text style={styles.text}>BACK</Text>
-        </TouchableOpacity>
-
       </View>
+
     </View>
   );
 }
@@ -144,8 +232,8 @@ const styles = StyleSheet.create({
   main: {
     flex: 2,
     flexDirection: "row",
-    alignItems: 'center', //vertical
-    justifyContent: 'center',
+    // alignItems: 'center', //vertical
+    // justifyContent: 'center',
   },
   container: {
     flex: 1,
@@ -175,18 +263,18 @@ const styles = StyleSheet.create({
     height: 90,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 30,
     borderRadius: 80,
     backgroundColor: 'white',
     // alignSelf: "flex-start",
   },
-  text:{
-    textShadowOffset:{ width: 1.2, height: 1.5 },
-    textShadowColor:'#8f8f8f',
+  text: {
+    textShadowOffset: { width: 1.2, height: 1.5 },
+    textShadowColor: '#8f8f8f',
     // textshadowOpacity: 0.8,
     textShadowRadius: 2.5,
     fontWeight: 'bold',
     fontSize: 14,
-    color:'black'
+    color: 'black'
   }
 });
