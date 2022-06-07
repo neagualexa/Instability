@@ -3,6 +3,7 @@ import json
 import genJSON
 import genPathJSON
 import genAlienJSON
+import genStatusJSON
 
 print("We're in tcp server..."); 
 #select a server port 
@@ -35,18 +36,31 @@ while True:
                 print('DEBUG: ', debugmsg) 
             elif cmsg[0] == 'l':
                 live_msg = cmsg[1:len(cmsg)]
-                print('Live coords: ', live_msg)
-
-                path_dict = json.loads(live_msg)
-
-                # print(path_dict)
-                # print(path_dict['position'])
+                print('Live msg: ', live_msg)
                 
-                # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
-                with open(path+'data/pathNode.json', 'w') as json_file:
-                    json.dump(path_dict, json_file, indent = 4, sort_keys=True)
-                
-                genPathJSON.genPath()
+                if '|' in live_msg:
+                    split_msg = live_msg.split('|')
+                    print("     live coords: ", split_msg[0])
+                    print("     live status: ", split_msg[1])
+
+                    path_dict = json.loads(split_msg[0])
+                    status_dict = json.loads(split_msg[1])
+                    
+                    # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
+                    with open(path+'data/pathNode.json', 'w') as json_file:
+                        json.dump(path_dict, json_file, indent = 4, sort_keys=True)
+                    
+                    with open(path+'data/status.json', 'w') as json_file:
+                        json.dump(status_dict, json_file, indent = 4, sort_keys=True)
+                    
+                    genPathJSON.genPath()
+                    genStatusJSON.genStatus()
+                else:
+                    # print(path_dict)
+                    # print(path_dict['position'])
+                    path_dict = json.loads(live_msg)
+                    with open(path+'data/pathNode.json', 'w') as json_file:
+                        json.dump(path_dict, json_file, indent = 4, sort_keys=True)
 
             elif cmsg[0] == 'a':
                 live_msg = cmsg[1:len(cmsg)]

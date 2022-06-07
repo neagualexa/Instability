@@ -19,3 +19,13 @@ with open(path+'data/nodes.json', 'w') as json_file:
 
 # with open(path+'data/edges.json', 'w') as json_file:
 #     json.dump({}, json_file, indent = 4, sort_keys=True)
+
+
+connection_graph = {
+    "name": "squal",
+    "data": [
+        {"x": 0, "y":0 }
+    ]
+}
+with open(path+'data/squal.json', 'w') as json_file:
+    json.dump(connection_graph, json_file, indent = 4, sort_keys=True)

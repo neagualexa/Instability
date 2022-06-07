@@ -32,9 +32,9 @@
         "target": "p11"
     },
     "edge16": {
-        "id": "ep11-p22",
+        "id": "ep11-p12",
         "source": "p11",
-        "target": "p22"
+        "target": "p12"
     },
     "edge2": {
         "id": "e1-3",

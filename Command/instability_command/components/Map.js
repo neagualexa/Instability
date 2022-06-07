@@ -85,9 +85,9 @@ function Flow() {
   }, []);
 
   // REPEAT THE GETPATH() TO CONTINUE UPDATING THE WEBPAGE !!!!!!!!!!!!!
-  setInterval(
-    () => getPath()
-  , 400);
+  // setInterval(
+  //   () => getPath()
+  // , 400);
 
   const getPath = () => {
     var myRequest = new Request('https://localhost:8000/');

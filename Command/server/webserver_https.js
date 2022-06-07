@@ -33,17 +33,21 @@ const requestListener = function (req, res) {
             //     refreshPage();
             // }, 2000)
             break
+        case "/status":
+                res.writeHead(200);
+                res.end(fs.readFileSync(path+'data/status.json'));
+                break
         case "/motors":
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/motors.json'));
             break
-        // case "/authors":
-        //     res.writeHead(200);
-        //     res.end(authors);
-        //     break
+        case "/squal":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/squal.json'));
+            break
         default:
             res.writeHead(404);
-            res.end(JSON.stringify({error:"Resource not found - TRY / or /books or /authors"}));
+            res.end(JSON.stringify({error:"Resource not found - TRY / or /status or anything under status"}));
     }
 }
 
