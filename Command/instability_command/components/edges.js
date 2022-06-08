@@ -34,7 +34,7 @@ export function generateEdges(){
       );
     }
   }
-  console.log(edges);
+  // console.log(edges);
   return edges;
 }
 

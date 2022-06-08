@@ -1,38 +1,18 @@
 {
     "data": {
-        "left":[
+        "left": [
             {
                 "x": 0,
-                "y": 0
-            },
-            {
-                "x": 1,
-                "y": 10
-            },
-            {
-                "x": 2,
                 "y": 0
             }
         ],
-        "right":[
+        "right": [
             {
                 "x": 0,
                 "y": 0
-            },
-            {
-                "x": 1,
-                "y": -10
-            },
-            {
-                "x": 2,
-                "y": 0
-            },
-            {
-                "x": 2,
-                "y": 10
             }
         ]
     },
-    "orientation": 0,
-    "name": "motors"
+    "name": "motors",
+    "orientation": 0
 }

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
-var sizePos = 7;
+var sizePos = 9;
 
 export default memo(({selected, isConnectable, xPos, yPos}) => {
   return (
@@ -49,14 +49,14 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
         ? 
           <div className= "positionNode">
             <div> - </div>
+            <div> - </div>
             <div>
               <strong>({xPos+''};{yPos+''})</strong>
             </div>
-            <div> - </div>
           </div>
         :
           <div className= "positionNode" style={{background:"#4a6c2f"}}>
-            <div style={{color:'#cfdfda'}}> -move to- </div>
+            <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
             <div style={{color:'#cfdfda'}}>
               <strong>({xPos+''};{yPos+''})</strong>
             </div>

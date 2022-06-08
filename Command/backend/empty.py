@@ -6,6 +6,7 @@ with open(path+'data/pathNodes.json', 'w') as json_file:
     json.dump({}, json_file, indent = 4, sort_keys=True)
 
 
+# EDGES AND NODES ------------------------------------------------------------
 with open(path+'data/nodes.json', 'r') as nodes:
     nodes_dict = json.load(nodes)
 
@@ -17,15 +18,39 @@ for n in nodes_dict:
 with open(path+'data/nodes.json', 'w') as json_file:
     json.dump(updated_dict, json_file, indent = 4, sort_keys=True)
 
-# with open(path+'data/edges.json', 'w') as json_file:
-#     json.dump({}, json_file, indent = 4, sort_keys=True)
+with open(path+'data/edges.json', 'w') as json_file:
+    json.dump({}, json_file, indent = 4, sort_keys=True)
 
 
-connection_graph = {
+# SQUAL ---------------------------------------------------------------------
+squal = {
     "name": "squal",
     "data": [
         {"x": 0, "y":0 }
     ]
 }
 with open(path+'data/squal.json', 'w') as json_file:
-    json.dump(connection_graph, json_file, indent = 4, sort_keys=True)
+    json.dump(squal, json_file, indent = 4, sort_keys=True)
+
+
+# MOTORS ---------------------------------------------------------------------
+motors = {
+    "data": {
+        "left":[
+            {
+                "x": 0,
+                "y": 0
+            }
+        ],
+        "right":[
+            {
+                "x": 0,
+                "y": 0
+            }
+        ]
+    },
+    "orientation": 0,
+    "name": "motors"
+}
+with open(path+'data/motors.json', 'w') as json_file:
+    json.dump(motors, json_file, indent = 4, sort_keys=True)

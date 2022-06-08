@@ -20,6 +20,7 @@ print('TCP Server running on port ', server_port)
 
 # path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+# path = '~/ubuntu/Rover/Instability/Command' #to be checked
 
 while True: 
     connection_socket, caddr = welcome_socket.accept() 
@@ -31,24 +32,28 @@ while True:
      
     if cmsg != "":
         if cmsg[0] != '{':
+            # DEBUG ---------------------------------------------------------------------------
             if cmsg[0] == 'd':
                 debugmsg = cmsg[1:len(cmsg)]
                 print('DEBUG: ', debugmsg) 
+
+            # LIVE COORDS & STATUS ------------------------------------------------------------
             elif cmsg[0] == 'l':
                 live_msg = cmsg[1:len(cmsg)]
                 print('Live msg: ', live_msg)
                 
                 if '|' in live_msg:
                     split_msg = live_msg.split('|')
-                    print("     live coords: ", split_msg[0])
+                    # print("     live coords: ", split_msg[0])
                     print("     live status: ", split_msg[1])
 
                     path_dict = json.loads(split_msg[0])
                     status_dict = json.loads(split_msg[1])
-                    
-                    # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
+                     
                     with open(path+'data/pathNode.json', 'w') as json_file:
-                        json.dump(path_dict, json_file, indent = 4, sort_keys=True)
+                        cm_position = {"position":{ "x":float(path_dict['position']['x']/47.0), 
+                                        "y":float(path_dict['position']['y']/47.0)}}
+                        json.dump(cm_position, json_file, indent = 4, sort_keys=True)
                     
                     with open(path+'data/status.json', 'w') as json_file:
                         json.dump(status_dict, json_file, indent = 4, sort_keys=True)
@@ -62,6 +67,7 @@ while True:
                     with open(path+'data/pathNode.json', 'w') as json_file:
                         json.dump(path_dict, json_file, indent = 4, sort_keys=True)
 
+            # ALIEN NODE ------------------------------------------------------------------
             elif cmsg[0] == 'a':
                 live_msg = cmsg[1:len(cmsg)]
                 print('Alien coords: ', live_msg)
@@ -80,6 +86,8 @@ while True:
 
             else:
                 print("unknown message type: ", cmsg)
+        
+        # POSITION COORD NODE --------------------------------------------------------------------
         else:
             strJSON = cmsg
             print('strJSON:  ',strJSON)
@@ -90,7 +98,7 @@ while True:
                 print(obj)
                 # print('id: ', obj_dict[obj]['id'])
                 print(obj_dict[obj]['position'])
-                # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
+               
                 with open(path+'data/'+obj+'.json', 'w') as json_file:
                     json.dump(obj_dict[obj], json_file, indent = 4, sort_keys=True)
                     

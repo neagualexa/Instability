@@ -6,7 +6,7 @@ export default memo(({selected, xPos, yPos}) => {
   return (
     <>
         <div className= "pathNode">
-            ({xPos+''};{yPos+''})
+            ({xPos+''}; {'\n'};{yPos+''})
         </div>
     </>
   );

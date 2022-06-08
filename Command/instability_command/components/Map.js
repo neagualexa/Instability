@@ -64,7 +64,7 @@ function Flow() {
   const onEdgeUpdate = (oldEdge, newConnection) => setEdges((els) => updateEdge(oldEdge, newConnection, els));
 
 
-  //TODO: manually add local node to the map, not write back to file (could do for the future!!)
+  //TODO: manually add local node to the map to ask rover to move to specific location
   const addNode = useCallback(() => {
     yPos.current += 50;
     var newN = {
@@ -76,7 +76,7 @@ function Flow() {
     };
     nodes.push(newN);
     setNodes((nodes) => {
-      console.log(nodes);
+      // console.log(nodes);
       return [
         ...nodes,
         newN
@@ -87,7 +87,7 @@ function Flow() {
   // REPEAT THE GETPATH() TO CONTINUE UPDATING THE WEBPAGE !!!!!!!!!!!!!
   // setInterval(
   //   () => getPath()
-  // , 400);
+  // , 1000);
 
   const getPath = () => {
     var myRequest = new Request('https://localhost:8000/');
@@ -139,7 +139,7 @@ function Flow() {
         }
       });
       nodes.push(new_path); 
-      console.log(nodes);
+      // console.log(nodes);
     } else {
       // console.log("Path node ",new_path_node.position," already exists")
     }
@@ -163,20 +163,21 @@ function Flow() {
         onEdgeUpdate={onEdgeUpdate}
         onConnect={onConnect}
         fitView={{ padding: 0.2 }}
+        minZoom={0.1}
+        maxZoom={5}
 
       >
         <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
-        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 30, alignItems: 'center' }}>
-          {/* TODO: size of the given buttons does not change, will look into it */}
-          <ControlButton onClick={addNode} style={{ width: 20 }}> <BiAddToQueue /> </ControlButton>
-          <ControlButton onClick={genNodes} style={{ width: 20 }}> <BiAnalyse /> </ControlButton>
-          <ControlButton onClick={hidePathNodes} style={{ width: 20, fontSize: 12 }}> Hide Path </ControlButton>
-          <ControlButton onClick={genEdges} style={{ width: 20 }}> <BiVector /> </ControlButton>
-          <ControlButton onClick={hideEdg} style={{ width: 20, fontSize: 12 }}> Hide Edge </ControlButton>
-          <button onClick={getPath}>Path</button> {/* manual request to read the server */}
-          <button onClick={refreshPage}>Reload</button>
+        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 35, alignItems: 'center' }}>
+          <ControlButton onClick={addNode} style={{ width: 25 }}> <BiAddToQueue /> </ControlButton>
+          <ControlButton onClick={genNodes} style={{ width: 25 }}> <BiAnalyse /> </ControlButton>
+          <ControlButton onClick={hidePathNodes} style={{ width: 25, fontSize: 12 }}> Hide Paths </ControlButton>
+          <ControlButton onClick={genEdges} style={{ width: 25 }}> <BiVector /> </ControlButton>
+          <ControlButton onClick={hideEdg} style={{ width: 25, fontSize: 12 }}> Hide Edges </ControlButton>
+          <button onClick={getPath} style={{ fontSize: 12, background:'white' }}>Path update</button> {/* manual request to read the server */}
+          <button onClick={refreshPage} style={{fontSize: 12, background:'white' }}>Reload</button>
         </Controls>
-        <Background />
+        <Background /> {/* dots on the background */}
 
       </ReactFlow>
 

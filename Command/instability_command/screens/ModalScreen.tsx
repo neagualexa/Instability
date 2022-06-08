@@ -57,7 +57,7 @@ export default function ModalScreen() {
   };
 
   const fetchData = useCallback((json)=>{
-    console.log(json)
+    // console.log(json)
     console.log("X axis: ",  getDataXList(json.data))
     console.log("Y axis: ", getDataYList(json.data))
     setChartData({

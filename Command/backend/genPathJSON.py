@@ -17,15 +17,18 @@ def genPath():
     # for p in path_dict:
     # GENERATING THE ID SHOULD BE MADE EVEN MORE COMPLEX TO NOT RUN OUT OF VALUES
     newNodeID = 'l_' + str(len(path_dict)+1)
+    cm_position = { 'x':float(path_new_node['position']['x']/47.0), 
+                    'y':float(path_new_node['position']['y']/47.0)}
+    print(cm_position)
     found = False
     for n in path_dict:
-        if path_new_node['position'] == path_dict[n]['position']:
+        if cm_position == path_dict[n]['position']:
             found = True
             break
     if found == False:
         node = {
             'id': newNodeID,
-            'position': path_new_node['position']
+            'position': cm_position
         }
         nodes_dict[newNodeID] = node
         path_dict[newNodeID] = node

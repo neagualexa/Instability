@@ -31,7 +31,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         return response.json();
       })
       .then(function (json) {
-        console.log(json);
+        // console.log(json);
         getOrientation(json.orientation);
         setColour(json.data);
         fetchData(json.data);
@@ -88,7 +88,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
   }, []);
 
   const fetchData = useCallback((json) => {
-    console.log(json)
+    // console.log(json)
     console.log("Left: ", getDataYList(json.left))
     console.log("Right: ", getDataYList(json.right))
     setMotorSpeed({
@@ -114,7 +114,6 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
     });
   }, []);
 
-  // TODO: could add another map that shows the real path and a diagram showing the orientation of the robot and which motor is doing what
 
   return (
     <View style={{alignItems:'center'}}>
