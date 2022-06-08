@@ -8,6 +8,7 @@ import LineGraph, {getDataXList, getDataYList} from '../components/chart.js'
 import { useState, useEffect, useCallback } from "react"
 
 import useWindowDimensions from '../screens/getScreenDimensions'
+import { arrayBuffer } from 'stream/consumers';
 
 export const dataVar = {
   labels: [0,1,2,3,4,5,6,7],
@@ -34,9 +35,9 @@ export default function ModalScreen() {
   //   () => updateData()
   // , 1200);
 
-  const myRequest = new Request('https://localhost:8000/squal');
+  const myStatusRequest = new Request('https://localhost:8000/status');
 
-  const updateData = ()=>{
+  const updateData = (myRequest)=>{
     fetch(myRequest)
       .then(function (response) {
         if (!response.ok) {
@@ -56,21 +57,39 @@ export default function ModalScreen() {
 
   };
 
+  const attachToArray = (array, element) => {
+    array.push(element)
+    return array;
+  }
+
+  const genXaxis = (end) => {
+    var axis = [];
+    for(let i = 0; i <= end; i++){
+      axis.push(i);
+    }
+    return axis;
+  }
+
   const fetchData = useCallback((json)=>{
-    // console.log(json)
-    console.log("X axis: ",  getDataXList(json.data))
-    console.log("Y axis: ", getDataYList(json.data))
     setChartData({
-        labels: getDataXList(json.data),
+        labels: genXaxis(chartData.datasets[0].data.length),
         datasets: [
           {
-            label: json.name,
-            data: getDataYList(json.data),
+            label: 'squal',
+            data: attachToArray(chartData.datasets[0].data, json['squal']),
             backgroundColor: "rgba(75,192,192,0.2)",
             borderColor: "rgba(75,192,192,1)",
             borderWidth: 2,
             fill: false,
           }
+          // {
+          //   label: json['left'].name,
+          //   data: getDataYList(json['squal']),
+          //   backgroundColor: "rgba(75,192,192,0.2)",
+          //   borderColor: "rgba(75,192,192,1)",
+          //   borderWidth: 2,
+          //   fill: false,
+          // }
         ]
     });
   }, []);
@@ -80,7 +99,7 @@ export default function ModalScreen() {
     <View style={{ alignItems: 'center', justifyContent:'center', flex:1}}>
       <div style={{height:550, width:1060, backgroundColor:'white'}}>
         <LineGraph chartData={chartData} />
-        <button onClick={updateData}>Update</button>
+        <button onClick={() => updateData(myStatusRequest)}>Update</button>
       </div>
     </View>
   );

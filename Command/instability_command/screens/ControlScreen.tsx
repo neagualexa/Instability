@@ -116,7 +116,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
 
 
   return (
-    <View style={{alignItems:'center'}}>
+    <View style={{alignItems:'center', bottom:'3%' }}>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={styles.title}>Controller page</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
@@ -124,33 +124,33 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
       <View style={styles.main}>
 
         {/* LEFT */}
-        <View style={{}}>
+        <View style={{width:'50%', paddingLeft:'10%'}}>
 
           {/* ROVER */}
           <View style={styles.row}>
-            <GiMarsCuriosity color="white" size={300} />
+            <GiMarsCuriosity color="white" size={'40%'} />
 
-            <View style={{}}>
+            <View style={{width:'35%'}}>
               <div style={{paddingLeft:70, paddingBottom:20}}>
                 <Text style={styles.title}>Motors:</Text>
               </div>
 
               <div style={{ paddingLeft: 30, paddingRight: 30, paddingBottom: 15  }}>
-                <GiCartwheel color="white" size={50} />
+                <GiCartwheel color="white" size={'35%'} />
                 <Bulb size={10} color={leftColour} style={{ padding: 10 }} />
                 <Text style={{ color: "white", fontSize: 16, fontWeight: 'bold' }}>  LEFT </Text>
 
               </div>
 
               <div style={{ paddingLeft: 30, paddingRight: 30, paddingBottom: 15 }}>
-                <GiCartwheel color="white" size={50} />
+                <GiCartwheel color="white" size={'35%'} />
                 <Bulb size={10} color={rightColour} style={{ padding: 10 }} />
                 <Text style={{ color: "white", fontSize: 16, fontWeight: 'bold' }}> RIGHT </Text>
               </div>
             </View>
 
             {/* ORIENTATION ARROW */}
-            <View>
+            <View style={{width:'40%'}}>
               <div style={{paddingBottom:20}}>
                 <Text style={styles.title}>Direction:</Text>
               </div>
@@ -166,26 +166,13 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
             
           </View>
 
-          {/* GRAPH */}
-          <View style={{padding: 30}}>
-            <View style={styles.row}>
-              <View style={{ width: 500, backgroundColor: 'white', padding: 5 }}>
-                <LineGraph chartData={motorSpeed} />
-              </View>
-              <View style={{ padding: 10 }}>
-                <TouchableOpacity onPress={connect} style={styles.roundButton1}>
-                  <Text style={styles.text}>Update</Text></TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
         </View>
 
         {/* RIGHT */}
-        <View style={{paddingLeft:100}}>
+        <View style={{width:'50%'}}>
 
           {/* Joystick */}
-          <View style={{alignItems:'center'}}>
+          <View style={{alignItems:'center', height:'30%'}}>
             <TouchableOpacity
               onPress={() => pressDirection("forward")}
               style={styles.roundButton1}
@@ -195,21 +182,23 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
 
 
             <View style={styles.row}>
-              <TouchableOpacity
-                onPress={() => pressDirection("left")}
-                style={styles.roundButton1}
-              >
-                <Text style={styles.text}>LEFT</Text>
-              </TouchableOpacity>
+              <div style={{padding:10}}>
+                <TouchableOpacity
+                  onPress={() => pressDirection("left")}
+                  style={styles.roundButton1}
+                >
+                  <Text style={styles.text}>LEFT</Text>
+                </TouchableOpacity>
+              </div>
 
-              <Text>        +        </Text>
-
-              <TouchableOpacity
-                onPress={() => pressDirection("right")}
-                style={styles.roundButton1}
-              >
-                <Text style={styles.text}>RIGHT</Text>
-              </TouchableOpacity>
+              <div style={{padding:10}}>
+                <TouchableOpacity
+                  onPress={() => pressDirection("right")}
+                  style={styles.roundButton1}
+                >
+                  <Text style={styles.text}>RIGHT</Text>
+                </TouchableOpacity>
+              </div>
             </View>
 
             <TouchableOpacity
@@ -219,7 +208,22 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
               <Text style={styles.text}>BACK</Text>
             </TouchableOpacity>
           </View>
+
+          {/* GRAPH */}
+          <View style={{padding: 10}}>
+            <View style={styles.row}>
+              <View style={{ width: '90%', backgroundColor: 'white', padding: 5 }}>
+                <LineGraph chartData={motorSpeed} />
+              </View>
+              <View style={{ padding: 10 }}>
+                <TouchableOpacity onPress={connect} style={styles.roundButton1}>
+                  <Text style={styles.text}>Update Motors</Text></TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
         </View>
+
 
       </View>
 
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   row: {
-    flex: 3,
+    flex: 2,
     alignItems: 'center',
     flexDirection: "row",
     // margin: 20,
@@ -253,17 +257,17 @@ const styles = StyleSheet.create({
     // marginTop: 20,
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: 20,
     height: 1,
     width: '80%',
   },
   roundButton1: {
-    width: 90,
-    height: 90,
+    width: 72,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30,
-    borderRadius: 80,
+    padding: 10,
+    borderRadius: 50,
     backgroundColor: 'white',
     // alignSelf: "flex-start",
   },

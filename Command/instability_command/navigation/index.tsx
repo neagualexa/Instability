@@ -101,7 +101,7 @@ function BottomTabNavigator() {
                 size={20}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
-              > {`\t`} Click here to open SQUAL graph </FontAwesome>
+              > {`\t`} Click here to open general graph </FontAwesome>
             </Pressable>
           ),
         })}
