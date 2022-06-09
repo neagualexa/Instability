@@ -8,7 +8,8 @@ import LineGraph, {getDataXList, getDataYList} from '../components/chart.js'
 import { useState, useEffect, useCallback } from "react"
 
 import useWindowDimensions from '../screens/getScreenDimensions'
-import { arrayBuffer } from 'stream/consumers';
+
+import { checkState } from '../components/floatingButton.js';
 
 export const dataVar = {
   labels: [0,1,2,3,4,5,6,7],
@@ -31,9 +32,13 @@ export default function ModalScreen() {
 
   const { h, w } = useWindowDimensions();
 
-  // setInterval(
-  //   () => updateData()
-  // , 1200);
+  // setInterval( () => {
+  //   // console.log("modal OUT: ", checkState)
+  //   if(checkState){
+  //     // console.log("map: ",checkState)
+  //     updateData(myStatusRequest)
+  //   }
+  // },2000);
 
   const myStatusRequest = new Request('https://localhost:8000/status');
 
@@ -130,11 +135,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     // margin: 20,
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
   },
   title: {

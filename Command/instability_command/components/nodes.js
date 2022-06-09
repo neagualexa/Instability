@@ -1,21 +1,44 @@
-import NodesJSON from '../../data/nodes.json';
-import currentNode from '../../data/currentNode.json';
+// import NodesJSON from '../../data/nodes.json';
+// import currentNode from '../../data/currentNode.json';
+
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 // console.log(NodesJSON);
 
 let initialNodes = [
   {
-    id: 'p00',
+    id: 'p0',
     type: 'position',
-    position: { x: 190, y: 240 },
+    position: { x: 0, y: 0 },
     hidden: false,
   },
 ];
 
 // console.log(initialNodes);
 let nodes = initialNodes;
+var myRequest = new Request('https://localhost:8000/nodes');
 
-export function generateNodes(){
+export const getNodes = () => {
+  fetch(myRequest)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("HTTPS error, status = " + response.status);
+      }
+      return response.json();
+    })
+    .then(function (json) {
+      // console.log('START connection read:');
+      // console.log(json);
+      generateNodes(json);
+      return 
+      // return (json);
+    })
+    // .catch(function (error) {
+    //   console.log('Error: ' + error.message)
+    // })
+};
+
+export function generateNodes(NodesJSON){
   //nodes are being added multiple times...must check if they exists in order to not add them again
   //code updates everytime we change the code...so should put the map as first/main page so it refreshes on it
   var exists = false;
@@ -52,17 +75,17 @@ export function generateNodes(){
       }
       else {
         //if(NodesJSON[i].id[0] == "p")
-        if(currentNode.id == NodesJSON[i].id) { 
-          //should check the postion too to make sure that it has the same coords or to add a new node
-          nodes.push(
-            {
-              id: NodesJSON[i].id,
-              type: 'currentPos',
-              position: NodesJSON[i].position,
-              hidden: false
-            }
-          );
-        } else {
+        // if(currentNode.id == NodesJSON[i].id) { 
+        //   //should check the postion too to make sure that it has the same coords or to add a new node
+        //   nodes.push(
+        //     {
+        //       id: NodesJSON[i].id,
+        //       type: 'currentPos',
+        //       position: NodesJSON[i].position,
+        //       hidden: false
+        //     }
+        //   );
+        // } else {
           nodes.push(
             {
               id: NodesJSON[i].id,
@@ -71,7 +94,7 @@ export function generateNodes(){
               hidden: false
             }
           );
-        }
+        // }
       }
       
     }

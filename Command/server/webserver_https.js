@@ -30,10 +30,18 @@ const requestListener = function (req, res) {
                 fs.readFileSync(path+'data/pathNode.json')
             );
             break
+        case "/end":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/end.json'));
+            break
+        case "/nodes":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/nodes.json'));
+            break
         case "/status":
-                res.writeHead(200);
-                res.end(fs.readFileSync(path+'data/status.json'));
-                break
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/status.json'));
+            break
         case "/motors":
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/motors.json'));

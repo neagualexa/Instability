@@ -1,5 +1,8 @@
-import EdgesJSON from '../../data/edges.json';
-import NodesJSON from '../../data/nodes.json';
+// import EdgesJSON from '../../data/edges.json';
+// import NodesJSON from '../../data/nodes.json';
+let NodesJSON={}
+let EdgesJSON={}
+// TODO: update edges on the website!!!!!!!!!
 
 const initialEdges = [
   // { id: 'e00-01', source: 'p00', target: 'p01' , sourceHandle: 'left_out',   targetHandle: 'right_in'}, //West

@@ -1,10 +1,10 @@
 import ReactFlow, { MiniMap, Controls, Background, ControlButton } from 'react-flow-renderer';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useRef, useEffect, componentDidUpdate } from 'react';
 import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-flow-renderer';
 
 import useWindowDimensions from '../screens/getScreenDimensions'
 
-import initialNodes, { generateNodes, hidePath } from './nodes.js';
+import initialNodes, { generateNodes, hidePath, addNode } from './nodes.js';
 import initialEdges, { generateEdges, hideEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
@@ -16,6 +16,8 @@ import centeredEdge from './centeredEdge.js'
 import './map.css';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { BiAddToQueue, BiAnalyse, BiVector } from "react-icons/bi"; {/* https://react-icons.github.io/react-icons/icons?name=bi */ }
+
+import { checkState } from './floatingButton.js';
 
 const nodeTypes = {
   position: positionNode,
@@ -68,34 +70,97 @@ function Flow() {
 
   const onEdgeUpdate = (oldEdge, newConnection) => setEdges((els) => updateEdge(oldEdge, newConnection, els));
 
+  // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
+  var intervalID1 = 0;
 
-  //TODO: manually add local node to the map to ask rover to move to specific location
-  const addNode = useCallback(() => {
-    yPos.current += 50;
-    var newN = {
-      id: "l_"+Math.random(),
-      position: { x: 100, y: yPos.current },
-      data: { label: "yo" },
-      type:'path',
-      hidden:false
-    };
-    nodes.push(newN);
-    setNodes((nodes) => {
-      // console.log(nodes);
-      return [
-        ...nodes,
-        newN
-      ];
-    });
+  setInterval( () => {
+    console.log("map OUT interval: ", checkState)
+    var old_nodes = [];
+    if(checkState){
+      // console.log("map: ",checkState)
+      // intervalID1 = setInterval( () => {
+      
+      // useEffect(() => {
+        if(old_nodes != nodes){
+        getPath(myRequestPATH)
+        getNodes(myRequestNODES)
+        old_nodes = nodes;
+        }
+        
+      // }, [nodes]); // Only re-run the effect if nodes changes
+
+      // }, 900);
+    }
+    // } else {
+    //   clearInterval(intervalID1);
+    // }
+  }, 900);
+
+  // ADD NODES FETCH ________________________________________________________________________________________________________
+  var myRequestNODES = new Request('https://localhost:8000/end');
+  const getNodes = (myRequest) => {
+    
+    fetch(myRequest)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("HTTPS error, status = " + response.status);
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        // console.log('START connection read:');
+        // console.log(json);
+        addNode(json);
+        return 
+        // return (json);
+      })
+      // .catch(function (error) {
+      //   console.log('Error: ' + error.message)
+      // })
+  };
+
+  const addNode = useCallback((new_node) => {
+    const new_node_cm = {'position': { 
+                            'x':new_node['position']['x']/47, 
+                            'y':new_node['position']['y']/47
+                        }}
+    var found = false;
+    for (let n in nodes) {
+      if ((new_node_cm.position.x == nodes[n].position.x) && (new_node_cm.position.y == nodes[n].position.y)) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      console.log("Added node: ", new_node_cm)
+      var new_n = {
+        id: "p_" + nodes.length,
+        position: new_node_cm['position'],
+        type: 'position',
+        hidden: false
+      };
+      setNodes(() => {
+        if (!found) {
+          return [
+            ...nodes,
+            new_n
+          ];
+        } else {
+          return nodes;
+        }
+      });
+      nodes.push(new_n); 
+      console.log(nodes);
+    } else {
+      console.log("Position Node ",new_node_cm.position," already exists")
+    }
   }, []);
 
-  // REPEAT THE GETPATH() TO CONTINUE UPDATING THE WEBPAGE !!!!!!!!!!!!!
-  // setInterval(
-  //   () => getPath()
-  // , 900);
 
-  const getPath = () => {
-    var myRequest = new Request('https://localhost:8000/');
+  // ADD LIVE PATH _____________________________________________________________________________________________________________
+  var myRequestPATH = new Request('https://localhost:8000/');
+  const getPath = (myRequest) => {
+    
     fetch(myRequest)
       .then(function (response) {
         if (!response.ok) {
@@ -150,11 +215,34 @@ function Flow() {
   }, []);
   
 
+  // MANUALLY ADD NODE _________________________________________________________________________________________
+  //TODO: manually add local node to the map to ask rover to move to specific location
+  const addNodeManual = useCallback(() => {
+    yPos.current += 50;
+    var newN = {
+      id: "l_"+Math.random(),
+      position: { x: 100, y: yPos.current },
+      data: { label: "yo" },
+      type:'path',
+      hidden:false
+    };
+    nodes.push(newN);
+    setNodes((nodes) => {
+      // console.log(nodes);
+      return [
+        ...nodes,
+        newN
+      ];
+    });
+  }, []);
+
+  // REFRESH PAGE__________________________________________________________________________________________
   function refreshPage() {
     window.location.reload(false);
   }
 
 
+  // FRONTEND ______________________________________________________________________________________________
   return (
     <div>
       <ReactFlow
@@ -174,7 +262,7 @@ function Flow() {
       >
         <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
         <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 35, alignItems: 'center' }}>
-          <ControlButton onClick={addNode} style={{ width: 25 }}> <BiAddToQueue /> </ControlButton>
+          <ControlButton onClick={addNodeManual} style={{ width: 25 }}> <BiAddToQueue /> </ControlButton>
           <ControlButton onClick={genNodes} style={{ width: 25 }}> <BiAnalyse /> </ControlButton>
           <ControlButton onClick={hidePathNodes} style={{ width: 25, fontSize: 12 }}> Hide Paths </ControlButton>
           <ControlButton onClick={genEdges} style={{ width: 25 }}> <BiVector /> </ControlButton>

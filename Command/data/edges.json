@@ -1,1 +1,7 @@
-{}
+{
+    "edge1": {
+        "id": "ep1-p4",
+        "source": "p1",
+        "target": "p4"
+    }
+}
