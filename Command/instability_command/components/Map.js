@@ -11,6 +11,7 @@ import alienNode from './alienNode.js';
 import positionNode from './positionNode.js';
 import currentPosNode from './currentPosNode.js';
 import pathNode from './pathNode.js';
+import centeredEdge from './centeredEdge.js'
 
 import './map.css';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
@@ -21,6 +22,10 @@ const nodeTypes = {
   alien: alienNode,
   currentPos: currentPosNode,
   path: pathNode,
+};
+
+const edgeTypes = {
+  centered_edge: centeredEdge,
 };
 
 function Flow() {
@@ -87,7 +92,7 @@ function Flow() {
   // REPEAT THE GETPATH() TO CONTINUE UPDATING THE WEBPAGE !!!!!!!!!!!!!
   // setInterval(
   //   () => getPath()
-  // , 1000);
+  // , 900);
 
   const getPath = () => {
     var myRequest = new Request('https://localhost:8000/');
@@ -134,14 +139,13 @@ function Flow() {
             new_path
           ];
         } else {
-          // console.log("Node at ", new_path_node['position'], " already exists!");
           return nodes;
         }
       });
       nodes.push(new_path); 
-      // console.log(nodes);
+      console.log(nodes);
     } else {
-      // console.log("Path node ",new_path_node.position," already exists")
+      console.log("Path node ",new_path_node.position," already exists")
     }
   }, []);
   
@@ -158,6 +162,7 @@ function Flow() {
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        // edgeTypes={edgeTypes}
         onNodesChange={onNodesChange} //change node positions on map live
         onEdgesChange={onEdgesChange} //change edge positions on map live
         onEdgeUpdate={onEdgeUpdate}

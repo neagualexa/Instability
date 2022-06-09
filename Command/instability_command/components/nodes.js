@@ -76,7 +76,7 @@ export function generateNodes(){
       
     }
   }
-  // console.log(nodes);
+  console.log("GENERATE NODES:", nodes);
   return nodes;
 }
 

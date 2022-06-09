@@ -6,12 +6,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 // https://mui.com/material-ui/react-checkbox/
-// import UpdateDisabledIcon from '@mui/icons-material/UpdateDisabled';
-// import UpdateIcon from '@mui/icons-material/Update';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+import { width } from '@mui/system';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -24,11 +23,13 @@ export default function App() {
       <SafeAreaProvider>
         <Navigation colorScheme={colorScheme} />
         <StatusBar />
-        <View style={styles.floatinBtn}>
-        <FormGroup >
-          {/* <FormControlLabel control={<Checkbox defaultChecked icon={<UpdateDisabledIcon />} checkedIcon={<UpdateIcon />}/>} label="Updates" /> */}
-          <FormControlLabel control={<Checkbox defaultChecked />} label="Updates" />
-        </FormGroup>
+        <View style={[styles.floatinBtn]}>
+          <FormGroup >
+            <FormControlLabel control={<Checkbox 
+                                  icon={<Text style={styles.icon}>OFF</Text>} 
+                                  checkedIcon={<Text style={[styles.icon_selected]}>ON</Text>} />} 
+                              label="Updates" labelPlacement="start" />
+          </FormGroup>
         </View>
       </SafeAreaProvider>
     );
@@ -43,8 +44,30 @@ const styles = StyleSheet.create({
   },
   floatinBtn: {
     position: 'absolute',
-    top: 15,
-    left: 70,
-    color:'white'
+    top: 63,
+    left: 0,
+    color:'white',
+    backgroundColor:"rgba(18,18,18,0.5)",
+    borderColor:"#222223",
+    borderWidth:0.1,
+    // paddingRight: 20,
+    width: 150,
+    alignItems:'flex-start',
+  },
+  icon:{
+    backgroundColor:"#121212",
+    color:"white",
+    width: 40,
+    borderColor:"#222223",
+    borderWidth: 2,
+    textAlign:'center'
+  },
+  icon_selected:{
+    backgroundColor:"#121212",
+    color:"white",
+    width: 40,
+    borderColor:"#f5fbe4",
+    borderWidth: 2,
+    textAlign:'center'
   }
 });

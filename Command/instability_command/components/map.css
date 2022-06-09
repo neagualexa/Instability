@@ -18,7 +18,8 @@
     font-family: 'space-mono';
     font-size: 6px;
     background: #7cad3e;
-    /* border-radius: 50%; */
+    /* left: -25px;
+    top: -25px; */
     width: 50px; /* 3rem x font-size */
     height: 50px;
     text-align: center;
@@ -30,6 +31,8 @@
     font-family: 'space-mono';
     font-size: 6px;
     background: #236477;
+    /* left: -25px;
+    top: -25px; */
     width: 50px;
     height: 50px;
     text-align: center;
@@ -43,6 +46,8 @@
     color: #bfbcb9;
     background: #344919;
     /* border-radius: 50%; */
+    /* left: -7.5px;
+    top: -7.5px; */
     width: 15px; /* 3 x font-size */
     height: 15px;
     text-align: center;
