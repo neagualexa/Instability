@@ -15,10 +15,25 @@ let initialNodes = [
 ];
 
 // console.log(initialNodes);
-let nodes = initialNodes;
+// let nodes = initialNodes;
 var myRequest = new Request('https://localhost:8000/nodes');
+var myRequestCurrentNode = new Request('https://localhost:8000/currentNode');
 
-export const getNodes = () => {
+export const getNodes = (nodes) => {
+  var currentNode = {}
+  // var nodes = initialNodes;
+    fetch(myRequestCurrentNode)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("HTTPS error, status = " + response.status);
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        currentNode = json; 
+        return
+      })
+
   fetch(myRequest)
     .then(function (response) {
       if (!response.ok) {
@@ -29,24 +44,27 @@ export const getNodes = () => {
     .then(function (json) {
       // console.log('START connection read:');
       // console.log(json);
-      generateNodes(json);
-      return 
+      nodes = generateNodes(json, currentNode, nodes); 
+      // console.log("GENERATED NODES:", nodes);
+      return
       // return (json);
     })
     // .catch(function (error) {
     //   console.log('Error: ' + error.message)
     // })
+
+    return nodes;
 };
 
-export function generateNodes(NodesJSON){
+export function generateNodes(NodesJSON, currentNode, nodes){
   //nodes are being added multiple times...must check if they exists in order to not add them again
   //code updates everytime we change the code...so should put the map as first/main page so it refreshes on it
   var exists = false;
   for (let i in NodesJSON) {
     exists = false;
     for(let n in nodes){
-      // console.log(nodes[n].id, '----', NodesJSON[i].id);
-      if(nodes[n].position == NodesJSON[i].position){
+      // console.log(nodes[n].position, '----', NodesJSON[i].position);
+      if((nodes[n].position.x == NodesJSON[i].position.x)&&(nodes[n].position.y == NodesJSON[i].position.y)){
         exists = true;
         // console.log("IF CASE: FOUND NODE");
         break;
@@ -75,17 +93,17 @@ export function generateNodes(NodesJSON){
       }
       else {
         //if(NodesJSON[i].id[0] == "p")
-        // if(currentNode.id == NodesJSON[i].id) { 
-        //   //should check the postion too to make sure that it has the same coords or to add a new node
-        //   nodes.push(
-        //     {
-        //       id: NodesJSON[i].id,
-        //       type: 'currentPos',
-        //       position: NodesJSON[i].position,
-        //       hidden: false
-        //     }
-        //   );
-        // } else {
+        if(currentNode.id == NodesJSON[i].id) { 
+          //should check the postion too to make sure that it has the same coords or to add a new node
+          nodes.push(
+            {
+              id: NodesJSON[i].id,
+              type: 'currentPos',
+              position: NodesJSON[i].position,
+              hidden: false
+            }
+          );
+        } else {
           nodes.push(
             {
               id: NodesJSON[i].id,
@@ -94,12 +112,12 @@ export function generateNodes(NodesJSON){
               hidden: false
             }
           );
-        // }
+        }
       }
       
     }
   }
-  console.log("GENERATE NODES:", nodes);
+  // console.log("GENERATE NODES:", nodes);
   return nodes;
 }
 

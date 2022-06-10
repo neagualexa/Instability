@@ -1,6 +1,6 @@
 {
     "motor_left": 255,
-    "motor_right": 33,
+    "motor_right": 8,
     "orientation": 45,
-    "squal": 51
+    "squal": 0
 }

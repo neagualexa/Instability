@@ -38,6 +38,14 @@ const requestListener = function (req, res) {
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/nodes.json'));
             break
+        case "/currentNode":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/currentNode.json'));
+            break
+        case "/edges":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/edges.json'));
+            break
         case "/status":
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/status.json'));

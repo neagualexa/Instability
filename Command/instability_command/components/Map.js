@@ -4,8 +4,8 @@ import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-f
 
 import useWindowDimensions from '../screens/getScreenDimensions'
 
-import initialNodes, { generateNodes, hidePath, addNode } from './nodes.js';
-import initialEdges, { generateEdges, hideEdges } from './edges.js';
+import initialNodes, { generateNodes, hidePath, addNode, getNodes } from './nodes.js';
+import initialEdges, { generateEdges, hideEdges, getEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
 import positionNode from './positionNode.js';
@@ -37,7 +37,7 @@ function Flow() {
   const yPos = useRef(0);
 
   //update the map with the json data directly
-  generateNodes();
+  // getNodes();
 
   const { height, width } = useWindowDimensions();
 
@@ -55,10 +55,12 @@ function Flow() {
   );
 
   const genNodes = useCallback(
-    () => setNodes(generateNodes()), [setNodes]
+    // () => setNodes(generateNodes()), [setNodes]
+    () => setNodes(getNodes(nodes)), [setNodes]
   );
   const genEdges = useCallback(
-    () => setEdges(generateEdges()), [setEdges]
+    // () => setEdges(generateEdges()), [setEdges]
+    () => setEdges(getEdges(edges, nodes)), [setEdges]
   );
 
   const hidePathNodes = useCallback(
@@ -83,7 +85,8 @@ function Flow() {
       // useEffect(() => {
         if(old_nodes != nodes){
         getPath(myRequestPATH)
-        getNodes(myRequestNODES)
+        getNode(myRequestNODE)
+        getAlien(myRequestALIEN)
         old_nodes = nodes;
         }
         
@@ -97,8 +100,8 @@ function Flow() {
   }, 900);
 
   // ADD NODES FETCH ________________________________________________________________________________________________________
-  var myRequestNODES = new Request('https://localhost:8000/end');
-  const getNodes = (myRequest) => {
+  var myRequestNODE = new Request('https://localhost:8000/end');
+  const getNode = (myRequest) => {
     
     fetch(myRequest)
       .then(function (response) {
@@ -211,6 +214,67 @@ function Flow() {
       console.log(nodes);
     } else {
       console.log("Path node ",new_path_node.position," already exists")
+    }
+  }, []);
+
+
+  // ADD NODES FETCH ________________________________________________________________________________________________________
+  var myRequestALIEN = new Request('https://localhost:8000/end');
+  const getAlien = (myRequest) => {
+    
+    fetch(myRequest)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("HTTPS error, status = " + response.status);
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        // console.log('START connection read:');
+        // console.log(json);
+        addNode(json);
+        return 
+        // return (json);
+      })
+      // .catch(function (error) {
+      //   console.log('Error: ' + error.message)
+      // })
+  };
+
+  const addAlien = useCallback((new_node) => {
+    const new_node_cm = {'position': { 
+                            'x':new_node['position']['x']/47, 
+                            'y':new_node['position']['y']/47
+                        }}
+    var found = false;
+    for (let n in nodes) {
+      if ((new_node_cm.position.x == nodes[n].position.x) && (new_node_cm.position.y == nodes[n].position.y)) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      console.log("Added node: ", new_node_cm)
+      var new_n = {
+        id: "p_" + nodes.length,
+        position: new_node_cm['position'],
+        type: 'position',
+        hidden: false
+      };
+      setNodes(() => {
+        if (!found) {
+          return [
+            ...nodes,
+            new_n
+          ];
+        } else {
+          return nodes;
+        }
+      });
+      nodes.push(new_n); 
+      console.log(nodes);
+    } else {
+      console.log("Position Node ",new_node_cm.position," already exists")
     }
   }, []);
   

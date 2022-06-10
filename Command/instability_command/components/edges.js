@@ -1,7 +1,7 @@
 // import EdgesJSON from '../../data/edges.json';
 // import NodesJSON from '../../data/nodes.json';
-let NodesJSON={}
-let EdgesJSON={}
+// let NodesJSON={}
+// let EdgesJSON={}
 // TODO: update edges on the website!!!!!!!!!
 
 const initialEdges = [
@@ -13,14 +13,35 @@ const initialEdges = [
 
 let edges = initialEdges;
 
-export function generateEdges(){
+var myRequest = new Request('https://localhost:8000/edges');
+
+export const getEdges = (edges, nodes) => {
+  fetch(myRequest)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("HTTPS error, status = " + response.status);
+      }
+      return response.json();
+    })
+    .then(function (json) {
+      // console.log(json);
+      generateEdges(json, edges, nodes);
+      return 
+      // return (json);
+    })
+    // .catch(function (error) {
+    //   console.log('Error: ' + error.message)
+    // })
+};
+
+export function generateEdges(EdgesJSON, edges, NodesJSON){
   var exists = false;
   for (let i in EdgesJSON) {
     exists = false;
     for(let n in edges){
       if(edges[n].id == EdgesJSON[i].id){
         exists = true;
-        // console.log("IF CASE: FOUND edge");
+        console.log("IF CASE: FOUND edge");
         break;
       }
     }
@@ -30,8 +51,8 @@ export function generateEdges(){
           id: EdgesJSON[i].id,
           source: EdgesJSON[i].source,
           target: EdgesJSON[i].target,
-          sourceHandle: getSourceHandle(i),
-          targetHandle: getTargetHandle(i),
+          sourceHandle: getSourceHandle(i, EdgesJSON, NodesJSON),
+          targetHandle: getTargetHandle(i, EdgesJSON, NodesJSON),
           hidden: false,
         }
       );
@@ -44,7 +65,7 @@ export function generateEdges(){
 let s = { };
 let t = { };
 
-function getSourceHandle(i) {
+function getSourceHandle(i, EdgesJSON, NodesJSON) {
   for (let n in NodesJSON) {
     if (EdgesJSON[i].source == NodesJSON[n].id) {
       s = NodesJSON[n];
@@ -85,7 +106,7 @@ function getSourceHandle(i) {
   return tag;
 }
 
-function getTargetHandle(i) {
+function getTargetHandle(i, EdgesJSON, NodesJSON) {
   for (let n in NodesJSON) {
     if (EdgesJSON[i].source == NodesJSON[n].id) {
       s = NodesJSON[n];
