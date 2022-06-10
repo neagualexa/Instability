@@ -46,10 +46,10 @@
     color: #bfbcb9;
     background: #344919;
     /* border-radius: 50%; */
-    /* left: -7.5px;
-    top: -7.5px; */
-    width: 15px; /* 3 x font-size */
-    height: 15px;
+    left: 22.5px;
+    top: 22.5px;
+    width: 7px; /* 3 x font-size */
+    height: 7px;
     text-align: center;
 }
 

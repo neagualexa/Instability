@@ -23,6 +23,7 @@ path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 # path = '~/ubuntu/Rover/Instability/Command' #to be checked
 
 while True: 
+
     connection_socket, caddr = welcome_socket.accept() 
     #notice recv and send instead of recvto and sendto 
     cmsg = connection_socket.recv(1024) 
@@ -52,7 +53,7 @@ while True:
                      
                     with open(path+'data/pathNode.json', 'w') as json_file:
                         cm_position = {"position":{ "x":float(path_dict['position']['x']/47.0), 
-                                        "y":float(path_dict['position']['y']/47.0)}}
+                                                    "y":float(path_dict['position']['y']/47.0)}}
                         json.dump(cm_position, json_file, indent = 4, sort_keys=True)
                     
                     with open(path+'data/status.json', 'w') as json_file:
@@ -65,7 +66,9 @@ while True:
                     # print(path_dict['position'])
                     path_dict = json.loads(live_msg)
                     with open(path+'data/pathNode.json', 'w') as json_file:
-                        json.dump(path_dict, json_file, indent = 4, sort_keys=True)
+                        cm_position = {"position":{ "x":float(path_dict['position']['x']/47.0), 
+                                                    "y":float(path_dict['position']['y']/47.0)}}
+                        json.dump(cm_position, json_file, indent = 4, sort_keys=True)
 
             # ALIEN NODE ------------------------------------------------------------------
             elif cmsg[0] == 'a':
@@ -79,7 +82,9 @@ while True:
                 
                 # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
                 with open(path+'data/alien.json', 'w') as json_file:
-                    json.dump(path_dict, json_file, indent = 4, sort_keys=True)
+                    cm_position = {"position":{ "x":float(path_dict['position']['x']/47.0), 
+                                                "y":float(path_dict['position']['y']/47.0)}}
+                    json.dump(cm_position, json_file, indent = 4, sort_keys=True)
                 
                 genAlienJSON.genAlienJSON()
 
@@ -100,10 +105,12 @@ while True:
                 print(obj_dict[obj]['position'])
                
                 with open(path+'data/'+obj+'.json', 'w') as json_file:
-                    json.dump(obj_dict[obj], json_file, indent = 4, sort_keys=True)
+                    cm_position = {"position":{ "x":float(obj_dict[obj]['position']['x']/47.0), 
+                                                "y":float(obj_dict[obj]['position']['y']/47.0)}}
+                    json.dump(cm_position, json_file, indent = 4, sort_keys=True)
                     
             genJSON.genJSON()
     else:
         print('ERROR: cmsg is empty/none')
 
-    # connection_socket.send(obj_dict['node02']) # assuming first is currentPos,second is nextPos
+    # connection_socket.send("testing 1", c1add) # assuming first is currentPos,second is nextPos

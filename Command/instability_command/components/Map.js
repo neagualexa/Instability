@@ -86,7 +86,7 @@ function Flow() {
         if(old_nodes != nodes){
         getPath(myRequestPATH)
         getNode(myRequestNODE)
-        getAlien(myRequestALIEN)
+        // getAlien(myRequestALIEN)
         old_nodes = nodes;
         }
         
@@ -101,8 +101,24 @@ function Flow() {
 
   // ADD NODES FETCH ________________________________________________________________________________________________________
   var myRequestNODE = new Request('https://localhost:8000/end');
+  var myRequestSTARTNODE = new Request('https://localhost:8000/start');
   const getNode = (myRequest) => {
-    
+    var start_node = {}
+    fetch(myRequestSTARTNODE)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("HTTPS error, status = " + response.status);
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        // console.log('START connection read:');
+        // console.log(json);
+        start_node = json;
+        return 
+        // return (json);
+      })
+
     fetch(myRequest)
       .then(function (response) {
         if (!response.ok) {
@@ -113,7 +129,7 @@ function Flow() {
       .then(function (json) {
         // console.log('START connection read:');
         // console.log(json);
-        addNode(json);
+        addNode(json, start_node);
         return 
         // return (json);
       })
@@ -122,42 +138,33 @@ function Flow() {
       // })
   };
 
-  const addNode = useCallback((new_node) => {
-    const new_node_cm = {'position': { 
-                            'x':new_node['position']['x']/47, 
-                            'y':new_node['position']['y']/47
-                        }}
+  const addNode = useCallback((new_node, start_node) => {
+    console.log(start_node)
+
     var found = false;
     for (let n in nodes) {
-      if ((new_node_cm.position.x == nodes[n].position.x) && (new_node_cm.position.y == nodes[n].position.y)) {
+      if ((new_node.position.x == nodes[n].position.x) && (new_node.position.y == nodes[n].position.y)) {
         found = true;
         break;
       }
     }
     if (!found) {
-      console.log("Added node: ", new_node_cm)
+      console.log("Added node: ", new_node)
       var new_n = {
         id: "p_" + nodes.length,
-        position: new_node_cm['position'],
+        position: new_node['position'],
         type: 'currentPos',
         hidden: false
       };
       setNodes(() => {
         if (!found) {
-          n = []
-          for (let i in nodes) {
-            if ( i <= nodes.length-2 ) {
-              n.push(nodes[i])
-            } else {
-              n.push({
-                id: nodes[i]['id'],
-                position: nodes['position'],
-                type: 'currentPos',
-                hidden: false
-              })
-            }
-            
-          }
+          // for (let i in nodes){
+          //   if(start_node.position.x == nodes[i].position.x && start_node.position.y == nodes[i].position.y) {
+          //     nodes[i]["type"] = "position";
+          //     break
+          //   }
+          // }
+          
           return [
             ...nodes,
             new_n
@@ -169,7 +176,7 @@ function Flow() {
       nodes.push(new_n); 
       console.log(nodes);
     } else {
-      console.log("Position Node ",new_node_cm.position," already exists")
+      // console.log("Position Node ",new_node_cm.position," already exists")
     }
   }, []);
 
@@ -192,9 +199,9 @@ function Flow() {
         return 
         // return (json);
       })
-      // .catch(function (error) {
-      //   console.log('Error: ' + error.message)
-      // })
+      .catch(function (error) {
+        console.log('Error LIVE PATH: ' + error.message)
+      })
   };
 
   const livePathNode = useCallback((new_path_node) => {
@@ -207,7 +214,7 @@ function Flow() {
       }
     }
     if (!found) {
-      console.log("Added node: ", new_path_node)
+      // console.log("Added node: ", new_path_node)
       new_path = {
         id: "l_" + Math.random(),
         position: new_path_node['position'],
@@ -227,13 +234,13 @@ function Flow() {
       nodes.push(new_path); 
       console.log(nodes);
     } else {
-      console.log("Path node ",new_path_node.position," already exists")
+      // console.log("Path node ",new_path_node.position," already exists")
     }
   }, []);
 
 
-  // ADD NODES FETCH ________________________________________________________________________________________________________
-  var myRequestALIEN = new Request('https://localhost:8000/end');
+  // ADD ALIEN FETCH ________________________________________________________________________________________________________
+  var myRequestALIEN = new Request('https://localhost:8000/alien');
   const getAlien = (myRequest) => {
     
     fetch(myRequest)
@@ -246,33 +253,29 @@ function Flow() {
       .then(function (json) {
         // console.log('START connection read:');
         // console.log(json);
-        addNode(json);
+        addAlien(json);
         return 
         // return (json);
       })
-      // .catch(function (error) {
-      //   console.log('Error: ' + error.message)
-      // })
+      .catch(function (error) {
+        console.log('Error ALIEN: ' + error.message)
+      })
   };
 
-  const addAlien = useCallback((new_node) => {
-    const new_node_cm = {'position': { 
-                            'x':new_node['position']['x']/47, 
-                            'y':new_node['position']['y']/47
-                        }}
+  const addAlien = useCallback((new_alien) => {
     var found = false;
     for (let n in nodes) {
-      if ((new_node_cm.position.x == nodes[n].position.x) && (new_node_cm.position.y == nodes[n].position.y)) {
+      if ((new_alien.position.x == nodes[n].position.x) && (new_alien.position.y == nodes[n].position.y)) {
         found = true;
         break;
       }
     }
     if (!found) {
-      console.log("Added node: ", new_node_cm)
+      console.log("Added alien: ", new_alien)
       var new_n = {
         id: "p_" + nodes.length,
-        position: new_node_cm['position'],
-        type: 'position',
+        position: new_alien['position'],
+        type: 'alien',
         hidden: false
       };
       setNodes(() => {
@@ -288,7 +291,7 @@ function Flow() {
       nodes.push(new_n); 
       console.log(nodes);
     } else {
-      console.log("Position Node ",new_node_cm.position," already exists")
+      console.log("Alien Node ",new_alien.position," already exists")
     }
   }, []);
   

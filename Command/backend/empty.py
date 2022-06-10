@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import json
 
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
@@ -48,8 +47,8 @@ with open(path+'data/currentNode.json', 'w') as json_file:
 
 pathNode = {
     "position": {
-        "x": NULL,
-        "y": NULL
+        "x": 0,
+        "y": 0
     }
 }
 

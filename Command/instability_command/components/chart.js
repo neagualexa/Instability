@@ -4,7 +4,8 @@ import Chart from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import {CategoryScale} from 'chart.js'; 
 Chart.register(CategoryScale);
-import 'chartjs-plugin-zoom'
+import zoomPlugin from 'chartjs-plugin-zoom';
+Chart.register(zoomPlugin);
 
 export function getDataXList(data){
     var data_list = [];
@@ -39,14 +40,25 @@ const LineGraph = ({chartData}) => {
                     display:true,
                     position:'right'
                 },
-                zoom: {
-                  enabled: true,
-                  mode: 'x',
-                },
-                pan: {
-                  enabled: true,
-                  mode: 'x',
-                },
+                plugins: {
+                  zoom: {
+                    zoom: {
+                      wheel: {
+                        enabled: true,
+                      },
+                      pinch: {
+                        enabled: true,
+                      },
+                      sensitivity:0.5, 
+                      // drag: true,
+                      mode: 'x',
+                    },
+                    pan: {
+                      enabled: true,
+                      mode: 'xy',
+                    }
+                  }
+                }
             }}
             />
         </div>

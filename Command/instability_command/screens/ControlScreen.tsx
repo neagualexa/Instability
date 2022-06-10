@@ -216,7 +216,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
                 <LineGraph chartData={motorSpeed} />
               </View>
               <View style={{ padding: 10 }}>
-                <TouchableOpacity onPress={connect} style={styles.roundButton1}>
+                <TouchableOpacity onPress={connect} style={[styles.roundButton1,{right:5}]}>
                   <Text style={styles.text}>Update Motors</Text></TouchableOpacity>
               </View>
             </View>

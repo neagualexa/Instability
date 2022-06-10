@@ -49,19 +49,26 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
         ? 
           <div className= "positionNode">
             <div> - </div>
-            <div> - </div>
             <div>
-              <strong>({xPos+''};{yPos+''})</strong>
+              <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
             </div>
+            <div> - </div>
+            <div> - </div>
           </div>
         :
-          <div className= "positionNode" style={{background:"#4a6c2f"}}>
-            <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
-            <div style={{color:'#cfdfda'}}>
-              <strong>({xPos+''};{yPos+''})</strong>
+          <div>
+            <div className= "positionNode" style={{background:"#4a6c2f"}}>
+              <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
+              <div style={{color:'#cfdfda'}}>
+                <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
+              </div>
+              <div style={{color:'#cfdfda'}}> -?- </div>
+              <div style={{color:'#cfdfda'}}> - </div>
             </div>
-            <div style={{color:'#cfdfda'}}> -?- </div>
+
+            <script> {/* TODO: call back to the database https server and send the PosX and PosY */}</script>
           </div>
+          
       }
 
       {/* BOTTOM */}

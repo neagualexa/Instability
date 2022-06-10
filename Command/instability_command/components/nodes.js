@@ -33,6 +33,9 @@ export const getNodes = (nodes) => {
         currentNode = json; 
         return
       })
+      .catch(function (error) {
+        console.log('Error currentNODE: ' + error.message)
+      })
 
   fetch(myRequest)
     .then(function (response) {
@@ -49,9 +52,9 @@ export const getNodes = (nodes) => {
       return
       // return (json);
     })
-    // .catch(function (error) {
-    //   console.log('Error: ' + error.message)
-    // })
+    .catch(function (error) {
+      console.log('Error NODES: ' + error.message)
+    })
 
     return nodes;
 };
@@ -59,18 +62,7 @@ export const getNodes = (nodes) => {
 export function generateNodes(NodesJSON, currentNode, nodes){
   //nodes are being added multiple times...must check if they exists in order to not add them again
   //code updates everytime we change the code...so should put the map as first/main page so it refreshes on it
-  var exists = false;
   for (let i in NodesJSON) {
-    exists = false;
-    for(let n in nodes){
-      // console.log(nodes[n].position, '----', NodesJSON[i].position);
-      if((nodes[n].position.x == NodesJSON[i].position.x)&&(nodes[n].position.y == NodesJSON[i].position.y)){
-        exists = true;
-        // console.log("IF CASE: FOUND NODE");
-        break;
-      }
-    }
-    if (!exists){
       if(NodesJSON[i].id[0] == "a"){
         nodes.push(
           {
@@ -96,7 +88,7 @@ export function generateNodes(NodesJSON, currentNode, nodes){
         //if(NodesJSON[i].id[0] == "p")
         if(currentNode.id == NodesJSON[i].id) { 
           //should check the postion too to make sure that it has the same coords or to add a new node
-          console.log("create as current node")
+          // console.log("create as current node")
           nodes.push(
             {
               id: NodesJSON[i].id,
@@ -115,23 +107,7 @@ export function generateNodes(NodesJSON, currentNode, nodes){
             }
           );
         }
-      }
-    } else {
-      console.log(currentNode, currentNode.id, NodesJSON[i].id)
-        //if(NodesJSON[i].id[0] == "p")
-        if(currentNode.id == NodesJSON[i].id) { 
-          //should check the postion too to make sure that it has the same coords or to add a new node
-          console.log("create as current node")
-          nodes.push(
-            {
-              id: NodesJSON[i].id,
-              type: 'currentPos',
-              position: NodesJSON[i].position,
-              hidden: false
-            }
-          );
-        }
-    }
+      } 
   }
   // console.log("GENERATE NODES:", nodes);
   return nodes;

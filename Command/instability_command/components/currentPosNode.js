@@ -51,16 +51,18 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
             <div> - </div>
             <div> - </div>
             <div>
-              <strong>({xPos+''};{yPos+''})</strong>
+              <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
             </div>
+            <div> - </div>
           </div>
         :
           <div className= "currentPosNode" style={{background:"#173042"}}>
             <div style={{color:'#cfdfda'}}> -rover- </div>
             <div style={{color:'#cfdfda'}}> -is here- </div>
             <div style={{color:'#cfdfda'}}>
-              <strong>({xPos+''};{yPos+''})</strong>
+              <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
             </div>
+            <div style={{color:'#cfdfda'}}> - </div>
           </div>
       }
 

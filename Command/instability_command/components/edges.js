@@ -11,7 +11,7 @@ const initialEdges = [
   // { id: 'e1-5', source: '1', target: '5' , sourceHandle: 'right_out',  targetHandle: 'left_in'}, //East
 ];
 
-let edges = initialEdges;
+// let edges = initialEdges;
 
 var myRequest = new Request('https://localhost:8000/edges');
 
@@ -29,10 +29,12 @@ export const getEdges = (edges, nodes) => {
       return 
       // return (json);
     })
-    // .catch(function (error) {
-    //   console.log('Error: ' + error.message)
-    // })
+    .catch(function (error) {
+      console.log('Error EDGES: ' + error.message)
+    })
 };
+
+// TODO: add backwards edge when generating a new connection, complete the opposite (target to source and source to target edges)
 
 export function generateEdges(EdgesJSON, edges, NodesJSON){
   var exists = false;
@@ -41,7 +43,7 @@ export function generateEdges(EdgesJSON, edges, NodesJSON){
     for(let n in edges){
       if(edges[n].id == EdgesJSON[i].id){
         exists = true;
-        console.log("IF CASE: FOUND edge");
+        // console.log("IF CASE: FOUND edge");
         break;
       }
     }

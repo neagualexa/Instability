@@ -15,21 +15,19 @@ def genJSON():
   # add end_node into the nodeJSON to be read by the webpage
   # GENERATING THE ID SHOULD BE MADE EVEN MORE COMPLEX TO NOT RUN OUT OF VALUES
   newNodeID = 'p' + str(len(nodes_dict)+1)
-  cm_position_END = { 'x':float(end_node['position']['x']/47.0), 
-                      'y':float(end_node['position']['y']/47.0)}
   found = False
   for n in nodes_dict:
-    if nodes_dict[n]['position'] == cm_position_END:
+    if nodes_dict[n]['position'] == end_node['position']:
       found = True
 
   if found == False:
     new_node = {
       'id': newNodeID,
-      'position': cm_position_END
+      'position': end_node['position']
     }
     nodes_dict[newNodeID] = new_node # assume the start node is already in the mapJSON
-    print('current:: ', start_node)
-    print('new::     ', end_node)
+    print('start:: ', start_node)
+    print('end::     ', end_node)
     print(nodes_dict)
 
     # ADDing the live path nodes
@@ -48,10 +46,8 @@ def genJSON():
     # generate edge/path just completed
     for n in nodes_dict:
       exists = False
-      cm_position_START = { 'x':float(start_node['position']['x']/47.0), 
-                            'y':float(start_node['position']['y']/47.0)}
       # if start node exists in the map already
-      if cm_position_START == nodes_dict[n]['position']:
+      if start_node['position'] == nodes_dict[n]['position']:
         exists = True
         source = nodes_dict[n]['id']
         newEdgeID = 'edge' + str(len(edges_dict)+1)
