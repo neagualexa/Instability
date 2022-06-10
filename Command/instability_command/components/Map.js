@@ -139,11 +139,25 @@ function Flow() {
       var new_n = {
         id: "p_" + nodes.length,
         position: new_node_cm['position'],
-        type: 'position',
+        type: 'currentPos',
         hidden: false
       };
       setNodes(() => {
         if (!found) {
+          n = []
+          for (let i in nodes) {
+            if ( i <= nodes.length-2 ) {
+              n.push(nodes[i])
+            } else {
+              n.push({
+                id: nodes[i]['id'],
+                position: nodes['position'],
+                type: 'currentPos',
+                hidden: false
+              })
+            }
+            
+          }
           return [
             ...nodes,
             new_n

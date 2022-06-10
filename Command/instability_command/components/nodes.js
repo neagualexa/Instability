@@ -8,7 +8,7 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 let initialNodes = [
   {
     id: 'p0',
-    type: 'position',
+    type: 'currentPos',
     position: { x: 0, y: 0 },
     hidden: false,
   },
@@ -92,9 +92,11 @@ export function generateNodes(NodesJSON, currentNode, nodes){
         );
       }
       else {
+        console.log(currentNode, currentNode.id, NodesJSON[i].id)
         //if(NodesJSON[i].id[0] == "p")
         if(currentNode.id == NodesJSON[i].id) { 
           //should check the postion too to make sure that it has the same coords or to add a new node
+          console.log("create as current node")
           nodes.push(
             {
               id: NodesJSON[i].id,
@@ -114,7 +116,21 @@ export function generateNodes(NodesJSON, currentNode, nodes){
           );
         }
       }
-      
+    } else {
+      console.log(currentNode, currentNode.id, NodesJSON[i].id)
+        //if(NodesJSON[i].id[0] == "p")
+        if(currentNode.id == NodesJSON[i].id) { 
+          //should check the postion too to make sure that it has the same coords or to add a new node
+          console.log("create as current node")
+          nodes.push(
+            {
+              id: NodesJSON[i].id,
+              type: 'currentPos',
+              position: NodesJSON[i].position,
+              hidden: false
+            }
+          );
+        }
     }
   }
   // console.log("GENERATE NODES:", nodes);

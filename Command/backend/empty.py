@@ -1,10 +1,10 @@
+from asyncio.windows_events import NULL
 import json
 
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
 with open(path+'data/pathNodes.json', 'w') as json_file:
     json.dump({}, json_file, indent = 4, sort_keys=True)
-
 
 # EDGES AND NODES ------------------------------------------------------------
 with open(path+'data/nodes.json', 'r') as nodes:
@@ -18,8 +18,43 @@ for n in nodes_dict:
 with open(path+'data/nodes.json', 'w') as json_file:
     json.dump(updated_dict, json_file, indent = 4, sort_keys=True)
 
+edges = {
+    "edge0":{
+    "id": "edgep0-p1",
+    "source": "p0",
+    "target": "p1"
+    }
+}
+
 with open(path+'data/edges.json', 'w') as json_file:
-    json.dump({}, json_file, indent = 4, sort_keys=True)
+    json.dump(edges, json_file, indent = 4, sort_keys=True)
+
+currentNode = {
+    "id": "p0",
+    "position": {
+        "x": 0,
+        "y": 0
+    }
+}
+
+with open(path+'data/end.json', 'w') as json_file:
+    json.dump(currentNode, json_file, indent = 4, sort_keys=True)
+
+with open(path+'data/start.json', 'w') as json_file:
+    json.dump(currentNode, json_file, indent = 4, sort_keys=True)
+
+with open(path+'data/currentNode.json', 'w') as json_file:
+    json.dump(currentNode, json_file, indent = 4, sort_keys=True)
+
+pathNode = {
+    "position": {
+        "x": NULL,
+        "y": NULL
+    }
+}
+
+with open(path+'data/pathNode.json', 'w') as json_file:
+    json.dump(pathNode, json_file, indent = 4, sort_keys=True)
 
 
 # SQUAL ---------------------------------------------------------------------
