@@ -4,7 +4,35 @@ import { Handle } from 'react-flow-renderer';
 
 var sizePos = 9;
 
+let path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+
+
 export default memo(({selected, isConnectable, xPos, yPos}) => {
+
+  const moveto = () => {
+    var xhr = new XMLHttpRequest()
+    console.log("sending to /moveto...", xPos, yPos)
+    // get a callback when the server responds
+    xhr.addEventListener('load', () => {
+      // update the state of the component with the result here
+      console.log(xhr.responseText)
+    })
+    // open the request with the verb and the url
+    // xhr.open('GET', 'https://localhost:8000/moveto')
+    // // send the request
+    // xhr.send()
+    xhr.open('POST', 'https://localhost:8000/moveto')
+    xhr.send(
+      JSON.stringify({ 
+        position: {
+          x: xPos,
+          y: yPos
+        }
+       })
+    )
+
+  }
+
   return (
     <>
     {/* CONNECTORS WORK ANTICLOCKWISE */}
@@ -63,7 +91,8 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
                 <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
               </div>
               <div style={{color:'#cfdfda'}}> -?- </div>
-              <div style={{color:'#cfdfda'}}> - </div>
+              <button style={{color:'#cfdfda'}} onClick={moveto}> yes </button>
+              {/* <div style={{color:'#cfdfda'}}> - </div> */}
             </div>
 
             <script> {/* TODO: call back to the database https server and send the PosX and PosY */}</script>

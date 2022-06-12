@@ -22,7 +22,27 @@ const books = JSON.stringify([
 const requestListener = function (req, res) {
     if (cors(req, res)) return
 
-    res.setHeader("Content-Type", "application/json");
+    console.dir(req.method)
+    console.log(req.body)
+    
+
+    if (req.method == 'POST') {
+        console.log('POST')
+        var body = ''
+        req.on('data', function(data) {
+            body += data
+            console.log('Partial body: ' + body)
+        })
+        req.on('end', function() {
+            console.log('Body: ' + body)
+            fs.writeFileSync(path+'data/moveto.json', body)
+            res.writeHead(200)
+            res.end('post received')
+        })
+    } else {
+        console.log('GET')
+        res.setHeader("Content-Type", "application/json");
+    
     switch (req.url) {
         case '/':
             res.writeHead(200);
@@ -66,9 +86,14 @@ const requestListener = function (req, res) {
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/squal.json'));
             break
+        case "/moveto":
+            res.writeHead(200)
+            res.end(fs.readFileSync(path+'data/moveto.json'));
+            break
         default:
             res.writeHead(404);
             res.end(JSON.stringify({error:"Resource not found - TRY / or /status or anything under status"}));
+        }
     }
 }
 
