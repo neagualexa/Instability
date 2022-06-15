@@ -11,19 +11,25 @@ import alienNode from './alienNode.js';
 import positionNode from './positionNode.js';
 import currentPosNode from './currentPosNode.js';
 import pathNode from './pathNode.js';
-import centeredEdge from './centeredEdge.js'
+import centeredEdge from './centeredEdge.js';
+import goto_positionNode from './goto_positionNode.js';
+import manual_gotoNode from './manual_gotoNode';
 
 import './map.css';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text ,TextInput, View } from 'react-native';
 import { BiAddToQueue, BiAnalyse, BiVector } from "react-icons/bi"; {/* https://react-icons.github.io/react-icons/icons?name=bi */ }
 
 import { checkState } from './floatingButton.js';
+
+
 
 const nodeTypes = {
   position: positionNode,
   alien: alienNode,
   currentPos: currentPosNode,
   path: pathNode,
+  goto: goto_positionNode,
+  manual_goto: manual_gotoNode
 };
 
 const edgeTypes = {
@@ -35,6 +41,7 @@ function Flow() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const yPos = useRef(0);
+  const xPos = useRef(0);
 
   //update the map with the json data directly
   // getNodes();
@@ -79,25 +86,14 @@ function Flow() {
     console.log("map OUT interval: ", checkState)
     var old_nodes = [];
     if(checkState){
-      // console.log("map: ",checkState)
-      // intervalID1 = setInterval( () => {
-      
-      // useEffect(() => {
         if(old_nodes != nodes){
         getPath(myRequestPATH)
         getNode(myRequestNODE)
-        // getAlien(myRequestALIEN)
+        // getAlien(myRequestALIEN) //TODO: to be uncommented!!!!!!!
         old_nodes = nodes;
         }
-        
-      // }, [nodes]); // Only re-run the effect if nodes changes
-
-      // }, 900);
     }
-    // } else {
-    //   clearInterval(intervalID1);
-    // }
-  }, 900);
+  }, 1400);
 
   // ADD NODES FETCH ________________________________________________________________________________________________________
   var myRequestNODE = new Request('https://localhost:8000/end');
@@ -300,11 +296,12 @@ function Flow() {
   //TODO: manually add local node to the map to ask rover to move to specific location
   const addNodeManual = useCallback(() => {
     yPos.current += 50;
+    xPos.current += 50;
     var newN = {
-      id: "l_"+Math.random(),
-      position: { x: 100, y: yPos.current },
-      data: { label: "yo" },
-      type:'path',
+      id: "p_"+Math.random(),
+      position: { x: xPos.current, y: yPos.current },
+      data: { label: "new" },
+      type:'manual_goto',
       hidden:false
     };
     nodes.push(newN);

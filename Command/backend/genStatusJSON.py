@@ -25,7 +25,6 @@ def genStatus():
     with open(path+'data/motors.json', 'r') as c:
         motors_dict = json.load(c)
 
-    # TODO: change the status_dict[left or right Speed label names]
     motors_dict['data']['left'].append({'x':len(motors_dict['data']['left']), 'y':status_dict['motor_left']})
     motors_dict['data']['right'].append({'x':len(motors_dict['data']['right']), 'y':status_dict['motor_right']})
     motors_dict['orientation'] = status_dict['orientation']

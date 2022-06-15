@@ -1,11 +1,12 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 import { Handle } from 'react-flow-renderer';
-import { Text } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
 
 var sizePos = 9;
 
 let path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+
 
 
 export default memo(({selected, isConnectable, xPos, yPos}) => {
@@ -76,17 +77,17 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
       {
         !(selected) 
         ? 
-          <div className= "positionNode">
-            <div> - </div>
+          <div className= "goto_positionNode">
+            <div> -Click to- </div>
+            <div> -confirm- </div>
             <div>
               <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
             </div>
-            <div> - </div>
-            <div> - </div>
+            <div> -or refresh- </div>
           </div>
         :
           <div>
-            <div className= "positionNode" style={{background:"#4a6c2f"}}>
+            <div className= "goto_positionNode">
               <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
               <div style={{color:'#cfdfda'}}>
                 <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
