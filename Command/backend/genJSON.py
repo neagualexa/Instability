@@ -53,8 +53,10 @@ def genJSON():
         newEdgeID = 'edge' + str(len(edges_dict)+1)
         target=new_node['id']
 
-        id = 'e'+source+'-'+target
-        edges_dict[newEdgeID] = { 'id': id, 'source': source, 'target': target }
+        idA = 'e'+source+'-'+target
+        edges_dict[newEdgeID+'a'] = { 'id': idA, 'source': source, 'target': target }
+        idB = 'e'+target+'-'+source
+        edges_dict[newEdgeID+'b'] = { 'id': idB, 'source': target, 'target': source }
         print(edges_dict)
 
         # UPDATING currentNode

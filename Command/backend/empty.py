@@ -18,10 +18,15 @@ with open(path+'data/nodes.json', 'w') as json_file:
     json.dump(updated_dict, json_file, indent = 4, sort_keys=True)
 
 edges = {
-    "edge0":{
+    "edge0a":{
     "id": "edgep0-p1",
     "source": "p0",
     "target": "p1"
+    },
+    "edge0b":{
+    "id": "edgep1-p0",
+    "source": "p1",
+    "target": "p0"
     }
 }
 

@@ -60,7 +60,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
         type="target"
         position="right"
         id="right_in"
-        style={{ top: sizePos*2, height:5, width:5, background: '#555'  }}
+        style={{ top: sizePos*1.4, height:5, width:5, background: '#555'  }}
         onConnect={(params) => console.log('handle onConnect', params)}
         isConnectable={isConnectable}
       />
@@ -122,7 +122,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
         type="source"
         position="left"
         id="left_out"
-        style={{ top: sizePos*2, height:5, width:5, background: '#555' }}
+        style={{ top: sizePos*1.4, height:5, width:5, background: '#555' }}
         onConnect={(params) => console.log('handle onConnect', params)}
         isConnectable={isConnectable}
       />
