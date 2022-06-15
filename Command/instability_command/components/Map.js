@@ -286,7 +286,7 @@ function Flow() {
         }
       });
       nodes.push(new_n); 
-      console.log(nodes);
+      // console.log(nodes);
     } else {
       console.log("Alien Node ",new_alien.position," already exists")
     }
