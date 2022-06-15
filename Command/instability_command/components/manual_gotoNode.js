@@ -8,18 +8,14 @@ var sizePos = 9;
 let path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
 
-export default memo(({selected, isConnectable, xPos, yPos, hidden}) => {
 
-    // ASK FOR COORDS TO MOVE TO______________________________________________________________________________
-    const [xCoord, setXCoord] = useState(xPos)
-    const [yCoord, setYCoord] = useState(yPos)
-    const [confirm, setConfirm] = useState(false)
+export default memo(({selected, isConnectable, xPos, yPos}) => {
+
+  const [movingTo, setmovingTo] = useState(false)
 
   const moveto = () => {
-    hidden = true;
-    
     var xhr = new XMLHttpRequest()
-    console.log("sending to /moveto...", xCoord, yCoord)
+    console.log("sending to /moveto...", xPos, yPos)
     // get a callback when the server responds
     xhr.addEventListener('load', () => {
       // update the state of the component with the result here
@@ -33,69 +29,126 @@ export default memo(({selected, isConnectable, xPos, yPos, hidden}) => {
     xhr.send(
       JSON.stringify({ 
         position: {
-          x: xCoord,
-          y: yCoord
+          x: xPos,
+          y: yPos
         }
        })
     )
+    setmovingTo(true)
 
   }
 
   return (
     <>
+    {/* CONNECTORS WORK ANTICLOCKWISE */}
+    {/* TOP */}
+      <Handle
+        type="target"
+        position="top"
+        id= "top_in"
+        style={{ left: sizePos*2, height:5, width:5, background: '#555' }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      /> 
+      <Handle
+        type="source"
+        position="top"
+        id= "top_out"
+        style={{ left: sizePos*4, height:5, width:5, background: '#555' }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      /> 
+
+    {/* RIGHT */}
+      <Handle
+        type="target"
+        position="right"
+        id="right_in"
+        style={{ top: sizePos*2, height:5, width:5, background: '#555'  }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      />
+      <Handle
+        type="source"
+        position="right"
+        id="right_out"
+        style={{ top: sizePos*4, height:5, width:5, background: '#555' }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      /> 
 
       {
-        (!confirm)
-        ?
-          <div className= "manual_gotoNode" style={{justifyContent:'center'}}>
-
-            <div> Input coords </div>
-            
-            <TextInput onChangeText={setXCoord}
-            value={xCoord}
-            placeholder="X"
-            keyboardType="numeric"
-            maxLength={3} 
-            style={{width: 15, maxHeight:15, alignItems:'center', justifyContent:'center', color:'#cfdfda', fontSize:8, fontFamily:'space-mono'}}/>
-            <Text style={{color:'#cfdfda', fontSize:8, fontFamily:'space-mono'}}>;</Text>
-            <TextInput onChangeText={setYCoord}
-            value={yCoord}
-            placeholder="Y"
-            keyboardType="numeric"
-            maxLength={3} 
-            style={{width: 15, maxHeight:15, alignItems:'center', justifyContent:'center', color:'#cfdfda', fontSize:8, fontFamily:'space-mono'}}/>
-
-            <div></div>
-            <button style={{width: 20, maxHeight:15, alignItems:'center', justifyContent:'center', color:'#4a6c2f', fontSize:8}} 
-                    onClick={() => {setConfirm(true)}}>
-                  ok</button>
-          </div>
-        :
+         !(movingTo)
+         ?
           !(selected) 
           ? 
-            <div className= "manual_gotoNode">
+            <div className= "goto_positionNode">
               <div> -Click to- </div>
               <div> -confirm- </div>
               <div>
-                <strong>({xCoord+''};{yCoord+''})</strong>
+                <strong>({xPos+''};{yPos+''})</strong>
               </div>
               <div> -or refresh- </div>
             </div>
           :
             <div>
-              <div className= "manual_gotoNode">
+              <div className= "goto_positionNode">
                 <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
                 <div style={{color:'#cfdfda'}}>
-                  <strong>({xCoord+''};{yCoord+''})</strong>
+                  <strong>({xPos+''};{yPos+''})</strong>
                 </div>
                 <div style={{color:'#cfdfda'}}> -?- </div>
                 <button style={{width: 30, maxHeight:15, alignItems:'center', justifyContent:'center', color:'#4a6c2f', fontSize:8}} onClick={moveto}>
                   yes</button>
               </div>
             </div>
+        :
+        <div className= "goto_positionNode">
+          <div> -Moving- </div>
+          <div> -to- </div>
+          <div>
+            <strong>({xPos+''};{yPos+''})</strong>
+          </div>
+          <div> - </div>
+        </div>
           
       }
 
+      {/* BOTTOM */}
+      <Handle
+        type="source"
+        position="bottom"
+        id="bottom_out"
+        style={{ left: sizePos*2, height:5, width:5, background: '#555'  }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      />
+      <Handle
+        type="target"
+        position="bottom"
+        id="bottom_in"
+        style={{ left: sizePos*4, height:5, width:5, background: '#555'  }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      />
+
+      {/* LEFT */}
+      <Handle
+        type="source"
+        position="left"
+        id="left_out"
+        style={{ top: sizePos*2, height:5, width:5, background: '#555' }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      />
+      <Handle
+        type="target"
+        position="left"
+        id="left_in"
+        style={{top: sizePos*4, height:5, width:5, background: '#555' }}
+        onConnect={(params) => console.log('handle onConnect', params)}
+        isConnectable={isConnectable}
+      />
     </>
   );
 });

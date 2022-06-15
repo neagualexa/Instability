@@ -115,7 +115,7 @@ export function generateNodes(NodesJSON, currentNode, nodes){
 
 export function hidePath(all_nodes){
   for (let i in all_nodes) {
-    if(all_nodes[i]['id'][0] == "l"){
+    if(all_nodes[i]['id'][0] == "l" || all_nodes[i]['id'][0] == "gt"){
       if (all_nodes[i]['hidden'] == true){
         all_nodes[i]['hidden'] = false;
       } else {

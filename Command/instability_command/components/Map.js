@@ -23,6 +23,7 @@ import { checkState } from './floatingButton.js';
 
 
 
+
 const nodeTypes = {
   position: positionNode,
   alien: alienNode,
@@ -63,7 +64,7 @@ function Flow() {
 
   const genNodes = useCallback(
     // () => setNodes(generateNodes()), [setNodes]
-    () => setNodes(getNodes(nodes)), [setNodes]
+    () => {setNodes(getNodes(nodes), hidePath(nodes))}, [setNodes]
   );
   const genEdges = useCallback(
     // () => setEdges(generateEdges()), [setEdges]
@@ -294,13 +295,13 @@ function Flow() {
 
   // MANUALLY ADD NODE _________________________________________________________________________________________
   //TODO: manually add local node to the map to ask rover to move to specific location
-  const addNodeManual = useCallback(() => {
-    yPos.current += 50;
-    xPos.current += 50;
+  const [xCoord, setXCoord] = useState(50)
+  const [yCoord, setYCoord] = useState(50)
+
+  const addNodeManual = useCallback((xCoord, yCoord) => {
     var newN = {
-      id: "p_"+Math.random(),
-      position: { x: xPos.current, y: yPos.current },
-      data: { label: "new" },
+      id: "gt_"+Math.random(),
+      position: { x: xCoord, y: yCoord },
       type:'manual_goto',
       hidden:false
     };
@@ -339,14 +340,37 @@ function Flow() {
 
       >
         <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
-        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 35, alignItems: 'center' }}>
-          <ControlButton onClick={addNodeManual} style={{ width: 25 }}> <BiAddToQueue /> </ControlButton>
+        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 60, alignItems: 'center' }}>
           <ControlButton onClick={genNodes} style={{ width: 25 }}> <BiAnalyse /> </ControlButton>
           <ControlButton onClick={hidePathNodes} style={{ width: 25, fontSize: 12 }}> Hide Paths </ControlButton>
           <ControlButton onClick={genEdges} style={{ width: 25 }}> <BiVector /> </ControlButton>
           <ControlButton onClick={hideEdg} style={{ width: 25, fontSize: 12 }}> Hide Edges </ControlButton>
-          <button onClick={getPath} style={{ fontSize: 12, background:'white' }}>Path update</button> {/* manual request to read the server */}
-          <button onClick={refreshPage} style={{fontSize: 12, background:'white' }}>Reload</button>
+          <button onClick={getPath} style={{ fontSize: 12, background:'white',fontFamily:'space-mono' , border:2}}>Path update</button> {/* manual request to read the server */}
+          <button onClick={refreshPage} style={{fontSize: 12, background:'white',fontFamily:'space-mono', border:2 }}>Reload</button>
+
+          <View style={{alignItems:'center' , justifyContent:'center', backgroundColor:'white'}}>
+
+            <strong style={{fontSize: 12, background:'white',fontFamily:'space-mono' }}> Input </strong>
+            <strong style={{fontSize: 12, background:'white',fontFamily:'space-mono' }}> coords </strong>
+            
+            <div style={{flexDirection:'row', flex:3}}>
+              <TextInput onChangeText={(val) =>{setXCoord(val)}}
+              value={xCoord}
+              placeholder="X"
+              keyboardType="numeric"
+              maxLength={3} 
+              style={{width:25, fontSize:12, fontFamily:'space-mono'}}/>
+              <Text style={{fontSize:12, fontFamily:'space-mono'}}>;</Text>
+              <TextInput onChangeText={(val) => {setYCoord(val)}}
+              value={yCoord}
+              placeholder="Y"
+              keyboardType="numeric"
+              maxLength={3} 
+              style={{width:25, fontSize:12, fontFamily:'space-mono'}}/>
+            </div>
+            <ControlButton onClick={()=> {addNodeManual(xCoord,yCoord)}} style={{ width: 25 }}> <BiAddToQueue /> </ControlButton>
+          </View>
+
         </Controls>
         <Background /> {/* dots on the background */}
 
