@@ -93,3 +93,15 @@ motors = {
 }
 with open(path+'data/motors.json', 'w') as json_file:
     json.dump(motors, json_file, indent = 4, sort_keys=True)
+
+# RADAR ---------------------------------------------------------------------
+radar = {
+    "name": "radar",
+    "data": [
+        [1,0,0],
+        [0,1,0],
+        [0,0,1]
+    ]
+}
+with open(path+'data/radar.json', 'w') as json_file:
+    json.dump(radar, json_file, indent = 4, sort_keys=True)

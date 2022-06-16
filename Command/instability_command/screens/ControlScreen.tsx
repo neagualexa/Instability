@@ -10,6 +10,7 @@ import Arrow from '@elsdoerfer/react-arrow';
 
 import LineGraph, { getDataXList, getDataYList } from '../components/chart.js'
 import useWindowDimensions from '../screens/getScreenDimensions'
+import { checkState } from '../components/floatingButton.js';
 
 
 export default function ControlScreen({ navigation }: RootTabScreenProps<'Control'>) {
@@ -19,6 +20,15 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
   }
 
   const { h, w } = useWindowDimensions();
+
+    // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
+
+    setInterval( () => {
+      console.log("map OUT interval: ", checkState)
+      if(checkState){
+        connect()
+      }
+    }, 1400);
 
   var myRequest = new Request('https://localhost:8000/motors');
 

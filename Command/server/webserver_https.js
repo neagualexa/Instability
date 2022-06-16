@@ -10,15 +10,6 @@ const options = {
   cert: fs.readFileSync(path+'server/cert.pem')
 };
 
-const books = JSON.stringify([
-    { title: "The Alchemist", author: "Paulo Coelho", year: 1988 },
-    { title: "The Prophet", author: "Kahlil Gibran", year: 1923 }
-]);
-
-// function refreshPage() {
-//     window.location.reload(1);
-// }
-
 const requestListener = function (req, res) {
     if (cors(req, res)) return
 
@@ -85,6 +76,10 @@ const requestListener = function (req, res) {
         case "/squal":
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/squal.json'));
+            break
+        case "/radar":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/radar.json'));
             break
         case "/moveto":
             res.writeHead(200)
