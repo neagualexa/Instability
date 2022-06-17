@@ -1,4 +1,5 @@
 import json
+from random import random
 
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
@@ -60,6 +61,9 @@ pathNode = {
 with open(path+'data/pathNode.json', 'w') as json_file:
     json.dump(pathNode, json_file, indent = 4, sort_keys=True)
 
+with open(path+'data/moveto.json', 'w') as json_file:
+    json.dump(pathNode, json_file, indent = 4, sort_keys=True)
+
 
 # SQUAL ---------------------------------------------------------------------
 squal = {
@@ -98,10 +102,17 @@ with open(path+'data/motors.json', 'w') as json_file:
 radar = {
     "name": "radar",
     "data": [
-        [1,0,0],
-        [0,1,0],
-        [0,0,1]
+        
     ]
 }
+
+# arena is L=3.7m by l=2.4m approx
+
+for i in range(36): #L
+    radar['data'].append([])
+    for j in range(24):   #l
+        # radar['data'][i].append(0)
+        radar['data'][i].append(round(random()*10, 2))
+
 with open(path+'data/radar.json', 'w') as json_file:
     json.dump(radar, json_file, indent = 4, sort_keys=True)

@@ -2,8 +2,8 @@ import React from "react";
 import { HeatMapGrid } from "react-grid-heatmap";
 import { useState, useEffect, useCallback } from "react"
 
-const xLabels = new Array(20).fill(0).map((_, i) => `${i}`);
-const yLabels = [];
+const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
+const yLabels = new Array(36).fill(0).map((_, i) => `${i}`);
 // const data = new Array(yLabels.length)
 //   .fill(0)
 //   .map(() =>
@@ -36,19 +36,19 @@ const Heatmap = (data) => {
                 )}
                 xLabelsStyle={index => ({
                     color: index % 2 ? "transparent" : "#777",
-                    fontSize: ".65rem"
+                    fontSize: ".5rem"
                 })}
                 yLabelsStyle={() => ({
-                    fontSize: ".65rem",
-                    textTransform: "uppercase",
+                    fontSize: ".5rem",
+                    // textTransform: "uppercase",
                     color: "#777"
                 })}
                 cellStyle={(_x, _y, ratio) => ({
                     background: `rgb(12, 160, 44, ${ratio})`,
-                    fontSize: ".7rem",
+                    fontSize: ".2rem",
                     color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`
                 })}
-                cellHeight="1.5rem"
+                cellHeight="0.7rem"
                 xLabelsPos="bottom"
                 // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
             // yLabelsPos="right"

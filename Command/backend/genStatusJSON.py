@@ -38,7 +38,7 @@ def genStatus():
 
     # TODO: decide on what is transmitted to get the json you want for heatmap
 
-    # connection_dict['data'][status_dict]
+    # connection_dict['data'][status_dict['row']][status_dict['column']] = status_dict['radar']
 
     with open(path+'data/radar.json', 'w') as json_file:
         json.dump(connection_dict, json_file, indent = 4, sort_keys=True)

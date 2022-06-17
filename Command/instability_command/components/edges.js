@@ -29,8 +29,6 @@ export const getEdges = (edges, nodes) => {
     })
 };
 
-// TODO: add backwards edge when generating a new connection, complete the opposite (target to source and source to target edges)
-
 export function generateEdges(EdgesJSON, edges, NodesJSON){
   var exists = false;
   for (let i in EdgesJSON) {

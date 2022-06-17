@@ -60,6 +60,7 @@ const LineGraph = ({chartData}) => {
                   }
                 }
             }}
+            style={{height:'100%'}}
             />
         </div>
     );

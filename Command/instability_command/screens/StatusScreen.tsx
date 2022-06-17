@@ -18,8 +18,8 @@ import React from "react";
 import { HeatMapGrid } from "react-grid-heatmap";
 import { checkState } from '../components/floatingButton.js';
 
-const xLabels = new Array(23).fill(0).map((_, i) => `${i}`);
-const yLabels = [];
+const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
+const yLabels = new Array(36).fill(0).map((_, i) => `${i}`);
 
 export const dataVar = {
   labels: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -125,20 +125,26 @@ export default function StatusScreen() {
 
       {/* TOP */}
       <View style={{ width: '80%', alignItems: 'center' }}>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={styles.title}>Status ESP32</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
-        <View style={styles.row}>
+        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+          <View style={styles.row}>
+            {/* <Text style={styles.title}>Status ESP32</Text> */}
+            <Text style={[styles.title, { padding: 10 }]}>Status SENSORS & ESP32</Text>
+            <TouchableOpacity onPress={updateData} style={styles.roundButton1}>
+              <Text style={styles.text}>Update Graphs</Text></TouchableOpacity>
+          </View>
+        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+
+        <View style={[styles.row, {height:'100%'}]}>
           <View style={{ alignItems: 'center' }}>
-            <Text style={styles.title}>Wifi connection</Text>
+            <Text style={[styles.title,{color:'white', fontSize:10}]}>Wifi connection</Text>
             <Wifi status="search" width={"50"} height={"auto"} /> {/* search, good-connection, fair-connection, poor-connection, error */}
           </View>
 
           <Text>{'\t\t\t'}</Text>
           <View style={{ alignItems: 'center' }}>
-            <Text style={styles.title}>Battery level</Text>
-            <BatteryGauge value={batteryValue} padding={5} customization={batteryCustom} size={150} /> {/* https://npm.io/package/react-battery-gauge */}
+            <Text style={[styles.title,{color:'white', fontSize:10}]}>Battery level</Text>
+            <BatteryGauge value={batteryValue} padding={7} customization={batteryCustom} size={140} /> {/* https://npm.io/package/react-battery-gauge */}
           </View>
         </View>
 
@@ -146,33 +152,33 @@ export default function StatusScreen() {
 
       {/* BOTTOM */}
       <View style={{ width: '90%' }}>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <View style={styles.row}>
+        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+        {/* <View style={styles.row}>
           <Text style={[styles.title, { padding: 10 }]}>Status SENSORS</Text>
           <TouchableOpacity onPress={updateData} style={styles.roundButton1}>
             <Text style={styles.text}>Update Graphs</Text></TouchableOpacity>
-        </View>
+        </View> */}
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
         <View style={{ flexDirection: 'row', paddingBottom:5, justifyContent:'flex-start' }}>
 
           <View style={{ padding: 5, width: '50%', alignItems:'center' }}>
-            <Text style={[styles.title,{color:'white'}]}>SQUAL</Text>
-            <View style={{ backgroundColor: 'white', padding: 5,width:'100%'}}>
+            <Text style={[styles.title,{color:'white', fontSize:10}]}>SQUAL</Text>
+            <View style={{ backgroundColor: 'white', padding: 5, width: '100%', height:'97%', justifyContent:'center'}}>
               <LineGraph chartData={chartData} />
             </View>
           </View>
 
           <View style={{ padding: 5, width: '50%', alignItems:'center' }}>
-          <Text style={[styles.title,{color:'white'}]}>RADAR</Text>
-            <View style={{ backgroundColor: 'white', padding: 5, height: '95%',width:'100%', justifyContent: 'flex-end' }}>
+          <Text style={[styles.title,{color:'white', fontSize:10}]}>RADAR</Text>
+            <View style={{ backgroundColor: 'white', width: '100%', padding:5, justifyContent: 'flex-end' }}>
               {/* <Heatmap data={heatmapData}/> */}
-              <div
+              {/* <div
                 style={{
                   width: "100%",
                   fontFamily: "sans-serif"
                 }}
-              >
+              > */}
                 <HeatMapGrid
                   data={heatmapData}
                   xLabels={xLabels}
@@ -183,25 +189,25 @@ export default function StatusScreen() {
                   )}
                   xLabelsStyle={index => ({
                     color: index % 2 ? "transparent" : "#777",
-                    fontSize: ".65rem"
+                    fontSize: ".5rem"
                   })}
-                  yLabelsStyle={() => ({
-                    fontSize: ".65rem",
+                  yLabelsStyle={(index) => ({
+                    fontSize: ".5rem",
                     textTransform: "uppercase",
-                    color: "#777"
+                    color: index % 2 ? "transparent" : "#777",
                   })}
                   cellStyle={(_x, _y, ratio) => ({
-                    background: `rgb(12, 160, 44, ${ratio})`,
-                    fontSize: ".7rem",
+                    background: `rgb(8, 143, 143, ${ratio})`,
+                    fontSize: ".5rem",
                     color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`
                   })}
-                  cellHeight="1.5rem"
+                  cellHeight="0.7rem"
                   xLabelsPos="bottom"
                 // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
                 // yLabelsPos="right"
                 // square
                 />
-              </div>
+              {/* </div> */}
             </View>
           </View>
 
@@ -219,11 +225,12 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   separator: {
-    marginVertical: 5,
+    marginTop: 5,
+    marginBottom: 5,
     height: 1,
     width: '100%',
   },
@@ -268,11 +275,11 @@ const batteryCustom = {
   },
   "batteryMeter": {
     "outerGap": 1,
-    // "gradFill": [
-    //   {
-    //     "color": "red",
-    //     "offset": 0
-    //   },
+    "gradFill": [
+      {
+        "color": "rgb(8, 143, 143, 1)",
+        "offset": 100
+      },
     //   {
     //     "color": "orange",
     //     "offset": 15
@@ -281,7 +288,7 @@ const batteryCustom = {
     //     "color": "green",
     //     "offset": 90
     //   }
-    // ]
+    ]
   },
   "readingText": {
     "lightContrastColor": "ffe054",

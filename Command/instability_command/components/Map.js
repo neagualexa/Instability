@@ -291,10 +291,11 @@ function Flow() {
       console.log("Alien Node ",new_alien.position," already exists")
     }
   }, []);
+
+// TODO: fetch obstacle positions !!!
   
 
   // MANUALLY ADD NODE _________________________________________________________________________________________
-  //TODO: manually add local node to the map to ask rover to move to specific location
   const [xCoord, setXCoord] = useState(50)
   const [yCoord, setYCoord] = useState(50)
 
