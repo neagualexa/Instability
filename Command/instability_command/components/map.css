@@ -4,14 +4,27 @@
 
 .react-flow__node-alien {
     font-family: 'space-mono';
-    font-size: 8px;
+    font-size: 4.3px;
     background: #8d5b2f;
     border-radius: 50%;
-    width: 5rem;
-    height: 5rem;
+    width: 25px;
+    height: 25px;
     text-align: center;
-    padding-top: 1.5rem;
-    /* opacity: 70%; */
+    padding-top: 5px;
+    justify-items: center;
+}
+
+.react-flow__node-obstacle {
+    font-family: 'space-mono';
+    font-size: 8px;
+    background: #353535;
+    color: #e3dfdb;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    padding-top: 20px;
+    justify-items: center;
 }
 
 .react-flow__node-position {
@@ -20,8 +33,8 @@
     background: #7cad3e;
     /* left: -25px;
     top: -25px; */
-    width: 55px; /* 3rem x font-size */
-    height: 50px;
+    width: 48px; /* 3rem x font-size */
+    height: 45px;
     text-align: center;
     padding-top: 5px;
     justify-items: center;
@@ -33,8 +46,8 @@
     background: #236477;
     /* left: -25px;
     top: -25px; */
-    width: 55px;
-    height: 50px;
+    width: 48px;
+    height: 45px;
     text-align: center;
     padding-top: 5px;
     justify-items: center;
@@ -42,7 +55,7 @@
 
 .react-flow__node-path {
     font-family: 'space-mono';
-    font-size: 5px;
+    font-size: 2px;
     color: #bfbcb9;
     background: #344919;
     /* border-radius: 50%; */
@@ -55,12 +68,12 @@
 
 .react-flow__node-goto {
     font-family: 'space-mono';
-    font-size: 6px;
+    font-size: 3px;
     background: #3ead68;
     /* left: -25px;
     top: -25px; */
-    width: 50px; /* 3rem x font-size */
-    height: 50px;
+    width: 32px; /* 3rem x font-size */
+    height: 32px;
     text-align: center;
     padding-top: 5px;
     justify-items: center;
@@ -68,12 +81,12 @@
 
 .react-flow__node-manual_goto {
     font-family: 'space-mono';
-    font-size: 6px;
+    font-size: 3px;
     background: #3ead68;
     /* left: -25px;
     top: -25px; */
-    width: 50px; /* 3rem x font-size */
-    height: 50px;
+    width: 32px; /* 3rem x font-size */
+    height: 32px;
     text-align: center;
     padding-top: 5px;
     justify-items: center;

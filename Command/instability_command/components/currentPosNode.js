@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
-var sizePos = 9;
+var sizePos = 7.8;
 
 export default memo(({selected, isConnectable, xPos, yPos}) => {
   return (
@@ -51,7 +51,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
             <div> - </div>
             <div> - </div>
             <div>
-              <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
+              <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
             </div>
             <div> - </div>
           </div>
@@ -60,7 +60,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
             <div style={{color:'#cfdfda'}}> -rover- </div>
             <div style={{color:'#cfdfda'}}> -is here- </div>
             <div style={{color:'#cfdfda'}}>
-              <strong>({xPos.toFixed(2)+''};{yPos.toFixed(2)+''})</strong>
+              <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
             </div>
             <div style={{color:'#cfdfda'}}> - </div>
           </div>

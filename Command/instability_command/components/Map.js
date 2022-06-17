@@ -8,6 +8,7 @@ import initialNodes, { generateNodes, hidePath, addNode, getNodes } from './node
 import initialEdges, { generateEdges, hideEdges, getEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
+import obstacleNode from './obstacleNode.js';
 import positionNode from './positionNode.js';
 import currentPosNode from './currentPosNode.js';
 import pathNode from './pathNode.js';
@@ -27,6 +28,7 @@ import { checkState } from './floatingButton.js';
 const nodeTypes = {
   position: positionNode,
   alien: alienNode,
+  obstacle: obstacleNode,
   currentPos: currentPosNode,
   path: pathNode,
   goto: goto_positionNode,
@@ -91,6 +93,7 @@ function Flow() {
         getPath(myRequestPATH)
         getNode(myRequestNODE)
         // getAlien(myRequestALIEN) //TODO: to be uncommented!!!!!!!
+        // getObstacle(myRequestOBSTACLE)
         old_nodes = nodes;
         }
     }
@@ -293,6 +296,61 @@ function Flow() {
   }, []);
 
 // TODO: fetch obstacle positions !!!
+// ADD OBSTACLE FETCH ________________________________________________________________________________________________________
+var myRequestOBSTACLE = new Request('https://localhost:8000/obstacle');
+const getObstacle = (myRequest) => {
+  
+  fetch(myRequest)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("HTTPS error, status = " + response.status);
+      }
+      return response.json();
+    })
+    .then(function (json) {
+      // console.log('START connection read:');
+      // console.log(json);
+      addObstacle(json);
+      return 
+      // return (json);
+    })
+    .catch(function (error) {
+      console.log('Error OBSTACLE: ' + error.message)
+    })
+};
+
+const addObstacle = useCallback((new_ob) => {
+  var found = false;
+  for (let n in nodes) {
+    if ((new_ob.position.x == nodes[n].position.x) && (new_ob.position.y == nodes[n].position.y)) {
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    console.log("Added obstacle: ", new_ob)
+    var new_n = {
+      id: "o_" + nodes.length,
+      position: new_ob['position'],
+      type: 'obstacle',
+      hidden: false
+    };
+    setNodes(() => {
+      if (!found) {
+        return [
+          ...nodes,
+          new_n
+        ];
+      } else {
+        return nodes;
+      }
+    });
+    nodes.push(new_n); 
+    // console.log(nodes);
+  } else {
+    console.log("Obstacle Node ",new_ob.position," already exists")
+  }
+}, []);
   
 
   // MANUALLY ADD NODE _________________________________________________________________________________________
@@ -341,15 +399,15 @@ function Flow() {
 
       >
         <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
-        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 60, alignItems: 'center' }}>
-          <ControlButton onClick={genNodes} style={{ width: 25 }}> <BiAnalyse /> </ControlButton>
-          <ControlButton onClick={hidePathNodes} style={{ width: 25, fontSize: 12 }}> Hide Paths </ControlButton>
-          <ControlButton onClick={genEdges} style={{ width: 25 }}> <BiVector /> </ControlButton>
-          <ControlButton onClick={hideEdg} style={{ width: 25, fontSize: 12 }}> Hide Edges </ControlButton>
-          <button onClick={getPath} style={{ fontSize: 12, background:'white',fontFamily:'space-mono' , border:2}}>Path update</button> {/* manual request to read the server */}
-          <button onClick={refreshPage} style={{fontSize: 12, background:'white',fontFamily:'space-mono', border:2 }}>Reload</button>
+        <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 65, alignItems: 'center' }}>
+          <ControlButton onClick={genNodes} style={{ width: 30 }}> <BiAnalyse /> </ControlButton>
+          <ControlButton onClick={hidePathNodes} style={{ width: 50, fontSize: 12 ,fontFamily:'space-mono'}}> |Hide| |Paths| </ControlButton>
+          <ControlButton onClick={genEdges} style={{ width: 30 }}> <BiVector /> </ControlButton>
+          <ControlButton onClick={hideEdg} style={{ width: 40,padding:10, fontSize: 12, fontFamily:'space-mono'}}> (Hide) (Edges) </ControlButton>
+          <ControlButton onClick={getPath} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>[Path] [update]</ControlButton> {/* manual request to read the server */}
+          <ControlButton onClick={refreshPage} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>Reload</ControlButton>
 
-          <View style={{alignItems:'center' , justifyContent:'center', backgroundColor:'white'}}>
+          <View style={{alignItems:'center' , justifyContent:'center', backgroundColor:'white', padding:2}}>
 
             <strong style={{fontSize: 12, background:'white',fontFamily:'space-mono' }}> Input </strong>
             <strong style={{fontSize: 12, background:'white',fontFamily:'space-mono' }}> coords </strong>

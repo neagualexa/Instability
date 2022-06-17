@@ -73,6 +73,16 @@ export function generateNodes(NodesJSON, currentNode, nodes){
           }
         );
       }
+      else if(NodesJSON[i].id[0] == "o"){
+        nodes.push(
+          {
+            id: NodesJSON[i].id,
+            type: 'obstacle',
+            position: NodesJSON[i].position,
+            hidden: false
+          }
+        );
+      }
       else if(NodesJSON[i].id[0] == "l"){
         nodes.push(
           {

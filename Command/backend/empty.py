@@ -64,6 +64,12 @@ with open(path+'data/pathNode.json', 'w') as json_file:
 with open(path+'data/moveto.json', 'w') as json_file:
     json.dump(pathNode, json_file, indent = 4, sort_keys=True)
 
+with open(path+'data/alien.json', 'w') as json_file:
+    json.dump(pathNode, json_file, indent = 4, sort_keys=True)
+
+with open(path+'data/obstacle.json', 'w') as json_file:
+    json.dump(pathNode, json_file, indent = 4, sort_keys=True)
+
 
 # SQUAL ---------------------------------------------------------------------
 squal = {

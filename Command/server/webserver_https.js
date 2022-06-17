@@ -65,6 +65,10 @@ const requestListener = function (req, res) {
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/alien.json'));
             break
+        case "/obstacle":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/obstacle.json'));
+            break
         case "/status":
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/status.json'));
