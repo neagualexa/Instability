@@ -15,6 +15,7 @@ import { checkState } from '../components/floatingButton.js';
 
 export default function ControlScreen({ navigation }: RootTabScreenProps<'Control'>) {
 
+  // TODO: actually implement the joystick
   function pressDirection(direction) {
     console.log('Go ', direction, '!');
   }
@@ -22,13 +23,17 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
   const { h, w } = useWindowDimensions();
 
     // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
-
-    setInterval( () => {
-      console.log("map OUT interval: ", checkState)
-      if(checkState){
-        connect()
-      }
-    }, 1400);
+    let updateCycle
+    useEffect(() => {
+      updateCycle = setInterval( () => {
+                                  console.log("CONTROL: update interval: ", checkState)
+                                  if(checkState){
+                                    connect()
+                                  }
+                                }, 1400); // Set a timer as a side effect
+      return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
+    },[])
+    
 
   var myRequest = new Request('https://localhost:8000/motors');
 
@@ -99,8 +104,8 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
 
   const fetchData = useCallback((json) => {
     // console.log(json)
-    console.log("Left: ", getDataYList(json.left))
-    console.log("Right: ", getDataYList(json.right))
+    // console.log("Left: ", getDataYList(json.left))
+    // console.log("Right: ", getDataYList(json.right))
     setMotorSpeed({
       labels: (getDataXList(json.left).length >= getDataXList(json.right).length ? getDataXList(json.left) : getDataXList(json.right)),
       datasets: [

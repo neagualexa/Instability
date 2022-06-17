@@ -3,6 +3,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 // https://mui.com/material-ui/react-checkbox/
+import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 
 import { useState, useCallback } from 'react';
 
@@ -17,12 +18,15 @@ export default function FloatingButton() {
         <View>
             <FormGroup >
                 <FormControlLabel control={<Checkbox 
-                                    icon={<Text style={styles.icon}>OFF</Text>} 
-                                    checkedIcon={<Text style={[styles.icon_selected]}>ON</Text>} />} 
-                                label="Updates" labelPlacement="start" 
+                                    icon={<BsToggleOff style={styles.icon} size={30}/>} 
+                                    checkedIcon={<BsToggleOn style={styles.icon} size={30}/>} 
+                                    color="default" 
+                                    />} 
+                                label="Updates" labelPlacement="start"  
                                 onChange={() => {setChecked(!checked); 
                                                 checkState = checked; 
-                                                console.log(checkState, " & check:", checked)}}/>
+                                                // console.log(checkState, " & check:", checked)
+                                                }}/>
             </FormGroup>
         </View>
     );

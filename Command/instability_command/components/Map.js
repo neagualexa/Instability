@@ -84,20 +84,25 @@ function Flow() {
 
   // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
   var intervalID1 = 0;
-
-  setInterval( () => {
-    console.log("map OUT interval: ", checkState)
-    var old_nodes = [];
-    if(checkState){
-        if(old_nodes != nodes){
-        getPath(myRequestPATH)
-        getNode(myRequestNODE)
-        // getAlien(myRequestALIEN) //TODO: to be uncommented!!!!!!!
-        // getObstacle(myRequestOBSTACLE)
-        old_nodes = nodes;
+  
+  let updateCycle
+  useEffect(() => {
+    updateCycle =  setInterval( () => {
+        console.log("MAP: update interval: ", checkState)
+        var old_nodes = [];
+        if(checkState){
+            if(old_nodes != nodes){
+            getPath(myRequestPATH)
+            getNode(myRequestNODE)
+            // getAlien(myRequestALIEN) //TODO: to be uncommented!!!!!!!
+            // getObstacle(myRequestOBSTACLE)
+            old_nodes = nodes;
+            }
         }
-    }
-  }, 1400);
+      }, 1400); 
+
+    return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
+  },[])
 
   // ADD NODES FETCH ________________________________________________________________________________________________________
   var myRequestNODE = new Request('https://localhost:8000/end');
@@ -139,7 +144,7 @@ function Flow() {
   };
 
   const addNode = useCallback((new_node, start_node) => {
-    console.log(start_node)
+    // console.log(start_node)
 
     var found = false;
     for (let n in nodes) {
@@ -174,7 +179,7 @@ function Flow() {
         }
       });
       nodes.push(new_n); 
-      console.log(nodes);
+      // console.log(nodes);
     } else {
       // console.log("Position Node ",new_node_cm.position," already exists")
     }
@@ -232,7 +237,7 @@ function Flow() {
         }
       });
       nodes.push(new_path); 
-      console.log(nodes);
+      // console.log(nodes);
     } else {
       // console.log("Path node ",new_path_node.position," already exists")
     }

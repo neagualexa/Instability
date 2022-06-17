@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback } from "react"
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-import { Wifi } from '../components/wifi'
-import '../components/wifi.styles.css'
-import BatteryGauge from 'react-battery-gauge'
+// import BatteryGauge from 'react-battery-gauge'
+import { BiWifiOff, BiWifi } from "react-icons/bi";
+import { BsBatteryFull,BsBatteryCharging,BsBatteryHalf,BsBattery } from "react-icons/bs";
 
 import LineGraph, { getDataXList, getDataYList } from '../components/chart.js'
 
@@ -88,8 +88,8 @@ export default function StatusScreen() {
 
   const fetchData = useCallback((json) => {
     // console.log(json)
-    console.log("X axis: ", getDataXList(json.data))
-    console.log("Y axis: ", getDataYList(json.data))
+    // console.log("X axis: ", getDataXList(json.data))
+    // console.log("Y axis: ", getDataYList(json.data))
     setChartData({
       labels: getDataXList(json.data),
       datasets: [
@@ -106,18 +106,21 @@ export default function StatusScreen() {
   }, []);
 
   const fetchHeatMapData = useCallback((json) => {
-    console.log("Radar:", json.data)
+    // console.log("Radar:", json.data)
     setheatmapData(json.data);
   }, []);
 
   // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
-
-  setInterval( () => {
-    console.log("map OUT interval: ", checkState)
-    if(checkState){
-      updateData()
-    }
-  }, 1400);
+  let updateCycle
+  useEffect(() => {
+    updateCycle = setInterval( () => {
+                              console.log("STATUS: update interval: ", checkState)
+                              if(checkState){
+                                updateData()
+                              }
+                            }, 1400); // Set a timer as a side effect
+    return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
+  },[])
 
 
   return (
@@ -136,15 +139,20 @@ export default function StatusScreen() {
         {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
 
         <View style={[styles.row, {height:'100%'}]}>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={[styles.title,{color:'white', fontSize:10}]}>Wifi connection</Text>
-            <Wifi status="search" width={"50"} height={"auto"} /> {/* search, good-connection, fair-connection, poor-connection, error */}
+          <View style={{ alignItems: 'center', flexDirection:'row' }}>
+            <Text style={[styles.title,{color:'white', fontSize:12}]}>Wifi connection</Text>
+              {/* TODO: GET WIFI SIGNAL CONNECTED OR NOT */}
+              <BiWifiOff style={{color:'white'}} size={50}/>
+              <BiWifi style={{color:'white'}} size={50}/>
           </View>
 
           <Text>{'\t\t\t'}</Text>
+
           <View style={{ alignItems: 'center' }}>
-            <Text style={[styles.title,{color:'white', fontSize:10}]}>Battery level</Text>
-            <BatteryGauge value={batteryValue} padding={7} customization={batteryCustom} size={140} /> {/* https://npm.io/package/react-battery-gauge */}
+            <Text style={[styles.title,{color:'white', fontSize:12}]}>Battery level</Text>
+            <BsBatteryFull style={{color:'white'}} size={50}/>
+             {/* <BatteryGauge value={batteryValue} padding={7} customization={batteryCustom} size={140} /> */}
+              {/* https://npm.io/package/react-battery-gauge */}
           </View>
         </View>
 
@@ -245,7 +253,7 @@ const styles = StyleSheet.create({
     // height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 7,
     borderRadius: 50,
     backgroundColor: 'white',
   },
@@ -275,11 +283,11 @@ const batteryCustom = {
   },
   "batteryMeter": {
     "outerGap": 1,
-    "gradFill": [
-      {
-        "color": "rgb(8, 143, 143, 1)",
-        "offset": 100
-      },
+    // "gradFill": [
+    //   {
+    //     "color": "rgb(8, 143, 143, 1)",
+    //     "offset": 100
+    //   },
     //   {
     //     "color": "orange",
     //     "offset": 15
@@ -288,7 +296,7 @@ const batteryCustom = {
     //     "color": "green",
     //     "offset": 90
     //   }
-    ]
+    // ]
   },
   "readingText": {
     "lightContrastColor": "ffe054",

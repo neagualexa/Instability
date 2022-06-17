@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     borderColor:"#222223",
     borderWidth:0.1,
     // paddingRight: 20,
-    width: 150,
+    width: 130,
     alignItems:'flex-start',
   }
 });
