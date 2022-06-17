@@ -2,6 +2,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { teal } from '@mui/material/colors';
 // https://mui.com/material-ui/react-checkbox/
 import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 
@@ -20,7 +21,12 @@ export default function FloatingButton() {
                 <FormControlLabel control={<Checkbox 
                                     icon={<BsToggleOff style={styles.icon} size={30}/>} 
                                     checkedIcon={<BsToggleOn style={styles.icon} size={30}/>} 
-                                    color="default" 
+                                    sx={{
+                                      color: teal[50],
+                                      '&.Mui-checked': {
+                                        color: teal[50],
+                                      },
+                                    }} 
                                     />} 
                                 label="Updates" labelPlacement="start"  
                                 onChange={() => {setChecked(!checked); 
