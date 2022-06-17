@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react';
 import { Handle } from 'react-flow-renderer';
 import { Text, View, TextInput } from 'react-native';
 
-var sizePos = 9;
+var sizePos = 7.8;
 
 let path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
@@ -88,7 +88,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
               <div>
                 <strong>({xPos+''};{yPos+''})</strong>
               </div>
-              <div> -or refresh- </div>
+              <div> -or hide- </div>
             </div>
           :
             <div>

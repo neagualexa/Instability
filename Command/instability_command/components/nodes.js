@@ -96,7 +96,7 @@ export function generateNodes(NodesJSON, currentNode, nodes){
       else {
         // console.log(currentNode, currentNode.id, NodesJSON[i].id)
         //if(NodesJSON[i].id[0] == "p")
-        if(currentNode.id == NodesJSON[i].id) { 
+        if(currentNode.position.x == NodesJSON[i].position.x && currentNode.position.y == NodesJSON[i].position.y) { 
           //should check the postion too to make sure that it has the same coords or to add a new node
           // console.log("create as current node")
           nodes.push(
@@ -125,13 +125,26 @@ export function generateNodes(NodesJSON, currentNode, nodes){
 
 export function hidePath(all_nodes){
   for (let i in all_nodes) {
-    if(all_nodes[i]['id'][0] == "l" || all_nodes[i]['id'][0] == "gt"){
-      if (all_nodes[i]['hidden'] == true){
+    if(all_nodes[i]['id'][0] == "l" || all_nodes[i]['id'][0] == "g"){
+      if (all_nodes[0]['hidden'] == true){
         all_nodes[i]['hidden'] = false;
       } else {
         all_nodes[i]['hidden'] = true;
       }
     }
+  }
+  // console.log(all_nodes)
+  console.log("Hidden/Not hidden real paths!");
+  return all_nodes;
+}
+
+export function hideAllNodes(all_nodes){
+  for (let i in all_nodes) {
+      if (all_nodes[0]['hidden'] == true){
+        all_nodes[i]['hidden'] = false;
+      } else {
+        all_nodes[i]['hidden'] = true;
+      }
   }
   // console.log(all_nodes)
   console.log("Hidden/Not hidden real paths!");

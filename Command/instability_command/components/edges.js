@@ -94,7 +94,7 @@ function getSourceHandle(i, EdgesJSON, NodesJSON) {
     if (t.position.y >= s.position.y) {
       tag = "bottom_out"
     } else {
-      tag = "top_in"
+      tag = "top_out"
     } 
       //overlay the nodes, too close(should not happen)    
   }

@@ -4,8 +4,8 @@ import { applyEdgeChanges, applyNodeChanges, addEdge, updateEdge } from 'react-f
 
 import useWindowDimensions from '../screens/getScreenDimensions'
 
-import initialNodes, { generateNodes, hidePath, addNode, getNodes } from './nodes.js';
-import initialEdges, { generateEdges, hideEdges, getEdges } from './edges.js';
+import initialNodes, { hidePath, getNodes, hideAllNodes } from './nodes.js';
+import initialEdges, { hideEdges, getEdges } from './edges.js';
 
 import alienNode from './alienNode.js';
 import obstacleNode from './obstacleNode.js';
@@ -406,9 +406,9 @@ const addObstacle = useCallback((new_ob) => {
         <MiniMap nodeColor={nodeColour} nodeBorderRadius={5} />
         <Controls showZoom={true} showInteractive={true} showFitView={true} style={{ background: 'white', width: 65, alignItems: 'center' }}>
           <ControlButton onClick={genNodes} style={{ width: 30 }}> <BiAnalyse /> </ControlButton>
-          <ControlButton onClick={hidePathNodes} style={{ width: 50, fontSize: 12 ,fontFamily:'space-mono'}}> |Hide| |Paths| </ControlButton>
+          <ControlButton onClick={hidePathNodes} style={{ width: 50, fontSize: 12 ,fontFamily:'space-mono'}}> |Hide| |extra| </ControlButton>
           <ControlButton onClick={genEdges} style={{ width: 30 }}> <BiVector /> </ControlButton>
-          <ControlButton onClick={hideEdg} style={{ width: 40,padding:10, fontSize: 12, fontFamily:'space-mono'}}> (Hide) (Edges) </ControlButton>
+          <ControlButton onClick={hideEdg} style={{ width: 40,padding:10, fontSize: 12, fontFamily:'space-mono'}}> (Hide) (edges) </ControlButton>
           <ControlButton onClick={getPath} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>[Path] [update]</ControlButton> {/* manual request to read the server */}
           <ControlButton onClick={refreshPage} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>Reload</ControlButton>
 

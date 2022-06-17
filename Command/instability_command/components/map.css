@@ -68,12 +68,12 @@
 
 .react-flow__node-goto {
     font-family: 'space-mono';
-    font-size: 3px;
+    font-size: 6px;
     background: #3ead68;
     /* left: -25px;
     top: -25px; */
-    width: 32px; /* 3rem x font-size */
-    height: 32px;
+    width: 48px; /* 3rem x font-size */
+    height: 45px;
     text-align: center;
     padding-top: 5px;
     justify-items: center;
@@ -81,12 +81,12 @@
 
 .react-flow__node-manual_goto {
     font-family: 'space-mono';
-    font-size: 3px;
+    font-size: 6px;
     background: #3ead68;
     /* left: -25px;
     top: -25px; */
-    width: 32px; /* 3rem x font-size */
-    height: 32px;
+    width: 48px; /* 3rem x font-size */
+    height: 45px;
     text-align: center;
     padding-top: 5px;
     justify-items: center;
