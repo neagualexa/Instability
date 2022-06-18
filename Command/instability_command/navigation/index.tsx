@@ -101,7 +101,7 @@ function BottomTabNavigator() {
                 size={20}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
-              > {`\t`} Click here to open general graph </FontAwesome>
+              > {`\t`} Click here for more info </FontAwesome>
             </Pressable>
           ),
         })}

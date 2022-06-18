@@ -142,7 +142,7 @@ export default function StatusScreen() {
           <View style={{ alignItems: 'center', flexDirection:'row' }}>
             <Text style={[styles.title,{color:'white', fontSize:12}]}>Wifi connection</Text>
               {/* TODO: GET WIFI SIGNAL CONNECTED OR NOT */}
-              <BiWifiOff style={{color:'white'}} size={50}/>
+              {/* <BiWifiOff style={{color:'white'}} size={50}/> */}
               <BiWifi style={{color:'white'}} size={50}/>
           </View>
 

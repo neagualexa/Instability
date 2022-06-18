@@ -196,11 +196,11 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
       <View style={styles.main}>
 
         {/* LEFT */}
-        <View style={{width:'50%', paddingLeft:'10%'}}>
+        <View style={{width:'50%', paddingLeft:'5%'}}>
 
           {/* ROVER */}
           <View style={styles.row}>
-            <GiMarsCuriosity color="white" size={'40%'} />
+            <GiMarsCuriosity color="white" size={'90%'} />
 
             <View style={{width:'35%'}}>
               <div style={{paddingLeft:70, paddingBottom:20}}>
@@ -241,7 +241,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         </View>
 
         {/* RIGHT */}
-        <View style={{width:'50%'}}>
+        <View style={{width:'50%', paddingRight:'5%'}}>
 
           {/* Joystick */}
           {/* <View style={{alignItems:'center', height:'30%'}}>
@@ -284,7 +284,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
           {/* GRAPH */}
           <View style={{padding: 10}}>
             <View style={styles.row}>
-              <View style={{ width: '90%', backgroundColor: 'white', padding: 5 }}>
+              <View style={{ width: '90%', backgroundColor: 'white', padding: 5, height:300, justifyContent: 'center' }}>
                 <LineGraph chartData={motorSpeed} />
               </View>
               <View style={{ padding: 10 }}>
