@@ -31,7 +31,7 @@ const nodeTypes = {
   obstacle: obstacleNode,
   currentPos: currentPosNode,
   path: pathNode,
-  goto: goto_positionNode,
+  // goto: goto_positionNode,
   manual_goto: manual_gotoNode
 };
 
@@ -45,9 +45,6 @@ function Flow() {
   const [edges, setEdges] = useState(initialEdges);
   const yPos = useRef(0);
   const xPos = useRef(0);
-
-  //update the map with the json data directly
-  // getNodes();
 
   const { height, width } = useWindowDimensions();
 
@@ -364,11 +361,12 @@ const addObstacle = useCallback((new_ob) => {
 
   const addNodeManual = useCallback((xCoord, yCoord) => {
     var newN = {
-      id: "gt_"+Math.random(),
-      position: { x: xCoord, y: yCoord },
+      id: "gt_"+(nodes.length+1),
+      position: { x: xCoord*4, y: yCoord*4 },
       type:'manual_goto',
       hidden:false
     };
+    console.log(newN.id)
     nodes.push(newN);
     setNodes((nodes) => {
       // console.log(nodes);
@@ -378,6 +376,39 @@ const addObstacle = useCallback((new_ob) => {
       ];
     });
   }, []);
+
+  // RANDOM MOVE NODE POSITION
+
+  const moveNode = useCallback(()=>{
+    setNodes((nds) =>
+      nds.map((node) => {
+        if (node.id[0] == 'g') {
+          console.log("change pos on button click")
+          // it's important that you create a new object here
+          // in order to notify react flow about the change
+          node.position = {x: parseInt(Math.random()*100), y:parseInt(Math.random()*100)}
+        }
+
+        return node;
+      })
+    );
+  },[setNodes]);
+
+  useEffect(() => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        if (node.id[0] == 'g') {
+          console.log("change pos from useEffect")
+          // it's important that you create a new object here
+          // in order to notify react flow about the change
+          node.position = {x: parseInt(Math.random()*100), y:parseInt(Math.random()*100)}
+        }
+
+        return node;
+      })
+    );
+  },[setNodes]);
+
 
   // REFRESH PAGE__________________________________________________________________________________________
   function refreshPage() {
@@ -411,6 +442,7 @@ const addObstacle = useCallback((new_ob) => {
           <ControlButton onClick={hideEdg} style={{ width: 40,padding:10, fontSize: 12, fontFamily:'space-mono'}}> (Hide) (edges) </ControlButton>
           <ControlButton onClick={getPath} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>[Path] [update]</ControlButton> {/* manual request to read the server */}
           <ControlButton onClick={refreshPage} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>Reload</ControlButton>
+          <ControlButton onClick={moveNode} style={{ width: 40,padding:10, fontSize: 12 ,fontFamily:'space-mono'}}>Move</ControlButton>
 
           <View style={{alignItems:'center' , justifyContent:'center', backgroundColor:'white', padding:2}}>
 

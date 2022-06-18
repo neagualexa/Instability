@@ -3,17 +3,6 @@ import random
 
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
-
-# nodes = {
-#     "0": {
-#         "id": "p0",
-#         "position": {
-#             "x": 0,
-#             "y": 0
-#         }
-#     }
-# }
-
 nodes = {}
 edges_dict = {}
 

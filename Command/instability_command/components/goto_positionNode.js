@@ -7,7 +7,7 @@ var sizePos = 7.8;
 
 let path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
-
+// NOT USED
 
 export default memo(({selected, isConnectable, xPos, yPos}) => {
 
