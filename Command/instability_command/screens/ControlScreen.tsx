@@ -12,27 +12,80 @@ import LineGraph, { getDataXList, getDataYList } from '../components/chart.js'
 import useWindowDimensions from '../screens/getScreenDimensions'
 import { checkState } from '../components/floatingButton.js';
 
+var default_dir = "-"
 
 export default function ControlScreen({ navigation }: RootTabScreenProps<'Control'>) {
 
   // TODO: actually implement the joystick
-  function pressDirection(direction) {
-    console.log('Go ', direction, '!');
-  }
+  // function pressDirection(direction) {
+  //   console.log('Go ', direction, '!');
+  // }
+
+  //detecting arrow key presses
+  const [joystickDirection, setJoystickDirection] = useState(default_dir)
+
+  // useEffect(() => {
+    document.onkeydown = (e) => {
+      e = e || window.event;
+      if (e.key === 'ArrowUp') {
+        console.log('up arrow pressed')
+        setJoystickDirection("forward")
+        remoteContol("forward")
+        
+      } else if (e.key === 'ArrowDown') {
+        console.log('down arrow pressed')
+        setJoystickDirection("backwards")
+        remoteContol("backwards")
+
+      } else if (e.key === 'ArrowLeft') {
+        console.log('left arrow pressed')
+        setJoystickDirection("left")
+        remoteContol("left")
+
+      } else if (e.key === 'ArrowRight') {
+        console.log('right arrow pressed')
+        setJoystickDirection("right")
+        remoteContol("right")
+      }
+      else{
+        // press any other key to stop the remove control movement
+        console.log('arrow NOT pressed')
+        setJoystickDirection("-")
+        remoteContol("-") 
+      }
+    }
+  // },[]);
+
+    // SEND JOYSTICK CONTOL__________________________________________________________
+    const remoteContol = (joystickDirection) => {
+      var xhr = new XMLHttpRequest()
+      console.log("sending to /joystick...")
+      // get a callback when the server responds
+      xhr.addEventListener('load', () => {
+        console.log(xhr.responseText)
+      })
+      xhr.open('POST', 'https://localhost:8000/joystick')
+      xhr.send(
+        JSON.stringify({ 
+          direction: joystickDirection
+         })
+      )
+    }
 
   const { h, w } = useWindowDimensions();
 
-    // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
-    let updateCycle
-    useEffect(() => {
-      updateCycle = setInterval( () => {
-                                  console.log("CONTROL: update interval: ", checkState)
-                                  if(checkState){
-                                    connect()
-                                  }
-                                }, 1400); // Set a timer as a side effect
-      return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
-    },[])
+  // INTERVAL FOR ALL FETCHES ________________________________________________________________//////////////////////////////
+  let updateCycle
+  useEffect(() => {
+    updateCycle = setInterval( () => {
+                                console.log("CONTROL: update interval: ", checkState)
+                                if(checkState){
+                                  connect()
+                                }
+
+                              }, 1400); // Set a timer as a side effect
+    return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
+  },[])
     
 
   var myRequest = new Request('https://localhost:8000/motors');
@@ -136,6 +189,10 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
       <Text style={styles.title}>Controller page</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
+              {/* CONTROL ROVER WITH ARROW KEYS */}
+        <Text style={styles.title}> Remote Control for rover to move: {joystickDirection}</Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
       <View style={styles.main}>
 
         {/* LEFT */}
@@ -187,7 +244,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         <View style={{width:'50%'}}>
 
           {/* Joystick */}
-          <View style={{alignItems:'center', height:'30%'}}>
+          {/* <View style={{alignItems:'center', height:'30%'}}>
             <TouchableOpacity
               onPress={() => pressDirection("forward")}
               style={styles.roundButton1}
@@ -222,7 +279,7 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
             >
               <Text style={styles.text}>BACK</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           {/* GRAPH */}
           <View style={{padding: 10}}>
@@ -238,7 +295,6 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
           </View>
 
         </View>
-
 
       </View>
 

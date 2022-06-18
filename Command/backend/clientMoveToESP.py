@@ -2,7 +2,7 @@ import socket
 import json
 print("We're in tcp client..."); 
 #the server name and port client wishes to access 
-server_name = '192.168.137.240'
+server_name = '192.168.137.123'
 server_port = 80 
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
@@ -13,6 +13,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 client_socket.connect((server_name, server_port)) 
 
+# TREAD 2
 old_moveto =  {"position":{ "x":0, 
                             "y":0 }}
 
@@ -42,7 +43,7 @@ end = "END transmission"
 client_socket.send(end.encode())
 
 
-#return values from the server 
+# #return values from the server 
 msg = client_socket.recv(1024) 
 print("reply: ", msg.decode())
 client_socket.close() 

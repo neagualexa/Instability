@@ -24,12 +24,29 @@ const requestListener = function (req, res) {
             body += data
             console.log('Partial body: ' + body)
         })
-        req.on('end', function() {
-            console.log('Body: ' + body)
-            fs.writeFileSync(path+'data/moveto.json', body)
-            res.writeHead(200)
-            res.end('post received')
-        })
+        switch (req.url) {
+            case "/moveto":
+                req.on('end', function() {
+                    console.log('Body: ' + body)
+                    fs.writeFileSync(path+'data/moveto.json', body)
+                    res.writeHead(200)
+                    res.end('post received')
+                })
+            break
+            case "/joystick":
+                req.on('end', function() {
+                    console.log('Body: ' + body)
+                    fs.writeFileSync(path+'data/joystick.json', body)
+                    res.writeHead(200)
+                    res.end('post received')
+                })
+            break
+            default:
+                res.writeHead(404);
+                res.end(JSON.stringify({error:"Resource not found to POST to"}));
+            
+        
+        }
     } else {
         console.log('GET')
         res.setHeader("Content-Type", "application/json");
@@ -88,6 +105,10 @@ const requestListener = function (req, res) {
         case "/moveto":
             res.writeHead(200)
             res.end(fs.readFileSync(path+'data/moveto.json'));
+            break
+        case "/joystick":
+            res.writeHead(200)
+            res.end(fs.readFileSync(path+'data/joystick.json'));
             break
         default:
             res.writeHead(404);
