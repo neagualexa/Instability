@@ -102,6 +102,10 @@ const requestListener = function (req, res) {
             res.writeHead(200);
             res.end(fs.readFileSync(path+'data/radar.json'));
             break
+        case "/ultrasonic":
+            res.writeHead(200);
+            res.end(fs.readFileSync(path+'data/ultrasonic.json'));
+            break
         case "/moveto":
             res.writeHead(200)
             res.end(fs.readFileSync(path+'data/moveto.json'));

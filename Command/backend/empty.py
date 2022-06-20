@@ -1,5 +1,6 @@
 import json
 from random import random
+import numpy as np
 
 path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
 
@@ -81,6 +82,16 @@ squal = {
 with open(path+'data/squal.json', 'w') as json_file:
     json.dump(squal, json_file, indent = 4, sort_keys=True)
 
+# Ultrasonic ---------------------------------------------------------------------
+squal = {
+    "name": "ultrasonic",
+    "data": [
+        {"x": 0, "y":0 }
+    ]
+}
+with open(path+'data/ultrasonic.json', 'w') as json_file:
+    json.dump(squal, json_file, indent = 4, sort_keys=True)
+
 
 # MOTORS ---------------------------------------------------------------------
 motors = {
@@ -112,13 +123,40 @@ radar = {
     ]
 }
 
-# arena is L=3.7m by l=2.4m approx
+# arena is (x)L=3.7m by (y)l=2.4m approx
+def makeGaussian(size, fwhm = 4, center=[8,20]):
+    """ Make a square gaussian kernel.
 
-for i in range(36): #L
+    size is the length of a side of the square
+    fwhm is full-width-half-maximum, which
+    can be thought of as an effective radius.
+    """
+
+    x = np.arange(0, size, 1, float)
+    y = x[:,np.newaxis]
+
+    if center is None:
+        x0 = y0 = size // 2
+    else:
+        x0 = center[0]
+        y0 = center[1]
+
+    return np.exp(-4*np.log(2) * ((x-x0)**2 + (y-y0)**2) / fwhm**2) *100
+
+data = makeGaussian(26)
+print("data::::", data)
+for i in range (0,len(data)-1):
     radar['data'].append([])
-    for j in range(24):   #l
-        # radar['data'][i].append(0)
-        radar['data'][i].append(round(random()*10, 2))
+    for j in data[i]:
+        radar["data"][i].append(round(j,2))
+print (radar)
+
+# for i in range(24): #L
+#     radar['data'].append([])
+#     for j in range(36):   #l
+#         # radar['data'][i].append(0)
+#         radar['data'][i].append(round(random()*10, 2)) # TODO: do not have it random, generate Gausian in a spot
+
 
 with open(path+'data/radar.json', 'w') as json_file:
     json.dump(radar, json_file, indent = 4, sort_keys=True)

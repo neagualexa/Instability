@@ -8,6 +8,9 @@ def genStatus():
     with open(path+'data/status.json', 'r') as s:
         status_dict = json.load(s)
 
+    with open(path+'data/pathNode.json', 'r') as s:
+        position_dict = json.load(s)
+
     # 1 ---------- GENERATE SQUAL graph --------------------------------------------------------------------
     with open(path+'data/squal.json', 'r') as c:
         connection_dict = json.load(c)
@@ -38,7 +41,21 @@ def genStatus():
 
     # TODO: decide on what is transmitted to get the json you want for heatmap
 
-    # connection_dict['data'][status_dict['row']][status_dict['column']] = status_dict['radar']
+    row =    (position_dict['position']['x'] /4 ) /10
+    column = (position_dict['position']['y'] /4 ) /10
+
+    connection_dict['data'][row][column] = status_dict['radar']
 
     with open(path+'data/radar.json', 'w') as json_file:
+        json.dump(connection_dict, json_file, indent = 4, sort_keys=True)
+
+    # 4 ---------- GENERATE ULTRASONIC sensor graph --------------------------------------------------------------------
+    with open(path+'data/ultrasonic.json', 'r') as c:
+        connection_dict = json.load(c)
+
+    # print(connection_dict)
+
+    connection_dict['data'].append({'x':len(connection_dict['data']), 'y':status_dict['squal']})
+
+    with open(path+'data/ultrasonic.json', 'w') as json_file:
         json.dump(connection_dict, json_file, indent = 4, sort_keys=True)

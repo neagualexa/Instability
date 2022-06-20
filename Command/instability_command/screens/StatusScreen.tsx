@@ -18,8 +18,8 @@ import React from "react";
 import { HeatMapGrid } from "react-grid-heatmap";
 import { checkState } from '../components/floatingButton.js';
 
-const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
-const yLabels = new Array(36).fill(0).map((_, i) => `${i}`);
+const xLabels = new Array(36).fill(0).map((_, i) => `${i}`);
+const yLabels = new Array(24).fill(0).map((_, i) => `${i}`);
 
 export const dataVar = {
   labels: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -50,6 +50,7 @@ export default function StatusScreen() {
 
   const myRequestSQUAL = new Request('https://localhost:8000/squal');
   const myRequestRADAR = new Request('https://localhost:8000/radar');
+  const myRequestULTRASONIC = new Request('https://localhost:8000/ultrasonic');
 
   const updateData = () => {
     fetch(myRequestSQUAL)
@@ -61,18 +62,35 @@ export default function StatusScreen() {
       })
       .then(function (json) {
         setIsLoaded(true);
-        fetchData(json);
+
+        fetch(myRequestULTRASONIC)
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("HTTPS ULTRASONIC error, status = " + response.status);
+            }
+            return response.json();
+          })
+          .then(function (json2) {
+            setIsLoaded(true);
+            fetchData(json, json2);
+            return
+          })
+          .catch(function (error) {
+            // setIsLoaded(true);
+            console.log('Ultrasonic Error: ' + error.message)
+          })
+        // fetchData(json);
         return
       })
       .catch(function (error) {
         // setIsLoaded(true);
-        console.log('Error: ' + error.message)
+        console.log('SQUAL Error: ' + error.message)
       })
 
     fetch(myRequestRADAR)
       .then(function (response) {
         if (!response.ok) {
-          throw new Error("HTTPS error, status = " + response.status);
+          throw new Error("HTTPS RADAR error, status = " + response.status);
         }
         return response.json();
       })
@@ -81,12 +99,12 @@ export default function StatusScreen() {
         return
       })
       .catch(function (error) {
-        console.log('Error: ' + error.message)
+        console.log('Radar Error: ' + error.message)
       })
 
   };
 
-  const fetchData = useCallback((json) => {
+  const fetchData = useCallback((json, json2) => {
     // console.log(json)
     // console.log("X axis: ", getDataXList(json.data))
     // console.log("Y axis: ", getDataYList(json.data))
@@ -98,6 +116,14 @@ export default function StatusScreen() {
           data: getDataYList(json.data),
           backgroundColor: "rgba(75,192,192,0.2)",
           borderColor: "rgba(75,192,192,1)",
+          borderWidth: 2,
+          fill: false,
+        },
+        {
+          label: json2.name,
+          data: getDataYList(json2.data),
+          backgroundColor: "rgba(115,139,233,0.2)",
+          borderColor: "rgba(115,139,233,1)",
           borderWidth: 2,
           fill: false,
         }
@@ -160,24 +186,18 @@ export default function StatusScreen() {
 
       {/* BOTTOM */}
       <View style={{ width: '90%' }}>
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-        {/* <View style={styles.row}>
-          <Text style={[styles.title, { padding: 10 }]}>Status SENSORS</Text>
-          <TouchableOpacity onPress={updateData} style={styles.roundButton1}>
-            <Text style={styles.text}>Update Graphs</Text></TouchableOpacity>
-        </View> */}
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
         <View style={{ flexDirection: 'row', paddingBottom:5, justifyContent:'flex-start' }}>
 
-          <View style={{ padding: 5, width: '50%', alignItems:'center' }}>
+          <View style={{ padding: 5, width: '45%', alignItems:'center' }}>
             <Text style={[styles.title,{color:'white', fontSize:10}]}>SQUAL</Text>
-            <View style={{ backgroundColor: 'white', padding: 5, width: '100%', height:'97%', justifyContent:'center'}}>
+            <div  style={{ backgroundColor: 'white', padding: 5, width: '100%', height: '100%'}}>
               <LineGraph chartData={chartData} />
-            </View>
+            </div >
           </View>
 
-          <View style={{ padding: 5, width: '50%', alignItems:'center' }}>
+          <View style={{ padding: 5, width: '55%', alignItems:'center' }}>
           <Text style={[styles.title,{color:'white', fontSize:10}]}>RADAR</Text>
             <View style={{ backgroundColor: 'white', width: '100%', padding:5, justifyContent: 'flex-end' }}>
               {/* <Heatmap data={heatmapData}/> */}
@@ -209,7 +229,7 @@ export default function StatusScreen() {
                     fontSize: ".5rem",
                     color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`
                   })}
-                  cellHeight="0.7rem"
+                  cellHeight="0.75rem"
                   xLabelsPos="bottom"
                 // onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
                 // yLabelsPos="right"
