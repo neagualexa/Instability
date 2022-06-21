@@ -44,7 +44,7 @@ def genStatus():
     row =    (position_dict['position']['x'] /4 ) /10
     column = (position_dict['position']['y'] /4 ) /10
 
-    connection_dict['data'][row][column] = status_dict['radar']
+    connection_dict['data'][column][row] = status_dict['radar']
 
     with open(path+'data/radar.json', 'w') as json_file:
         json.dump(connection_dict, json_file, indent = 4, sort_keys=True)
