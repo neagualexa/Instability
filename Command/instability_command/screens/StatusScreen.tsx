@@ -162,43 +162,43 @@ export default function StatusScreen() {
             <TouchableOpacity onPress={updateData} style={styles.roundButton1}>
               <Text style={styles.text}>Update Graphs</Text></TouchableOpacity>
           </View>
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
         <View style={[styles.row, {height:'100%'}]}>
           <View style={{ alignItems: 'center', flexDirection:'row' }}>
-            <Text style={[styles.title,{color:'white', fontSize:12}]}>Wifi connection</Text>
+            <Text style={[styles.title,{color:'white', fontSize:14}]}>ESP32 WiFi connection {'\t'}</Text>
               {/* TODO: GET WIFI SIGNAL CONNECTED OR NOT */}
               {/* <BiWifiOff style={{color:'white'}} size={50}/> */}
+              {/* <Text>{'\t\t'}</Text> */}
               <BiWifi style={{color:'white'}} size={50}/>
           </View>
 
-          <Text>{'\t\t\t'}</Text>
-
+          {/*
           <View style={{ alignItems: 'center' }}>
             <Text style={[styles.title,{color:'white', fontSize:12}]}>Battery level</Text>
             <BsBatteryFull style={{color:'white'}} size={50}/>
-             {/* <BatteryGauge value={batteryValue} padding={7} customization={batteryCustom} size={140} /> */}
-              {/* https://npm.io/package/react-battery-gauge */}
-          </View>
+              <BatteryGauge value={batteryValue} padding={7} customization={batteryCustom} size={140} /> 
+               https://npm.io/package/react-battery-gauge 
+          </View> */}
         </View>
 
       </View>
 
       {/* BOTTOM */}
-      <View style={{ width: '90%' }}>
+      <View style={{ width: '90%'}}>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
         <View style={{ flexDirection: 'row', paddingBottom:5, justifyContent:'flex-start' }}>
 
-          <View style={{ padding: 5, width: '45%', alignItems:'center' }}>
-            <Text style={[styles.title,{color:'white', fontSize:10}]}>SQUAL</Text>
-            <div  style={{ backgroundColor: 'white', padding: 5, width: '100%', height: '100%'}}>
+          <View style={{ padding: 5, width: '45%',alignItems:'center' }}>
+            <Text style={[styles.title,{color:'white', fontSize:14}]}>SQUAL</Text>
+            <div  style={{ backgroundColor: 'white', padding: 7, width: '100%', position:'relative', height:'100%'}}>
               <LineGraph chartData={chartData} />
             </div >
           </View>
 
           <View style={{ padding: 5, width: '55%', alignItems:'center' }}>
-          <Text style={[styles.title,{color:'white', fontSize:10}]}>RADAR</Text>
+          <Text style={[styles.title,{color:'white', fontSize:14}]}>RADAR</Text>
             <View style={{ backgroundColor: 'white', width: '100%', padding:5, justifyContent: 'flex-end' }}>
               {/* <Heatmap data={heatmapData}/> */}
               {/* <div
