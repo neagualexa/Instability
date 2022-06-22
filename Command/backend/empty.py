@@ -144,12 +144,12 @@ def makeGaussian(size, fwhm = 4, center=[8,20]):
     return np.exp(-4*np.log(2) * ((x-x0)**2 + (y-y0)**2) / fwhm**2) *100
 
 data = makeGaussian(26)
-print("data::::", data)
+# print("data::::", data)
 for i in range (0,len(data)-1):
     radar['data'].append([])
     for j in data[i]:
         radar["data"][i].append(round(j,2))
-print (radar)
+# print (radar)
 
 # for i in range(24): #L
 #     radar['data'].append([])

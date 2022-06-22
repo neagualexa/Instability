@@ -41,8 +41,8 @@ def genStatus():
 
     # TODO: decide on what is transmitted to get the json you want for heatmap
 
-    row =    (position_dict['position']['x'] /4 ) /10
-    column = (position_dict['position']['y'] /4 ) /10
+    row =    int(int(position_dict['position']['x'] /4 ) /10)
+    column = int(int(position_dict['position']['y'] /4 ) /10)
 
     connection_dict['data'][column][row] = status_dict['radar']
 
