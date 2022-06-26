@@ -3,6 +3,8 @@ This project’s goal was to build a Mars rover with the aim of mapping an undis
 
 This repo contains the codes for the Command WebApp for the Instability Rover.
 
+![alt text](https://github.com/LollyCraft/Instability/blob/main/rover_image.png "Rover image")
+
 ### References of all imported MIT Licensed Libraries:
 - https://docs.expo.dev/ 
 - https://reactnavigation.org/ 
