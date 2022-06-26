@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-// import BatteryGauge from 'react-battery-gauge'
+import BatteryGauge from 'react-battery-gauge'
 import { BiWifiOff, BiWifi } from "react-icons/bi";
 import { BsBatteryFull,BsBatteryCharging,BsBatteryHalf,BsBattery } from "react-icons/bs";
 
@@ -39,18 +39,20 @@ const dataRadar = [
   [0]
 ]
 
+const batteryValDefault = 100;
+
 export default function StatusScreen() {
 
-  var batteryValue = 30;
   const [chartData, setChartData] = useState(dataVar)
   const [heatmapData, setheatmapData] = useState(dataRadar)
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [batteryVal, setBatteryData] = useState(batteryValDefault)
 
   // const { h, w } = useWindowDimensions();
 
   const myRequestSQUAL = new Request('https://localhost:8000/squal');
   const myRequestRADAR = new Request('https://localhost:8000/radar');
   const myRequestULTRASONIC = new Request('https://localhost:8000/ultrasonic');
+  const myRequestBATTERY = new Request('https://localhost:8000/battery');
 
   const updateData = () => {
     fetch(myRequestSQUAL)
@@ -60,8 +62,7 @@ export default function StatusScreen() {
         }
         return response.json();
       })
-      .then(function (json) {
-        setIsLoaded(true);
+      .then(function (jsonSQUAL) {
 
         fetch(myRequestULTRASONIC)
           .then(function (response) {
@@ -70,9 +71,24 @@ export default function StatusScreen() {
             }
             return response.json();
           })
-          .then(function (json2) {
-            setIsLoaded(true);
-            fetchData(json, json2);
+          .then(function (jsonULTRASONIC) {
+
+            fetch(myRequestBATTERY)
+              .then(function (response) {
+                if (!response.ok) {
+                  throw new Error("HTTPS BATTERY error, status = " + response.status);
+                }
+                return response.json();
+              })
+              .then(function (jsonBattery) {
+                fetchData(jsonSQUAL, jsonULTRASONIC, jsonBattery); //---------------------------------------
+                setBatteryData(jsonBattery.data[jsonBattery.data.length-1].y)
+                return
+              })
+              .catch(function (error) {
+                console.log('Radar Error: ' + error.message)
+              })
+
             return
           })
           .catch(function (error) {
@@ -104,26 +120,34 @@ export default function StatusScreen() {
 
   };
 
-  const fetchData = useCallback((json, json2) => {
+  const fetchData = useCallback((jsonSQUAL, jsonULTRASONIC, jsonBattery) => {
     // console.log(json)
     // console.log("X axis: ", getDataXList(json.data))
     // console.log("Y axis: ", getDataYList(json.data))
     setChartData({
-      labels: getDataXList(json.data),
+      labels: getDataXList(jsonSQUAL.data),
       datasets: [
         {
-          label: json.name,
-          data: getDataYList(json.data),
+          label: jsonSQUAL.name,
+          data: getDataYList(jsonSQUAL.data),
           backgroundColor: "rgba(75,192,192,0.2)",
           borderColor: "rgba(75,192,192,1)",
           borderWidth: 2,
           fill: false,
         },
         {
-          label: json2.name,
-          data: getDataYList(json2.data),
+          label: jsonULTRASONIC.name,
+          data: getDataYList(jsonULTRASONIC.data),
           backgroundColor: "rgba(115,139,233,0.2)",
           borderColor: "rgba(115,139,233,1)",
+          borderWidth: 2,
+          fill: false,
+        },
+        {
+          label: jsonBattery.name,
+          data: getDataYList(jsonBattery.data),
+          backgroundColor: "rgba(100,139,100,0.2)",
+          borderColor: "rgba(100,139,100,1)",
           borderWidth: 2,
           fill: false,
         }
@@ -171,15 +195,18 @@ export default function StatusScreen() {
               {/* <BiWifiOff style={{color:'white'}} size={50}/> */}
               {/* <Text>{'\t\t'}</Text> */}
               <BiWifi style={{color:'white'}} size={50}/>
-          </View>
 
-          {/*
-          <View style={{ alignItems: 'center' }}>
+              <Text style={[styles.title,{color:'white', fontSize:14}]}>{'\t'} & battery {'\t'}</Text>
+
+              <BatteryGauge value={batteryVal} padding={3} customization={batteryCustom} size={100} />
+          </View>
+          
+          {/* <View style={{ alignItems: 'center' }}>
             <Text style={[styles.title,{color:'white', fontSize:12}]}>Battery level</Text>
             <BsBatteryFull style={{color:'white'}} size={50}/>
-              <BatteryGauge value={batteryValue} padding={7} customization={batteryCustom} size={140} /> 
-               https://npm.io/package/react-battery-gauge 
-          </View> */}
+            <BatteryGauge value={batteryValue} padding={3} customization={batteryCustom} size={100} />
+              https://npm.io/package/react-battery-gauge 
+          </View>  */}
         </View>
 
       </View>

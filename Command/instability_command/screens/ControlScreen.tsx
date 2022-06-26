@@ -29,22 +29,22 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
       e = e || window.event;
       if (e.key === 'ArrowUp') {
         console.log('up arrow pressed')
-        setJoystickDirection("forward")
+        setJoystickDirection("F")
         remoteContol("forward")
         
       } else if (e.key === 'ArrowDown') {
         console.log('down arrow pressed')
-        setJoystickDirection("backwards")
+        setJoystickDirection("B")
         remoteContol("backwards")
 
       } else if (e.key === 'ArrowLeft') {
         console.log('left arrow pressed')
-        setJoystickDirection("left")
+        setJoystickDirection("L")
         remoteContol("left")
 
       } else if (e.key === 'ArrowRight') {
         console.log('right arrow pressed')
-        setJoystickDirection("right")
+        setJoystickDirection("R")
         remoteContol("right")
       }
       else{
@@ -123,8 +123,8 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
       },
       {
         label: 'RIGHT stationary',
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "rgba(180, 40, 100, 0.2)",
+        borderColor: "rgba(150, 40, 100, 1)",
         borderWidth: 2,
         fill: false,
         data: [0, 0, 0]
@@ -173,8 +173,8 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         {
           label: "RIGHT velocity",
           data: getDataYList(json.right),
-          backgroundColor: "rgba(75,192,192,0.2)",
-          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(180, 40, 100, 0.2)",
+          borderColor: "rgba(150, 40, 100, 1)",
           borderWidth: 2,
           fill: false,
         },
