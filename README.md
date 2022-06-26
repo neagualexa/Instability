@@ -1,7 +1,7 @@
 # Instability
 Command WebApp for Instability Rover
 
-# References of all imported MIT Licensed Libraries:
+## References of all imported MIT Licensed Libraries:
 https://docs.expo.dev/ 
 
 https://reactnavigation.org/ 
