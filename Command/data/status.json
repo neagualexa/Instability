@@ -1,8 +1,9 @@
 {
-    "motor_left": 161,
-    "motor_right": 139,
+    "battery": 0,
+    "motor_left": 0,
+    "motor_right": 0,
     "orientation": 45,
     "radar": 0,
-    "squal": 1,
+    "squal": 0,
     "ultrasonic": 0.0
 }

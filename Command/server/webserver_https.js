@@ -114,6 +114,10 @@ const requestListener = function (req, res) {
             res.writeHead(200)
             res.end(fs.readFileSync(path+'data/joystick.json'));
             break
+        case "/battery":
+            res.writeHead(200)
+            res.end(fs.readFileSync(path+'data/battery.json'));
+            break
         default:
             res.writeHead(404);
             res.end(JSON.stringify({error:"Resource not found - TRY / or /status or anything under status"}));

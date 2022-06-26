@@ -37,25 +37,34 @@ def genStatus():
 
     # 3 ---------- GENERATE RADAR graph --------------------------------------------------------------------
     with open(path+'data/radar.json', 'r') as c:
-        connection_dict = json.load(c)
+        radar_dict = json.load(c)
 
     # TODO: decide on what is transmitted to get the json you want for heatmap
 
     row =    int(int(position_dict['position']['x'] /4 ) /10)
     column = int(int(position_dict['position']['y'] /4 ) /10)
 
-    connection_dict['data'][column][row] = status_dict['radar']
+    radar_dict['data'][column][row] = status_dict['radar']
 
     with open(path+'data/radar.json', 'w') as json_file:
-        json.dump(connection_dict, json_file, indent = 4, sort_keys=True)
+        json.dump(radar_dict, json_file, indent = 4, sort_keys=True)
 
     # 4 ---------- GENERATE ULTRASONIC sensor graph --------------------------------------------------------------------
     with open(path+'data/ultrasonic.json', 'r') as c:
-        connection_dict = json.load(c)
+        ultrasonic_dict = json.load(c)
 
     # print(connection_dict)
 
-    connection_dict['data'].append({'x':len(connection_dict['data']), 'y':status_dict['squal']})
+    ultrasonic_dict['data'].append({'x':len(ultrasonic_dict['data']), 'y':status_dict['ultrasonic']})
 
     with open(path+'data/ultrasonic.json', 'w') as json_file:
-        json.dump(connection_dict, json_file, indent = 4, sort_keys=True)
+        json.dump(ultrasonic_dict, json_file, indent = 4, sort_keys=True)
+
+    # 4 ---------- GENERATE Battery % --------------------------------------------------------------------
+    with open(path+'data/battery.json', 'r') as c:
+        battery_dict = json.load(c)
+
+    battery_dict['data'].append({'x':len(battery_dict['data']), 'y':status_dict['battery']})
+
+    with open(path+'data/battery.json', 'w') as json_file:
+        json.dump(battery_dict, json_file, indent = 4, sort_keys=True)

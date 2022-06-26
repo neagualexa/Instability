@@ -83,14 +83,24 @@ with open(path+'data/squal.json', 'w') as json_file:
     json.dump(squal, json_file, indent = 4, sort_keys=True)
 
 # Ultrasonic ---------------------------------------------------------------------
-squal = {
+ultrasonic = {
     "name": "ultrasonic",
     "data": [
         {"x": 0, "y":0 }
     ]
 }
 with open(path+'data/ultrasonic.json', 'w') as json_file:
-    json.dump(squal, json_file, indent = 4, sort_keys=True)
+    json.dump(ultrasonic, json_file, indent = 4, sort_keys=True)
+
+# Battery ---------------------------------------------------------------------
+battery = {
+    "name": "battery",
+    "data": [
+        {"x": 0, "y":100 }
+    ]
+}
+with open(path+'data/battery.json', 'w') as json_file:
+    json.dump(battery, json_file, indent = 4, sort_keys=True)
 
 
 # MOTORS ---------------------------------------------------------------------
