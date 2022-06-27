@@ -64,14 +64,14 @@ export function generateNodes(NodesJSON, currentNode, nodes){
   //code updates everytime we change the code...so should put the map as first/main page so it refreshes on it
   for (let i in NodesJSON) {
       if(NodesJSON[i].id[0] == "a"){
-        nodes.push(
-          {
-            id: NodesJSON[i].id,
-            type: 'alien',
-            position: NodesJSON[i].position,
-            hidden: false
-          }
-        );
+        let new_n =  {
+          id: NodesJSON[i].id,
+          type: 'alien',
+          position: NodesJSON[i].position,
+          hidden: false
+        };
+        new_n.style = { ...new_n.style, backgroundColor: NodesJSON[i].colour };
+        nodes.push(new_n);
       }
       else if(NodesJSON[i].id[0] == "o"){
         nodes.push(

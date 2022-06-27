@@ -24,6 +24,8 @@ for i in range(0,5):
         x +=240
     y += 240
 
+colours = ["rgb(255, 0, 0)", "rgb(255, 255, 0)", "rgb(255, 102, 204)", "rgb(0, 51, 204)", "rgb(51, 153, 102)",  "rgb(0, 153, 0)"]
+
 for i in range (0,6):
     newID = "a_"+str(i)
     x = int(random.randint(0,1440))
@@ -33,7 +35,8 @@ for i in range (0,6):
         "position": {
             "x": x,
             "y": y
-        }
+        },
+        "colour":colours[i]
     }
     nodes[newID] = new_node
 

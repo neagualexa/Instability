@@ -21,7 +21,8 @@ def genAlienJSON():
   if found == False:
     new_node = {
       'id': newNodeID,
-      'position': alien_node['position']
+      'position': alien_node['position'],
+      'colour': alien_node['colour']
     }
     nodes_dict[newNodeID] = new_node # assume the start node is already in the mapJSON
     print('current:: ', alien_node)

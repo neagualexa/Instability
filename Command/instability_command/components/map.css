@@ -2,15 +2,16 @@
     background: #e3dfdb;
 }
 
+/* ALIENS by COLOUR */
 .react-flow__node-alien {
     font-family: 'space-mono';
     font-size: 4.3px;
-    background: #8d5b2f;
+    /* background: #8d5b2f; */
     border-radius: 50%;
     width: 25px;
     height: 25px;
     text-align: center;
-    padding-top: 5px;
+    padding-top: 4px;
     justify-items: center;
 }
 

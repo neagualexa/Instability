@@ -10,7 +10,7 @@ export default memo(({xPos, yPos}) => {
             <strong>Alien</strong>
           </div>
           <div>
-              <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
+              <strong>({xPos.toFixed(2)/4+''};{'\n'}{yPos.toFixed(2)/4+''})</strong>
             </div>
      	</div>
     </>

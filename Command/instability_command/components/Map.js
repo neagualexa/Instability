@@ -280,6 +280,7 @@ function Flow() {
         type: 'alien',
         hidden: false
       };
+      new_n.style = { ...new_n.style, backgroundColor: new_alien['colour'] };
       setNodes(() => {
         if (!found) {
           return [
