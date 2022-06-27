@@ -50,6 +50,12 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
         console.log('S -> stop motors')
         setJoystickDirection("Stop")
         remoteContol("S")
+      } else if (e.key === '.') {
+        console.log('END transmission')
+        setJoystickDirection("END")
+        remoteContol("A")
+        window.setTimeout(() => {setJoystickDirection("-");
+                                remoteContol("-")}, 500)
       }
       else{
         // press any other key to stop the remove control movement
