@@ -1,7 +1,7 @@
 import json
 
 # path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = 'c:/Users/ishaa/OneDrive - Imperial College London/Projects/Instability/Command/'
 
 def genPath():
     # only give one node

@@ -5,7 +5,7 @@ import { Text, View, TextInput } from 'react-native';
 
 var sizePos = 7.8;
 
-let path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+let path = 'c:/Users/ishaa/OneDrive - Imperial College London/Projects/Instability/Command/'
 
 // NOT USED
 

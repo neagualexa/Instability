@@ -6,7 +6,7 @@ print("We're in tcp client...");
 #the server name and port client wishes to access 
 server_name = '192.168.0.20'
 server_port = 80 
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = 'c:/Users/ishaa/OneDrive - Imperial College London/Projects/Instability/Command/'
 
 #create a TCP client socket 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 

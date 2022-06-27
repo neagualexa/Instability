@@ -1,8 +1,8 @@
 import json
 from random import random
-import numpy as np
+# import numpy as np
 
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = 'c:/Users/ishaa/OneDrive - Imperial College London/Projects/Instability/Command/'
 
 with open(path+'data/pathNodes.json', 'w') as json_file:
     json.dump({}, json_file, indent = 4, sort_keys=True)
@@ -136,51 +136,51 @@ with open(path+'data/motors.json', 'w') as json_file:
     json.dump(motors, json_file, indent = 4, sort_keys=True)
 
 # RADAR ---------------------------------------------------------------------
-radar = {
-    "name": "radar",
-    "data": [
+# radar = {
+#     "name": "radar",
+#     "data": [
         
-    ]
-}
+#     ]
+# }
 
 # arena is (x)L=3.7m by (y)l=2.4m approx
-def makeGaussian(size, fwhm = 3, center=[8,20]):
-    """ Make a square gaussian kernel.
+# def makeGaussian(size, fwhm = 3, center=[8,20]):
+#     """ Make a square gaussian kernel.
 
-    size is the length of a side of the square
-    fwhm is full-width-half-maximum, which
-    can be thought of as an effective radius.
-    """
+#     size is the length of a side of the square
+#     fwhm is full-width-half-maximum, which
+#     can be thought of as an effective radius.
+#     """
 
-    x = np.arange(0, size, 1, float)
-    y = x[:,np.newaxis]
+#     x = np.arange(0, size, 1, float)
+#     y = x[:,np.newaxis]
 
-    if center is None:
-        x0 = y0 = size // 2
-    else:
-        x0 = center[0]
-        y0 = center[1]
+#     if center is None:
+#         x0 = y0 = size // 2
+#     else:
+#         x0 = center[0]
+#         y0 = center[1]
 
-    return np.exp(-4*np.log(2) * ((x-x0)**2 + (y-y0)**2) / fwhm**2) *100
+#     return np.exp(-4*np.log(2) * ((x-x0)**2 + (y-y0)**2) / fwhm**2) *100
 
-data = makeGaussian(26)
-# print("data::::", data)
+# data = makeGaussian(26)
+# # print("data::::", data)
 
-for i in range (0,len(data)-1):
-    radar['data'].append([])
-    for j in data[i]:
-        radar["data"][i].append(round(j,2))
-
-# print (radar)
-
-
-
-# for i in range(24): #L
+# for i in range (0,len(data)-1):
 #     radar['data'].append([])
-#     for j in range(36):   #l
-#         radar['data'][i].append(3)
-        # radar['data'][i].append(round(random()*10, 2)) # TODO: do not have it random, generate Gausian in a spot
+#     for j in data[i]:
+#         radar["data"][i].append(round(j,2))
+
+# # print (radar)
 
 
-with open(path+'data/radar.json', 'w') as json_file:
-    json.dump(radar, json_file, indent = 4, sort_keys=True)
+
+# # for i in range(24): #L
+# #     radar['data'].append([])
+# #     for j in range(36):   #l
+# #         radar['data'][i].append(3)
+#         # radar['data'][i].append(round(random()*10, 2)) # TODO: do not have it random, generate Gausian in a spot
+
+
+# with open(path+'data/radar.json', 'w') as json_file:
+#     json.dump(radar, json_file, indent = 4, sort_keys=True)

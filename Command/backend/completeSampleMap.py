@@ -1,7 +1,7 @@
 import json
 import random
 
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = 'c:/Users/ishaa/OneDrive - Imperial College London/Projects/Instability/Command/'
 
 nodes = {}
 edges_dict = {}

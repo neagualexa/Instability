@@ -2,7 +2,7 @@ import json
 from sys import orig_argv
 
 # path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/instability_command/components/'
-path = 'd:/2_Work/Y2_courseworks/Instability_Rover/Instability/Command/'
+path = 'c:/Users/ishaa/OneDrive - Imperial College London/Projects/Instability/Command/'
 
 def genStatus():
     with open(path+'data/status.json', 'r') as s:
