@@ -30,22 +30,26 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
       if (e.key === 'ArrowUp') {
         console.log('up arrow pressed')
         setJoystickDirection("F")
-        remoteContol("forward")
+        remoteContol("F")
         
       } else if (e.key === 'ArrowDown') {
         console.log('down arrow pressed')
         setJoystickDirection("B")
-        remoteContol("backwards")
+        remoteContol("B")
 
       } else if (e.key === 'ArrowLeft') {
         console.log('left arrow pressed')
         setJoystickDirection("L")
-        remoteContol("left")
+        remoteContol("L")
 
       } else if (e.key === 'ArrowRight') {
         console.log('right arrow pressed')
         setJoystickDirection("R")
-        remoteContol("right")
+        remoteContol("R")
+      } else if (e.key === '/') {
+        console.log('S -> stop motors')
+        setJoystickDirection("Stop")
+        remoteContol("S")
       }
       else{
         // press any other key to stop the remove control movement

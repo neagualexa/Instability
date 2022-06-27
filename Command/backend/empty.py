@@ -144,7 +144,7 @@ radar = {
 }
 
 # arena is (x)L=3.7m by (y)l=2.4m approx
-def makeGaussian(size, fwhm = 4, center=[8,20]):
+def makeGaussian(size, fwhm = 3, center=[8,20]):
     """ Make a square gaussian kernel.
 
     size is the length of a side of the square
