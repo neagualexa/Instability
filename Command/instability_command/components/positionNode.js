@@ -79,9 +79,9 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
           <div className= "positionNode">
             <div> - </div>
             <div>
-              <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
+              <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{'\n'}{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
             </div>
-            <div> - </div>
+            {/* <div> - </div> */}
             <div> - </div>
           </div>
         :
@@ -89,9 +89,9 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
             <div className= "positionNode" style={{background:"#4a6c2f"}}>
               <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
               <div style={{color:'#cfdfda'}}>
-                <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
+                <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{'\n'}{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
               </div>
-              <div style={{color:'#cfdfda'}}> -?- </div>
+              {/* <div style={{color:'#cfdfda'}}> -?- </div> */}
               <button style={{width: 30, maxHeight:15, alignItems:'center', justifyContent:'center', color:'#4a6c2f', fontSize:8}} onClick={moveto}>
                 yes</button>
             </div>

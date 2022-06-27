@@ -2,8 +2,8 @@
     "battery": 0,
     "motor_left": 0,
     "motor_right": 0,
-    "orientation": 45,
+    "orientation": 0,
     "radar": 0,
-    "squal": 0,
+    "squal": 63,
     "ultrasonic": 0.0
 }

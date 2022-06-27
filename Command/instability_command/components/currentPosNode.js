@@ -49,20 +49,22 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
         ? 
           <div className= "currentPosNode">
             <div> - </div>
-            <div> - </div>
+            {/* <div> - </div> */}
             <div>
-              <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
+              <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{'\n'}{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
             </div>
+            {/* <div> - </div> */}
             <div> - </div>
           </div>
         :
           <div className= "currentPosNode" style={{background:"#173042"}}>
             <div style={{color:'#cfdfda'}}> -rover- </div>
-            <div style={{color:'#cfdfda'}}> -is here- </div>
+            {/* <div style={{color:'#cfdfda'}}> -is here- </div> */}
             <div style={{color:'#cfdfda'}}>
-              <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
+              <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{'\n'}{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
             </div>
-            <div style={{color:'#cfdfda'}}> - </div>
+            <div style={{color:'#cfdfda'}}> -is here- </div>
+            {/* <div style={{color:'#cfdfda'}}> - </div> */}
           </div>
       }
 

@@ -31,11 +31,11 @@ def genJSON():
     print(nodes_dict)
 
     # ADDing the live path nodes
-    with open(path+'data/pathNodes.json', 'r') as old_paths:
-      old_path_dict = json.load(old_paths)
-    for p in old_path_dict:
-      nodes_dict[old_path_dict[p]['id']] = old_path_dict[p]
-    print("Including live nodes: ", nodes_dict)
+    # with open(path+'data/pathNodes.json', 'r') as old_paths:
+    #   old_path_dict = json.load(old_paths)
+    # for p in old_path_dict:
+    #   nodes_dict[old_path_dict[p]['id']] = old_path_dict[p]
+    # print("Including live nodes: ", nodes_dict)
 
     # WRITING BACK all nodes in json
     with open(path+'data/nodes.json', 'w') as json_file:

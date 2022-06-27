@@ -61,7 +61,6 @@ export const getNodes = (nodes) => {
 
 export function generateNodes(NodesJSON, currentNode, nodes){
   //nodes are being added multiple times...must check if they exists in order to not add them again
-  //code updates everytime we change the code...so should put the map as first/main page so it refreshes on it
   for (let i in NodesJSON) {
       if(NodesJSON[i].id[0] == "a"){
         let new_n =  {
@@ -140,6 +139,9 @@ export function hidePath(all_nodes){
 
 export function hideAllNodes(all_nodes){
   for (let i in all_nodes) {
+    // if (all_nodes[i]['position']['x'] == 0 && all_nodes[i]['position']['y'] == 0) {
+
+    // }
       if (all_nodes[0]['hidden'] == true){
         all_nodes[i]['hidden'] = false;
       } else {

@@ -11,10 +11,20 @@ with open(path+'data/pathNodes.json', 'w') as json_file:
 with open(path+'data/nodes.json', 'r') as nodes:
     nodes_dict = json.load(nodes)
 
-updated_dict={}
-for n in nodes_dict:
-    if nodes_dict[n]['id'][0] != 'l':
-        updated_dict[len(updated_dict)] = nodes_dict[n]
+# updated_dict={}
+# for n in nodes_dict:
+#     if nodes_dict[n]['id'][0] != 'l' and nodes_dict[n]['id'][0] != 'o':
+#         updated_dict[len(updated_dict)] = nodes_dict[n]
+
+updated_dict={
+        "0": {
+        "id": "p_0_0",
+        "position": {
+            "x": 0,
+            "y": 0
+        }
+    }
+}
 
 with open(path+'data/nodes.json', 'w') as json_file:
     json.dump(updated_dict, json_file, indent = 4, sort_keys=True)
@@ -155,17 +165,21 @@ def makeGaussian(size, fwhm = 4, center=[8,20]):
 
 data = makeGaussian(26)
 # print("data::::", data)
+
 for i in range (0,len(data)-1):
     radar['data'].append([])
     for j in data[i]:
         radar["data"][i].append(round(j,2))
+
 # print (radar)
+
+
 
 # for i in range(24): #L
 #     radar['data'].append([])
 #     for j in range(36):   #l
-#         # radar['data'][i].append(0)
-#         radar['data'][i].append(round(random()*10, 2)) # TODO: do not have it random, generate Gausian in a spot
+#         radar['data'][i].append(3)
+        # radar['data'][i].append(round(random()*10, 2)) # TODO: do not have it random, generate Gausian in a spot
 
 
 with open(path+'data/radar.json', 'w') as json_file:

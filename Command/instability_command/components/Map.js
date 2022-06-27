@@ -63,7 +63,8 @@ function Flow() {
 
   const genNodes = useCallback(
     // () => setNodes(generateNodes()), [setNodes]
-    () => {setNodes(getNodes(nodes), hidePath(nodes))}, [setNodes]
+    // () => {setNodes(getNodes(nodes), hidePath(nodes))}, [setNodes]
+    () => {setNodes(getNodes(nodes))}, [setNodes]
   );
   const genEdges = useCallback(
     // () => setEdges(generateEdges()), [setEdges]
@@ -91,12 +92,12 @@ function Flow() {
             if(old_nodes != nodes){
             getPath(myRequestPATH)
             getNode(myRequestNODE)
-            // getAlien(myRequestALIEN) //TODO: to be uncommented!!!!!!!
-            // getObstacle(myRequestOBSTACLE)
+            getAlien(myRequestALIEN) //TODO: to be uncommented!!!!!!!
+            getObstacle(myRequestOBSTACLE)
             old_nodes = nodes;
             }
         }
-      }, 1400); 
+      }, 400); 
 
     return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
   },[])
