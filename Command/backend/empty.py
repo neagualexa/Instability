@@ -75,12 +75,21 @@ with open(path+'data/pathNode.json', 'w') as json_file:
 with open(path+'data/moveto.json', 'w') as json_file:
     json.dump(pathNode, json_file, indent = 4, sort_keys=True)
 
-with open(path+'data/alien.json', 'w') as json_file:
-    json.dump(pathNode, json_file, indent = 4, sort_keys=True)
-
 with open(path+'data/obstacle.json', 'w') as json_file:
     json.dump(pathNode, json_file, indent = 4, sort_keys=True)
 
+# ALIEN -------------------------------------------------------------------
+
+alien = {
+    "position": {
+        "x": 0,
+        "y": 0
+    },
+    "colour": "red"
+}
+
+with open(path+'data/alien.json', 'w') as json_file:
+    json.dump(alien, json_file, indent = 4, sort_keys=True)
 
 # SQUAL ---------------------------------------------------------------------
 squal = {
@@ -111,6 +120,13 @@ battery = {
 }
 with open(path+'data/battery.json', 'w') as json_file:
     json.dump(battery, json_file, indent = 4, sort_keys=True)
+
+# Joystick ---------------------------------------------------------------------
+joystick = {
+    "direction":"S"
+}
+with open(path+'data/joystick.json', 'w') as json_file:
+    json.dump(joystick, json_file, indent = 4, sort_keys=True)
 
 
 # MOTORS ---------------------------------------------------------------------

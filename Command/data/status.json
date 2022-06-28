@@ -4,6 +4,6 @@
     "motor_right": 0,
     "orientation": 0,
     "radar": 0,
-    "squal": 64,
+    "squal": 20,
     "ultrasonic": 0.0
 }

@@ -19,17 +19,30 @@ client_socket.connect((server_name, server_port))
 joystick_dict = json.load( open(path+'data/joystick.json', 'r'))
 # print(joystick_dict)
 while True:
-    joystick_dict = json.load( open(path+'data/joystick.json', 'r'))
-    print(joystick_dict)
-    if joystick_dict['direction'] != "-":
-        msg = str(joystick_dict['direction'])
-        #send the message to the TCP server 
-        client_socket.send(msg.encode())
+    clash = False
+    try:
+        joystick_dict = json.load( open(path+'data/joystick.json', 'r'))
+    except:
+        print("ERROR: clash when trying to read joystick json (try/catch)")
+        clash = True
 
-        #return values from the server 
-        b_msg = client_socket.recv(1024) 
-        print("reply: ", b_msg.decode())
-        time.sleep(0.1)
+    # try:
+    #     joystick_dict = json.load( open(path+'data/moveto.json', 'r'))
+    # except:
+    #     print("ERROR: clash when trying to read moveto json (try/catch)")
+    #     clash = True
+
+    if clash == False:
+        print(joystick_dict)
+        if joystick_dict['direction'] != "-":
+            msg = str(joystick_dict['direction'])
+            #send the message to the TCP server 
+            client_socket.send(msg.encode())
+
+            #return values from the server 
+            b_msg = client_socket.recv(1024) 
+            print("reply: ", b_msg.decode())
+            time.sleep(0.1)
 
 # msg = rover_scale_moveto
 # #send the message to the TCP server 

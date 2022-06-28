@@ -90,7 +90,8 @@ while True:
                     # MAKE SURE TO UPDATE THE PATH!!!!!!!!! 
                     with open(path+'data/alien.json', 'w') as json_file:
                         cm_position = {"position":{ "x":float(path_dict['position']['x']/47.0*4), 
-                                                    "y":float(path_dict['position']['y']/47.0*(-4))}}
+                                                    "y":float(path_dict['position']['y']/47.0*(-4))},
+                                       "colour": path_dict['colour']}
                         json.dump(cm_position, json_file, indent = 4, sort_keys=True)
                     
                     genAlienJSON.genAlienJSON()

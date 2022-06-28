@@ -24,47 +24,52 @@ export default function ControlScreen({ navigation }: RootTabScreenProps<'Contro
   //detecting arrow key presses
   const [joystickDirection, setJoystickDirection] = useState(default_dir)
 
-  // useEffect(() => {
-    document.onkeydown = (e) => {
-      e = e || window.event;
-      if (e.key === 'ArrowUp') {
-        console.log('up arrow pressed')
-        setJoystickDirection("F")
-        remoteContol("F")
-        
-      } else if (e.key === 'ArrowDown') {
-        console.log('down arrow pressed')
-        setJoystickDirection("B")
-        remoteContol("B")
+  useEffect(() => {
+    console.log('DEFAULT: S -> stop motors')
+    setJoystickDirection("Stop")
+    remoteContol("S")
+  },[]);
 
-      } else if (e.key === 'ArrowLeft') {
-        console.log('left arrow pressed')
-        setJoystickDirection("L")
-        remoteContol("L")
+  document.onkeydown = (e) => {
+    e = e || window.event;
+    if (e.key === 'ArrowUp') {
+      console.log('up arrow pressed')
+      setJoystickDirection("F")
+      remoteContol("F")
+      
+    } else if (e.key === 'ArrowDown') {
+      console.log('down arrow pressed')
+      setJoystickDirection("B")
+      remoteContol("B")
 
-      } else if (e.key === 'ArrowRight') {
-        console.log('right arrow pressed')
-        setJoystickDirection("R")
-        remoteContol("R")
-      } else if (e.key === '/') {
-        console.log('S -> stop motors')
-        setJoystickDirection("Stop")
-        remoteContol("S")
-      } else if (e.key === '.') {
-        console.log('END transmission')
-        setJoystickDirection("END")
-        remoteContol("A")
-        window.setTimeout(() => {setJoystickDirection("-");
-                                remoteContol("-")}, 500)
-      }
-      else{
-        // press any other key to stop the remove control movement
-        console.log('arrow NOT pressed')
-        setJoystickDirection("-")
-        remoteContol("-") 
-      }
+    } else if (e.key === 'ArrowLeft') {
+      console.log('left arrow pressed')
+      setJoystickDirection("L")
+      remoteContol("L")
+
+    } else if (e.key === 'ArrowRight') {
+      console.log('right arrow pressed')
+      setJoystickDirection("R")
+      remoteContol("R")
+    } else if (e.key === '/') {
+      console.log('S -> stop motors')
+      setJoystickDirection("Stop")
+      remoteContol("S")
+    } else if (e.key === '.') {
+      console.log('END transmission')
+      setJoystickDirection("END")
+      remoteContol("A")
+      window.setTimeout(() => {setJoystickDirection("-");
+                              remoteContol("-")}, 500)
     }
-  // },[]);
+    else{
+      // press any other key to stop the remove control movement
+      console.log('arrow NOT pressed')
+      setJoystickDirection("-")
+      remoteContol("-") 
+    }
+  }
+  
 
     // SEND JOYSTICK CONTOL__________________________________________________________
     const remoteContol = (joystickDirection) => {
