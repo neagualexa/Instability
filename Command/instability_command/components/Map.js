@@ -358,8 +358,8 @@ const addObstacle = useCallback((new_ob) => {
   
 
   // MANUALLY ADD NODE _________________________________________________________________________________________
-  const [xCoord, setXCoord] = useState(50)
-  const [yCoord, setYCoord] = useState(50)
+  const [xCoord, setXCoord] = useState(60)
+  const [yCoord, setYCoord] = useState(60)
 
   const addNodeManual = useCallback((xCoord, yCoord) => {
     var newN = {
