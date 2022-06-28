@@ -86,7 +86,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
               <div> -Click to- </div>
               <div> -confirm- </div>
               <div>
-                <strong>({xPos.toFixed(2)/4+''};{(-1)*yPos.toFixed(2)/4+''})</strong>
+                <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
               </div>
               <div> -or hide- </div>
             </div>
@@ -95,7 +95,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
               <div className= "goto_positionNode">
                 <div style={{color:'#cfdfda'}}> {'\n'}-move to- </div>
                 <div style={{color:'#cfdfda'}}>
-                  <strong>({xPos.toFixed(2)/4+''};{(-1)*yPos.toFixed(2)/4+''})</strong>
+                  <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
                 </div>
                 <div style={{color:'#cfdfda'}}> -?- </div>
                 <button style={{width: 30, maxHeight:15, alignItems:'center', justifyContent:'center', color:'#4a6c2f', fontSize:8}} onClick={moveto}>
@@ -107,7 +107,7 @@ export default memo(({selected, isConnectable, xPos, yPos}) => {
           <div> -Moving- </div>
           <div> -to- </div>
           <div>
-            <strong>({xPos.toFixed(2)/4+''};{yPos.toFixed(2)/4+''})</strong>
+            <strong>({(xPos.toFixed(2)/4).toFixed(2)+''};{((-1)*yPos.toFixed(2)/4).toFixed(2)+''})</strong>
           </div>
           <div> - </div>
         </div>

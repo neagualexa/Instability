@@ -299,7 +299,7 @@ function Flow() {
     }
   }, []);
 
-// TODO: fetch obstacle positions !!!
+
 // ADD OBSTACLE FETCH ________________________________________________________________________________________________________
 var myRequestOBSTACLE = new Request('https://localhost:8000/obstacle');
 const getObstacle = (myRequest) => {
@@ -364,7 +364,7 @@ const addObstacle = useCallback((new_ob) => {
   const addNodeManual = useCallback((xCoord, yCoord) => {
     var newN = {
       id: "gt_"+(nodes.length+1),
-      position: { x: xCoord*4, y: yCoord*4 },
+      position: { x: xCoord*4, y: (-1)*yCoord*4 },
       type:'manual_goto',
       hidden:false
     };

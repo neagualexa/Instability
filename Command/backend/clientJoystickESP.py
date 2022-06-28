@@ -26,12 +26,6 @@ while True:
         print("ERROR: clash when trying to read joystick json (try/catch)")
         clash = True
 
-    # try:
-    #     joystick_dict = json.load( open(path+'data/moveto.json', 'r'))
-    # except:
-    #     print("ERROR: clash when trying to read moveto json (try/catch)")
-    #     clash = True
-
     if clash == False:
         print(joystick_dict)
         if joystick_dict['direction'] != "-":
